@@ -1,6 +1,6 @@
-# foreman_plugin_template
+# foreman_datacenter
 #
-# This file is distributed under the same license as foreman_plugin_template.
+# This file is distributed under the same license as foreman_datacenter.
 #
 #, fuzzy
 msgid ""

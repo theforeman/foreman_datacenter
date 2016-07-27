@@ -1,2 +1,2 @@
-# Matches foreman_plugin_template.gemspec
-_('TODO: Description of ForemanPluginTemplate.')
+# Matches foreman_datacenter.gemspec
+_('A plugin that lets you document your servers in a datacenter')
