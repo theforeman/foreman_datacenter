@@ -28,15 +28,20 @@ module ForemanDatacenter
         # Add a new role called 'Discovery' if it doesn't exist
         role 'ForemanDatacenter', [:view_foreman_datacenter]
 
-        # add menu entry
-        menu :top_menu, :template,
-             url_hash: { controller: :'foreman_datacenter/hosts', action: :new_action },
-             caption: 'ForemanDatacenter',
-             parent: :hosts_menu,
-             after: :hosts
-
-        # add dashboard widget
-        widget 'foreman_datacenter_widget', name: N_('Foreman plugin template widget'), sizex: 4, sizey: 1
+        sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu do
+          menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          divider :top_menu, :parent => :datacenter, :after => :sites, :caption => 'Racks'
+          menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          divider :top_menu, :parent => :datacenter, :after => :rack_groups, :caption => 'Devices'
+          menu :top_menu, :devices, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :device_types, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :device_roles, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
+          menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+        end
       end
     end
 
