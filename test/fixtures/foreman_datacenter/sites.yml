@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  facility: MyString
+  asn: 1
+  physical_address: MyString
+  shipping_address: MyString
+  comments: MyString
+
+two:
+  name: MyString
+  facility: MyString
+  asn: 1
+  physical_address: MyString
+  shipping_address: MyString
+  comments: MyString

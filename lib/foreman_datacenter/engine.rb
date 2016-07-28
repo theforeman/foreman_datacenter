@@ -2,6 +2,7 @@ require 'deface'
 
 module ForemanDatacenter
   class Engine < ::Rails::Engine
+    isolate_namespace ForemanDatacenter
     engine_name 'foreman_datacenter'
 
     config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
