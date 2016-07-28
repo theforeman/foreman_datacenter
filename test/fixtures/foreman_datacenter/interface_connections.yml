@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  interface_a: 1
+  interface_b: 1
+  connection_status: 1
+
+two:
+  interface_a: 1
+  interface_b: 1
+  connection_status: 1

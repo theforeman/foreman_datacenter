@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device_id: 1
+  name: MyString
+  form_factor: MyString
+  mac_address: MyString
+  mgmt_only: false
+  description: MyString
+
+two:
+  device_id: 1
+  name: MyString
+  form_factor: MyString
+  mac_address: MyString
+  mgmt_only: false
+  description: MyString
