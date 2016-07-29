@@ -1,6 +1,6 @@
-class CreateForemanDatacenterInterfaces < ActiveRecord::Migration
+class CreateDeviceInterfaces < ActiveRecord::Migration
   def change
-    create_table :foreman_datacenter_interfaces do |t|
+    create_table :device_interfaces do |t|
       t.integer :device_id
       t.string :name, limit: 30
       t.string :form_factor
@@ -11,7 +11,6 @@ class CreateForemanDatacenterInterfaces < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_foreign_key :foreman_datacenter_interfaces, :foreman_datacenter_devices,
-                    column: :device_id
+    add_foreign_key :device_interfaces, :devices, column: :device_id
   end
 end

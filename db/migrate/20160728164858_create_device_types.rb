@@ -1,6 +1,6 @@
-class CreateForemanDatacenterDeviceTypes < ActiveRecord::Migration
+class CreateDeviceTypes < ActiveRecord::Migration
   def change
-    create_table :foreman_datacenter_device_types do |t|
+    create_table :device_types do |t|
       t.integer :manufacturer_id
       t.string :model, limit: 50, null: false
       t.integer :u_height, limit: 2, default: 1
@@ -13,7 +13,6 @@ class CreateForemanDatacenterDeviceTypes < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_foreign_key :foreman_datacenter_device_types,
-                    :foreman_datacenter_manufacturers, column: :manufacturer_id
+    add_foreign_key :device_types, :manufacturers, column: :manufacturer_id
   end
 end

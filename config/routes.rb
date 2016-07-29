@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
+  # todo: remove later
   get 'new_action', to: 'foreman_datacenter/hosts#new_action'
+
+  scope 'datacenter', module: :foreman_datacenter do
+    resources :sites
+  end
 end

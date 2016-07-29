@@ -2,7 +2,7 @@ require 'deface'
 
 module ForemanDatacenter
   class Engine < ::Rails::Engine
-    isolate_namespace ForemanDatacenter
+    # isolate_namespace ForemanDatacenter
     engine_name 'foreman_datacenter'
 
     config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
@@ -30,7 +30,7 @@ module ForemanDatacenter
         role 'ForemanDatacenter', [:view_foreman_datacenter]
 
         sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu do
-          menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }
           divider :top_menu, :parent => :datacenter, :after => :sites, :caption => 'Racks'
           menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
           menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
@@ -43,6 +43,8 @@ module ForemanDatacenter
           divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
           menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
         end
+
+        extend_template_helpers ForemanDatacenter::SitesHelper
       end
     end
 

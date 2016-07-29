@@ -1,6 +1,6 @@
-class CreateForemanDatacenterSites < ActiveRecord::Migration
+class CreateSites < ActiveRecord::Migration
   def change
-    create_table :foreman_datacenter_sites do |t|
+    create_table :sites do |t|
       t.string :name, limit: 50
       t.string :facility, limit: 50, default: ''
       t.integer :asn, length: 4, null: true
@@ -11,6 +11,6 @@ class CreateForemanDatacenterSites < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :foreman_datacenter_sites, :name, unique: true
+    add_index :sites, :name, unique: true
   end
 end
