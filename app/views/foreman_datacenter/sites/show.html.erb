@@ -1,4 +1,98 @@
-<p id="notice"><%= notice %></p>
+<% title h(@site.name) %>
 
-<%= link_to 'Edit', edit_site_path(@site) %> |
-<%= link_to 'Back', sites_path %>
+<% title_actions display_link_if_authorized(
+                     _('Edit'),
+                     hash_for_edit_site_path(:id => @site).merge(:auth_object => @site, :authorizer => authorizer),
+                     :class => 'btn btn-warning'
+                 ),
+                 display_delete_if_authorized(
+                     hash_for_site_path(:id => @site).merge(:auth_object => @site, :authorizer => authorizer),
+                     :data => { :confirm => 'Are you sure?'},
+                     :action => :destroy,
+                     :class => 'btn btn-danger'
+                 )
+                 help_path %>
+
+<div class="col-md-6">
+  <!-- Site -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Site</strong>
+    </div>
+    <table class="table table-hover panel-body">
+      <tbody>
+      <tr>
+        <td>Facility</td>
+        <td><%= h @site.facility %></td>
+      </tr>
+      <tr>
+        <td>AS Number</td>
+        <td><%= @site.asn %></td>
+      </tr>
+      <tr>
+        <td>Physical Address</td>
+        <td><%= h @site.physical_address %></td>
+      </tr>
+      <tr>
+        <td>Shipping Address</td>
+        <td><%= h @site.shipping_address %></td>
+      </tr>
+      <tr>
+        <td>Created</td>
+        <td><%= @site.created_at.to_s(:long) %></td>
+      </tr>
+      <tr>
+        <td>Last Updated</td>
+        <td><%= @site.updated_at.to_s(:long) %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Comments -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Comments</strong>
+    </div>
+    <div class="panel-body"><%= h @site.comments %></div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <!-- Stats -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Stats</strong>
+    </div>
+    <table class="table table-hover panel-body">
+      <tbody>
+      <tr>
+        <td>Racks</td>
+        <td><%= @site.racks_count %></td>
+      </tr>
+      <tr>
+        <td>Devices</td>
+        <td><%= @site.devices_count %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Rack groups -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Rack Groups</strong>
+    </div>
+    <table class="table table-hover panel-body">
+      <tbody>
+      <% @site.rack_groups.each do |rack_group| %>
+          <tr>
+            <td>
+              <%= link_to rack_group.name, rack_group_path(rack_group) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   scope 'datacenter', module: :foreman_datacenter do
     resources :sites
+    resources :rack_groups
   end
 end
