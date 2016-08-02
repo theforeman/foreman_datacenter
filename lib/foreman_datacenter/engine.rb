@@ -32,7 +32,7 @@ module ForemanDatacenter
         sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu do
           menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }
           divider :top_menu, :parent => :datacenter, :after => :sites, :caption => 'Racks'
-          menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/racks', action: :index }
           menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
           divider :top_menu, :parent => :datacenter, :after => :rack_groups, :caption => 'Devices'
           menu :top_menu, :devices, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }

@@ -1,17 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  site_id: 1
-  rack_group_id: 1
-  name: MyString
-  facility_id: MyString
-  height: 1
-  comments: MyText
-
-two:
-  site_id: 1
-  rack_group_id: 1
-  name: MyString
-  facility_id: MyString
-  height: 1
-  comments: MyText
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+#  column: value

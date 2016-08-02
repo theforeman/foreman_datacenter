@@ -1,0 +1,25 @@
+<%= form_for @rack, as: :rack, url: (@rack.new_record? ? racks_path : rack_path(@rack)) do |f| %>
+    <%= base_errors_for @rack %>
+
+    <%= selectable_f f, :site_id,
+                     options_from_collection_for_select(ForemanDatacenter::Site.all, 'id', 'name', @rack.site_id),
+                     {:include_blank => _('Choose a site')},
+                     {:label => _('Site'),
+                      :onchange => 'racksNewSiteSelected(this);',
+                      :'data-url' => rack_groups_racks_path,
+                      :help_inline => :indicator, :required => true} %>
+
+    <div id="rack-groups-container">
+      <%= selectable_f f, :rack_group_id, rack_groups_for_select(@rack),
+                       {:include_blank => _('Choose a rack group')},
+                       {:label => _('Group')} %>
+    </div>
+
+    <%= text_f f, :name, required: true, help_inline: _('Full name of the site') %>
+    <%= text_f f, :facility_id, help_inline: _('The unique rack ID assigned by the facility') %>
+    <%= text_f f, :height, help_inline: _('Height in rack units') %>
+
+    <%= textarea_f f, :comments, rows: 10 %>
+
+    <%= submit_or_cancel f %>
+<% end %>
