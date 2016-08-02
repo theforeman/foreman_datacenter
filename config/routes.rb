@@ -10,5 +10,6 @@ Rails.application.routes.draw do
       end
     end
     resources :rack_groups
+    resources :platforms
   end
 end
