@@ -1,0 +1,56 @@
+<% title h(@device_role.name) %>
+
+<% title_actions display_link_if_authorized(
+                   _('Edit'),
+                   hash_for_edit_device_role_path(:id => @device_role).merge(:auth_object => @device_role, :authorizer => authorizer),
+                   :class => 'btn btn-warning'
+                 ),
+                 display_delete_if_authorized(
+                   hash_for_device_role_path(:id => @device_role).merge(:auth_object => @device_role, :authorizer => authorizer),
+                   :data => { :confirm => 'Are you sure?'},
+                   :action => :destroy,
+                   :class => 'btn btn-danger'
+                 )
+   help_path %>
+
+<div class="col-md-6">
+  <!-- Rack group details -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Device role</strong>
+    </div>
+    <table class="table table-hover panel-body">
+      <tbody>
+      <tr>
+        <td>Name</td>
+        <td><%= h @device_role.name %></td>
+      </tr>
+      <tr>
+        <td>Color</td>
+        <td><%= @device_role.color %></td>
+      </tr>
+      <tr>
+        <td>Created</td>
+        <td><%= @device_role.created_at.to_s(:long) %></td>
+      </tr>
+      <tr>
+        <td>Last Updated</td>
+        <td><%= @device_role.updated_at.to_s(:long) %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <!-- Stats -->
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Stats</strong></div>
+    <table class="table table-hover panel-body">
+      <tr>
+        <td>Devices</td>
+        <td><%= @device_role.devices.length %></td>
+      </tr>
+    </table>
+  </div>
+</div>
