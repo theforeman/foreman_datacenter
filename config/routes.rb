@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     resources :rack_groups
     resources :platforms
     resources :device_roles
+    resources :manufacturers
   end
 end
