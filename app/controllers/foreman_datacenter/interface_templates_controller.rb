@@ -14,7 +14,7 @@ module ForemanDatacenter
 
       if @interface_template.save
         redirect_to device_type_url(@interface_template.device_type),
-                    notice: 'New interface template successfully created'
+                    notice: 'New interface template was successfully created'
       else
         process_error object: @interface_template
       end
@@ -22,7 +22,8 @@ module ForemanDatacenter
 
     def destroy
       if @interface_template.destroy
-        redirect_to device_type_url(@interface_template.device_type)
+        redirect_to device_type_url(@interface_template.device_type),
+                    notice: 'Interface template was successfully destroyed'
       else
         process_error object: @interface_template
       end

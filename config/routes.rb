@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :device_types do
       resources :interface_templates, only: [:new, :create, :destroy],
                 path: 'interfaces'
+      resources :console_port_templates, only: [:new, :create, :destroy],
+                path: 'console_ports'
     end
   end
 end
