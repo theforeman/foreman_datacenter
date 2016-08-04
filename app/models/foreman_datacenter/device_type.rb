@@ -13,5 +13,13 @@ module ForemanDatacenter
     validates :u_height, numericality: { only_integer: true }
     validates :subdevice_role, inclusion: { in: SUBDEVICE_ROLES },
               allow_blank: true
+
+    def parent?
+      subdevice_role == 'Parent'
+    end
+
+    def child?
+      subdevice_role == 'Child'
+    end
   end
 end

@@ -30,7 +30,8 @@ module ForemanDatacenter
 
     def update
       if @device_type.update(device_type_params)
-        process_success object: @device_type
+        redirect_to device_type_url(@device_type),
+                    notice: 'Device type was successfully updated'
       else
         process_error object: @device_type
       end

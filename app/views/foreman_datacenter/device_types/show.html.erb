@@ -41,6 +41,93 @@
     </table>
   </div>
 
+  <!-- Function -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Function</strong>
+    </div>
+    <table class="table table-hover panel-body">
+      <tbody>
+      <tr>
+        <td class="col-sm-3 text-right">
+          <% if @device_type.is_console_server %>
+              <span class="glyphicon glyphicon-ok text-success"></span>
+          <% else %>
+              <span class="glyphicon glyphicon-remove text-danger"></span>
+          <% end %>
+        </td>
+        <td class="col-sm-10">
+          <strong>Console Server</strong>
+          <br>
+          <% if @device_type.is_console_server %>
+              <small class="text-muted">This device has console server ports</small>
+          <% else %>
+              <small class="text-muted">This device does not have console server ports</small>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="col-sm-3 text-right">
+          <% if @device_type.is_pdu %>
+              <span class="glyphicon glyphicon-ok text-success"></span>
+          <% else %>
+              <span class="glyphicon glyphicon-remove text-danger"></span>
+          <% end %>
+        </td>
+        <td class="col-sm-10">
+          <strong>PDU</strong>
+          <br>
+          <% if @device_type.is_pdu %>
+              <small class="text-muted">This device has power outlets</small>
+          <% else %>
+              <small class="text-muted">This device does not have power outlets</small>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="col-sm-3 text-right">
+          <% if @device_type.is_network_device %>
+              <span class="glyphicon glyphicon-ok text-success"></span>
+          <% else %>
+              <span class="glyphicon glyphicon-remove text-danger"></span>
+          <% end %>
+        </td>
+        <td class="col-sm-10">
+          <strong>Network Device</strong>
+          <br>
+          <% if @device_type.is_network_device %>
+              <small class="text-muted">This device has non-management network interfaces</small>
+          <% else %>
+              <small class="text-muted">This device does not have non-management network interfaces</small>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="col-sm-3 text-right">
+          <% if @device_type.parent? %>
+              <label class="label label-info">Parent</label>
+          <% elsif @device_type.child? %>
+              <label class="label label-primary">Child</label>
+          <% else %>
+              <label class="label label-default">None</label>
+          <% end %>
+        </td>
+        <td class="col-sm-10">
+          <strong>Parent/Child</strong>
+          <br>
+          <% if @device_type.parent? %>
+              <small class="text-muted">This device has device bays for mounting child devices</small>
+          <% elsif @device_type.child? %>
+              <small class="text-muted">This device can only be mounted in a parent device</small>
+          <% else %>
+              <small class="text-muted">This device does not have device bays</small>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Console ports -->
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -76,7 +163,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <%= link_to 'Add a power port', new_device_type_power_port_template_path(@device_type),
-                  class: 'btn btn-primary btn-xs pull-right'%>
+                  class: 'btn btn-primary btn-xs pull-right' %>
       <strong>Power ports</strong>
     </div>
     <% if @device_type.power_port_templates.empty? %>
