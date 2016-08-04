@@ -4,6 +4,7 @@ module ForemanDatacenter
 
     belongs_to :manufacturer, :class_name => 'ForemanDatacenter::Manufacturer'
     has_many :devices, :class_name => 'ForemanDatacenter::Device'
+    has_many :interface_templates, :class_name => 'ForemanDatacenter::InterfaceTemplate'
 
     validates :manufacturer_id, presence: true
     validates :model, presence: true, length: { maximum: 50 }

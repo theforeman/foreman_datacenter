@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     resources :platforms
     resources :device_roles
     resources :manufacturers
-    resources :device_types
+    resources :device_types do
+      resources :interface_templates, only: [:new, :create, :destroy],
+                path: 'interfaces'
+    end
   end
 end

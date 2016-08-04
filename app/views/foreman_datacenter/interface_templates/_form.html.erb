@@ -1,0 +1,19 @@
+<%= form_for @interface_template, as: :interface_template, url: (@interface_template.new_record? ? device_type_interface_templates_path : device_type_interface_template_path(@interface_template)) do |f| %>
+    <%= base_errors_for @interface_template %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device Type</label>
+        <div class="col-md-4"><%= @interface_template.device_type.model %></div>
+      </div>
+    </div>
+
+    <%= f.hidden_field :device_type_id %>
+    <%= text_f f, :name, required: true %>
+    <%= selectable_f f, :form_factor,
+                     options_for_select(interface_template_form_factors, @interface_template.form_factor),
+                     {}, {:label => _('Form factor'), :required => true} %>
+    <%= checkbox_f f, :mgmt_only, label: 'Management only' %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_type_path(@interface_template.device_type) %>
+<% end %>
