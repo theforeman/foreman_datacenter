@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     resources :platforms
     resources :device_roles
     resources :manufacturers
+    resources :device_types
   end
 end

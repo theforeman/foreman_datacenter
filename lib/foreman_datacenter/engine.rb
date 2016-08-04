@@ -36,7 +36,7 @@ module ForemanDatacenter
           menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/rack_groups', action: :index }
           divider :top_menu, :parent => :datacenter, :after => :rack_groups, :caption => 'Devices'
           menu :top_menu, :devices, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
-          menu :top_menu, :device_types, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :device_types, :url_hash => { controller: :'foreman_datacenter/device_types', action: :index }
           menu :top_menu, :device_roles, :url_hash => { controller: :'foreman_datacenter/device_roles', action: :index }
           menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/manufacturers', action: :index }
           menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/platforms', action: :index }

@@ -1,0 +1,26 @@
+<%= form_for @device_type, as: :device_type, url: (@device_type.new_record? ? device_types_path : device_type_path(@device_type)) do |f| %>
+    <%= base_errors_for @device_type %>
+
+    <%= selectable_f f, :manufacturer_id,
+                     options_from_collection_for_select(ForemanDatacenter::Manufacturer.all, 'id', 'name', @device_type.manufacturer_id),
+                     {include_blank: 'Choose a manufacturer'},
+                     {required: true} %>
+    <%= text_f f, :model, required: true %>
+    <%= text_f f, :u_height, label: 'Height (U)', type: 'number', min: 0 %>
+
+    <%= checkbox_f f, :is_full_depth, label: 'Is full depth',
+                   help_inline: 'Device consumes both front and rear rack faces' %>
+    <%= checkbox_f f, :is_console_server, label: 'Is a console server',
+                   help_inline: 'This type of device has console server ports' %>
+    <%= checkbox_f f, :is_pdu, label: 'Is a PDU',
+                   help_inline: 'This type of device has power outlets' %>
+    <%= checkbox_f f, :is_network_device, label: 'Is a network device',
+                   help_inline: 'This type of device has network interfaces' %>
+
+    <%= selectable_f f, :subdevice_role,
+                     options_for_select(device_type_subdevice_roles, @device_type.subdevice_role), {},
+                     {label: 'Parent/child status',
+                      help_inline: 'Parent devices house child devices in device bays. Select "None" if this device type is neither a parent nor a child.'} %>
+
+    <%= submit_or_cancel f %>
+<% end %>
