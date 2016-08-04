@@ -18,6 +18,8 @@ Rails.application.routes.draw do
                 path: 'interfaces'
       resources :console_port_templates, only: [:new, :create, :destroy],
                 path: 'console_ports'
+      resources :power_port_templates, only: [:new, :create, :destroy],
+                path: 'power_ports'
     end
   end
 end
