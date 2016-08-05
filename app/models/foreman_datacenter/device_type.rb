@@ -17,6 +17,13 @@ module ForemanDatacenter
     validates :subdevice_role, inclusion: { in: SUBDEVICE_ROLES },
               allow_blank: true
 
+    # Ensure that child devices have 0U height
+    validate do
+      if child? && u_height != 0
+        errors.add(:u_height, 'Child device types must be 0U')
+      end
+    end
+
     def parent?
       subdevice_role == 'Parent'
     end
