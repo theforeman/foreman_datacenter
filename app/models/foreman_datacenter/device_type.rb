@@ -24,5 +24,13 @@ module ForemanDatacenter
     def child?
       subdevice_role == 'Child'
     end
+
+    def network_interfaces
+      interface_templates.reject(&:mgmt_only)
+    end
+
+    def management_interfaces
+      interface_templates.select(&:mgmt_only)
+    end
   end
 end

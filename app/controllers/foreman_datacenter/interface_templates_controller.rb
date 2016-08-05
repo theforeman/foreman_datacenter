@@ -9,6 +9,15 @@ module ForemanDatacenter
       )
     end
 
+    def new_management
+      @interface_template = InterfaceTemplate.new(
+        device_type: DeviceType.find(params[:device_type_id]),
+        form_factor: '10GE (SFP+)',
+        mgmt_only: true
+      )
+      render :new
+    end
+
     def create
       @interface_template = InterfaceTemplate.new(interface_template_params)
 

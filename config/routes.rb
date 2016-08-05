@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     resources :manufacturers
     resources :device_types do
       resources :interface_templates, only: [:new, :create, :destroy],
-                path: 'interfaces'
+                path: 'interfaces' do
+        collection do
+          get :new_management
+        end
+      end
       resources :console_port_templates, only: [:new, :create, :destroy],
                 path: 'console_ports'
       resources :power_port_templates, only: [:new, :create, :destroy],

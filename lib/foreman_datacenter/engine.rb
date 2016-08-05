@@ -42,8 +42,6 @@ module ForemanDatacenter
           divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
           menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
         end
-
-        extend_template_helpers ForemanDatacenter::SitesHelper
       end
     end
 
