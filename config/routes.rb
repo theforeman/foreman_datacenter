@@ -24,6 +24,8 @@ Rails.application.routes.draw do
                 path: 'console_server_ports'
       resources :power_outlet_templates, only: [:new, :create, :destroy],
                 path: 'power_outlets'
+      resources :device_bay_templates, only: [:new, :create, :destroy],
+                path: 'device_bays'
     end
   end
 end
