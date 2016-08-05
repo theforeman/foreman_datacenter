@@ -225,6 +225,37 @@
       </div>
   <% end %>
 
+  <!-- Console server ports -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to 'Add a console server port', new_device_type_console_server_port_template_path(@device_type),
+                  class: 'btn btn-primary btn-xs pull-right'%>
+      <strong>Console Server Ports</strong>
+    </div>
+    <% if @device_type.console_server_port_templates.empty? %>
+        <div class="panel-body">None</div>
+    <% else %>
+        <table class="table table-hover panel-body">
+          <tbody>
+          <% @device_type.console_server_port_templates.each do |console_server_port| %>
+              <tr>
+                <td class="col-sm-10"><%= console_server_port.name %></td>
+                <td class="col-sm-2">
+                  <%= action_buttons(
+                        display_delete_if_authorized(
+                          hash_for_device_type_console_server_port_template_path(id: console_server_port, device_type_id: @device_type).merge(:auth_object => console_server_port, :authorizer => authorizer),
+                          :data => { :confirm => 'Are you sure?'},
+                          :action => :destroy
+                        )
+                      ) %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    <% end %>
+  </div>
+
   <!-- Stats -->
   <div class="panel panel-default">
     <div class="panel-heading">
