@@ -4,7 +4,7 @@ module ForemanDatacenter
 
     def new
       @console_port_template = ConsolePortTemplate.new(
-        device_type: DeviceType.find(params[:device_type_id]),
+        device_type: DeviceType.find(params[:device_type_id])
       )
     end
 

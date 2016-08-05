@@ -8,6 +8,7 @@ module ForemanDatacenter
     has_many :console_port_templates, :class_name => 'ForemanDatacenter::ConsolePortTemplate'
     has_many :power_port_templates, :class_name => 'ForemanDatacenter::PowerPortTemplate'
     has_many :console_server_port_templates, :class_name => 'ForemanDatacenter::ConsoleServerPortTemplate'
+    has_many :power_outlet_templates, :class_name => 'ForemanDatacenter::PowerOutletTemplate'
 
     validates :manufacturer_id, presence: true
     validates :model, presence: true, length: { maximum: 50 }
