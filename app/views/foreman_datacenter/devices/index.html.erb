@@ -1,0 +1,51 @@
+<% javascript 'foreman_datacenter/devices' %>
+
+<% title _('Devices')  %>
+<% title_actions display_link_if_authorized(_('New device'), hash_for_new_device_path, class: 'btn btn-success'), help_path %>
+
+<table class="table table-bordered table-striped table-two-pane">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Site</th>
+    <th>Rack</th>
+    <th>Role</th>
+    <th>Type</th>
+    <th>IP Address</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @devices.each do |device| %>
+      <tr>
+        <td><%= link_to device.name, device_path(device) %></td>
+        <td>
+          <% if device.active? %>
+              <span class="glyphicon glyphicon-ok-sign text-success" title="Active"></span>
+          <% elsif device.offline? %>
+              <span class="glyphicon glyphicon-minus-sign text-danger" title="Offline"></span>
+          <% end %>
+        </td>
+        <td><%= h device.site.name %></td>
+        <td><%= h device.rack.name %></td>
+        <td><%= h device.device_role.name %></td>
+        <td><%= h device.device_type.model %></td>
+        <td><%= h device.ip_address %></td>
+        <td>
+          <%= action_buttons(
+                display_link_if_authorized(
+                  _("Edit"),
+                  hash_for_edit_device_path(:id => device).merge(:auth_object => device, :authorizer => authorizer)
+                ),
+                display_delete_if_authorized(
+                  hash_for_device_path(:id => device).merge(:auth_object => device, :authorizer => authorizer),
+                  :data => { :confirm => 'Are you sure?'},
+                  :action => :destroy
+                )
+              ) %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

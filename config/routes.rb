@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   scope 'datacenter', module: :foreman_datacenter do
     resources :sites
     resources :racks do
-      collection do
-        get :rack_groups
-      end
+      get :rack_groups, on: :collection
     end
     resources :rack_groups
     resources :platforms
@@ -16,9 +14,7 @@ Rails.application.routes.draw do
     resources :device_types do
       resources :interface_templates, only: [:new, :create, :destroy],
                 path: 'interfaces' do
-        collection do
-          get :new_management
-        end
+        get :new_management, on: :collection
       end
       resources :console_port_templates, only: [:new, :create, :destroy],
                 path: 'console_ports'
@@ -30,6 +26,9 @@ Rails.application.routes.draw do
                 path: 'power_outlets'
       resources :device_bay_templates, only: [:new, :create, :destroy],
                 path: 'device_bays'
+    end
+    resources :devices do
+      get :device_types, on: :collection
     end
   end
 end

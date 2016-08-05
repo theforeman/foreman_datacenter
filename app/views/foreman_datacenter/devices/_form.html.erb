@@ -1,0 +1,42 @@
+<%= form_for @device, as: :device, url: (@device.new_record? ? devices_path : device_path(@device)) do |f| %>
+    <%= base_errors_for @device %>
+
+    <!-- Device -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Device</strong></div>
+      <div class="panel-body">
+        <%= text_f f, :name, required: true %>
+        <%= selectable_f f, :device_role_id,
+                         device_roles_for_select(@device.device_role_id),
+                         {include_blank: 'Choose a device role'},
+                         {required: true} %>
+      </div>
+    </div>
+
+    <!-- Hardware -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Hardware</strong></div>
+      <div class="panel-body">
+        <div class="clearfix">
+          <div class="form-group">
+            <label class="col-md-2 control-label required">Manufacturer *</label>
+            <div class="col-md-4">
+              <%= select_tag :manufacturer,
+                             device_manufacturers_for_select(@device.manufacturer_id),
+                             { :include_blank => 'Choose a manufacturer', :required => true,
+                               :onchange => 'devicesNewManufacturerSelected(this)',
+                               :'data-url' => device_types_devices_path,
+                               :class => 'form-control' } %>
+            </div>
+          </div>
+        </div>
+        <div id="device-types-container">
+          <%= render partial: 'device_types_for_select',
+                     locals: { f: f, manufacturer_id: @device.manufacturer_id, device_type_id: @device.device_type_id } %>
+        </div>
+        <%= text_f f, :serial, inline_help: 'Chassis serial number' %>
+      </div>
+    </div>
+
+    <%= submit_or_cancel f %>
+<% end %>
