@@ -17,10 +17,14 @@ class CreateDevices < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_foreign_key :devices, :device_types, column: :device_type_id
-    add_foreign_key :devices, :device_roles, column: :device_role_id
-    add_foreign_key :devices, :platforms, column: :platform_id
-    add_foreign_key :devices, :racks, column: :rack_id
+    add_foreign_key :devices, :device_types, column: :device_type_id,
+                    on_delete: :restrict
+    add_foreign_key :devices, :device_roles, column: :device_role_id,
+                    on_delete: :restrict
+    add_foreign_key :devices, :platforms, column: :platform_id,
+                    on_delete: :nullify
+    add_foreign_key :devices, :racks, column: :rack_id,
+                    on_delete: :restrict
 
     add_index :devices, :name, unique: true
   end

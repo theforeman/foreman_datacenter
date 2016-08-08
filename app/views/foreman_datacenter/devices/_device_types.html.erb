@@ -1,6 +1,5 @@
 <%= form_for :device do |f| %>
     <div id="device-types">
-      <%= render partial: 'device_types_for_select',
-                 locals: { f: f, manufacturer_id: @manufacturer_id, device_type_id: nil } %>
+      <%= device_types_for_device_form f, @manufacturer_id %>
     </div>
 <% end %>

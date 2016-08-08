@@ -14,3 +14,20 @@ function devicesNewManufacturerSelected(item) {
     });
   }
 }
+
+function devicesNewSiteSelected(item) {
+  var $item = $(item);
+  var site = $item.val();
+  if (site === '') {
+    return false;
+  } else {
+    foreman.tools.showSpinner();
+    var url = $item.data('url');
+    var params = $.param({ site_id: site });
+    var $container = $('#sites-container');
+    $container.load(url + ' #sites', params, function () {
+      $container.find('select').select2({allowClear: true});
+      foreman.tools.hideSpinner();
+    });
+  }
+}

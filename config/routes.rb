@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
     resources :devices do
       get :device_types, on: :collection
+      get :racks, on: :collection
     end
   end
 end

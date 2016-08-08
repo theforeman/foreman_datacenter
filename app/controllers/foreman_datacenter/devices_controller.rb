@@ -47,6 +47,11 @@ module ForemanDatacenter
       render partial: 'device_types'
     end
 
+    def racks
+      @site_id = params[:site_id]
+      render partial: 'racks'
+    end
+
     private
 
     def set_device

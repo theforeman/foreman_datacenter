@@ -21,9 +21,9 @@
           <div class="form-group">
             <label class="col-md-2 control-label required">Manufacturer *</label>
             <div class="col-md-4">
-              <%= select_tag :manufacturer,
+              <%= select_tag :manufacturer_id,
                              device_manufacturers_for_select(@device.manufacturer_id),
-                             { :include_blank => 'Choose a manufacturer', :required => true,
+                             { :include_blank => 'Choose a manufacturer',
                                :onchange => 'devicesNewManufacturerSelected(this)',
                                :'data-url' => device_types_devices_path,
                                :class => 'form-control' } %>
@@ -31,10 +31,48 @@
           </div>
         </div>
         <div id="device-types-container">
-          <%= render partial: 'device_types_for_select',
-                     locals: { f: f, manufacturer_id: @device.manufacturer_id, device_type_id: @device.device_type_id } %>
+          <%= device_types_for_device_form f, @device.manufacturer_id, @device.device_type_id %>
         </div>
-        <%= text_f f, :serial, inline_help: 'Chassis serial number' %>
+        <%= text_f f, :serial, help_inline: 'Chassis serial number' %>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Location</strong></div>
+      <div class="panel-body">
+        <div class="clearfix">
+          <div class="form-group">
+            <label class="col-md-2 control-label required">Site *</label>
+            <div class="col-md-4">
+              <%= sites_for_device_form @device.site_id %>
+            </div>
+          </div>
+        </div>
+        <div id="sites-container">
+          <%= racks_for_device_form f, @device.site_id, @device.rack_id %>
+        </div>
+        <%= selectable_f f, :face, ForemanDatacenter::Device.faces.keys,
+                         { include_blank: 'Choose a rack face', label: 'Rack face' } %>
+        <%= text_f f, :position, type: 'number', min: 0,
+                   help_inline: 'For multi-U devices, this is the lowest occupied rack unit.' %>
+      </div>
+    </div>
+
+    <!-- Management -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Management</strong></div>
+      <div class="panel-body">
+        <%= platforms_for_device_form f, @device.platform_id %>
+        <%= selectable_f f, :status, ForemanDatacenter::Device.statuses.keys %>
+      </div>
+    </div>
+
+    <!-- Comments -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Comments</strong></div>
+      <div class="panel-body">
+        <%= textarea_f f, :comments, rows: 10 %>
       </div>
     </div>
 
