@@ -36,6 +36,13 @@ Rails.application.routes.draw do
         get :inventory
         get :lldp_neighbors
       end
+      resources :device_bays, except: [:show, :index], shallow: true do
+        member do
+          get :populate_new
+          patch :populate
+          delete :depopulate
+        end
+      end
     end
   end
 end

@@ -1,0 +1,46 @@
+<tr>
+  <td>
+    <% if device_bay.installed_device %>
+        <span class="glyphicon glyphicon-record"></span>
+    <% else %>
+        <span class="glyphicon glyphicon-unchecked"></span>
+    <% end %>
+    <%= device_bay.name %>
+  </td>
+  <td>
+    <% if device_bay.installed_device %>
+        <%= link_to device_bay.installed_device.name,
+                    device_path(device_bay.installed_device) %>
+    <% else %>
+        <span class="text-muted">Vacant</span>
+    <% end %>
+  </td>
+  <td class="text-right">
+    <% if device_bay.installed_device %>
+        <%= link_to depopulate_device_bay_path(device_bay), class: 'btn btn-danger btn-xs',
+                    data: {confirm: 'Are you sure?'}, method: :delete do %>
+            <i class="glyphicon glyphicon-remove" title="Remove device"></i>
+        <% end %>
+        <%= link_to edit_device_bay_path(device_bay),
+                    class: 'btn btn-info btn-xs' do %>
+            <i class="glyphicon glyphicon-pencil" title="Edit device bay"></i>
+        <% end %>
+        <button class="btn btn-danger btn-xs" disabled>
+          <i class="glyphicon glyphicon-trash"></i>
+        </button>
+    <% else %>
+        <%= link_to populate_new_device_bay_path(device_bay),
+                    class: 'btn btn-success btn-xs' do %>
+            <i class="glyphicon glyphicon-plus"></i>
+        <% end %>
+        <%= link_to edit_device_bay_path(device_bay),
+                    class: 'btn btn-info btn-xs' do %>
+            <i class="glyphicon glyphicon-pencil" title="Edit device bay"></i>
+        <% end %>
+        <%= link_to device_bay_path(device_bay), class: 'btn btn-danger btn-xs',
+                    data: {confirm: 'Are you sure?'}, method: :delete do %>
+            <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+    <% end %>
+  </td>
+</tr>

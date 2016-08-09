@@ -148,10 +148,14 @@
           <% else %>
               <table class="table table-hover panel-body">
                 <tbody>
-                <!-- TODO: list device bays -->
+                <%= render partial: 'device_bay', collection: @device.device_bays %>
                 </tbody>
               </table>
           <% end %>
+          <div class="panel-footer text-right">
+            <%= link_to 'Add a device bay', new_device_device_bay_path(@device),
+                        class: 'btn btn-primary btn-xs' %>
+          </div>
         </div>
     <% end %>
   </div>

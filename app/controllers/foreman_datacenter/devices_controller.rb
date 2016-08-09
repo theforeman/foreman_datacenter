@@ -1,12 +1,14 @@
 module ForemanDatacenter
   class DevicesController < ApplicationController
-    before_action :set_device, only: [:show, :edit, :update, :destroy]
+    before_action :set_device, only: [:edit, :update, :destroy]
 
     def index
       @devices = Device.includes(:device_role, :device_type, rack: [:site]).all
     end
 
     def show
+      @device = Device.includes(device_bays: [:installed_device]).
+        find(params[:id])
     end
 
     def new

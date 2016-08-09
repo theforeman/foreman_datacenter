@@ -17,10 +17,10 @@ module ForemanDatacenter
 
     validates :device_type_id, presence: true
     validates :device_role_id, presence: true
-    validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
-    validates :serial, length: { maximum: 50 }
+    validates :name, presence: true, uniqueness: true, length: {maximum: 50}
+    validates :serial, length: {maximum: 50}
     validates :rack_id, presence: true
-    validates :position, numericality: { only_integer: true }, allow_nil: true
+    validates :position, numericality: {only_integer: true}, allow_nil: true
 
     def site_id
       rack.try(:site_id)
