@@ -11,6 +11,7 @@ class CreateDeviceInterfaces < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_foreign_key :device_interfaces, :devices, column: :device_id
+    add_foreign_key :device_interfaces, :devices, column: :device_id,
+                    on_delete: :cascade
   end
 end

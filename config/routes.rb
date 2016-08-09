@@ -28,8 +28,14 @@ Rails.application.routes.draw do
                 path: 'device_bays'
     end
     resources :devices do
-      get :device_types, on: :collection
-      get :racks, on: :collection
+      collection do
+        get :device_types
+        get :racks
+      end
+      member do
+        get :inventory
+        get :lldp_neighbors
+      end
     end
   end
 end

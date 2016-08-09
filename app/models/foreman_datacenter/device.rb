@@ -4,6 +4,13 @@ module ForemanDatacenter
     belongs_to :device_role, :class_name => 'ForemanDatacenter::DeviceRole'
     belongs_to :platform, :class_name => 'ForemanDatacenter::Platform'
     belongs_to :rack, :class_name => 'ForemanDatacenter::Rack'
+    has_many :device_bays, :class_name => 'ForemanDatacenter::DeviceBay'
+    has_one :parent_device_bay, :class_name => 'ForemanDatacenter::DeviceBay',
+            :foreign_key => 'installed_device_id'
+    has_many :power_outlets, :class_name => 'ForemanDatacenter::PowerOutlet'
+    has_many :power_ports, :class_name => 'ForemanDatacenter::PowerPort'
+    has_many :console_server_ports, :class_name => 'ForemanDatacenter::ConsoleServerPort'
+    has_many :console_ports, :class_name => 'ForemanDatacenter::ConsolePort'
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]
@@ -14,6 +21,10 @@ module ForemanDatacenter
     validates :serial, length: { maximum: 50 }
     validates :rack_id, presence: true
     validates :position, numericality: { only_integer: true }, allow_nil: true
+
+    def site_id
+      rack.try(:site_id)
+    end
 
     def site
       rack.site
@@ -27,8 +38,20 @@ module ForemanDatacenter
       device_type.try(:manufacturer_id)
     end
 
-    def site_id
-      rack.try(:site_id)
+    def is_console_server
+      device_type.try(:is_console_server)
+    end
+
+    def is_pdu
+      device_type.try(:is_pdu)
+    end
+
+    def is_network_device
+      device_type.try(:is_network_device)
+    end
+
+    def parent?
+      device_type.try(:subdevice_role) == 'Parent'
     end
   end
 end

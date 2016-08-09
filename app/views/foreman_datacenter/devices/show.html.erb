@@ -1,0 +1,158 @@
+<% title h(@device.name) %>
+
+<% title_actions display_link_if_authorized(
+                   _('Edit'),
+                   hash_for_edit_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
+                   :class => 'btn btn-warning'
+                 ),
+                 display_delete_if_authorized(
+                   hash_for_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
+                   :data => {:confirm => 'Are you sure?'},
+                   :action => :destroy,
+                   :class => 'btn btn-danger'
+                 ),
+                 help_path %>
+
+<ul class="nav nav-tabs">
+  <li class="active"><%= link_to 'Info', device_path(@device) %></li>
+  <li><%= link_to 'Inventory', inventory_device_path(@device) %></li>
+  <li><%= link_to 'LLDP Neighbors', lldp_neighbors_device_path(@device) %></li>
+</ul>
+
+<div class="row">
+  <div class="col-sm-6">
+    <!-- Device -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Device</strong>
+      </div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <tr>
+          <td>Site</td>
+          <td><%= link_to @device.site.name, site_path(@device.site) %></td>
+        </tr>
+        <tr>
+          <td>Rack</td>
+          <td><%= link_to @device.rack.name, rack_path(@device.rack) %></td>
+        </tr>
+        <tr>
+          <td>Position</td>
+          <td><%= @device.position %> / <%= @device.face %></td>
+        </tr>
+        <tr>
+          <td>Device Type</td>
+          <td><%= link_to @device.device_type.model, device_type_path(@device.device_type) %></td>
+        </tr>
+        <tr>
+          <td>Serial</td>
+          <td><%= @device.serial %></td>
+        </tr>
+        <tr>
+          <td>Created</td>
+          <td><%= @device.created_at.to_s(:long) %></td>
+        </tr>
+        <tr>
+          <td>Last Updated</td>
+          <td><%= @device.updated_at.to_s(:long) %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Management -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Management</strong>
+      </div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <tr>
+          <td>Role</td>
+          <td>
+            <%= link_to @device.device_role.name, device_role_path(@device.device_role) %>
+          </td>
+        </tr>
+        <tr>
+          <td>Platform</td>
+          <td>
+            <% if @device.platform %>
+                <%= link_to @device.platform.name, platform_path(@device.platform) %>
+            <% else %>
+                <span class="text-warning">Not assigned</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>
+            <% if @device.active? %>
+                <span class="label label-success">Active</span>
+            <% elsif @device.offline? %>
+                <span class="label label-danger">Offline</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Primary IPv4</td>
+          <td>
+            <% if @device.primary_ip4.blank? %>
+                Not defined
+            <% else %>
+                <%= @device.primary_ip4 %></td>
+            <% end %>
+            </tr>
+        <tr>
+          <td>Primary IPv6</td>
+          <td>
+            <% if @device.primary_ip6.blank? %>
+                Not defined
+            <% else %>
+                <%= @device.primary_ip6 %></td>
+            <% end %>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Critical Connections -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Critical Connections</strong>
+      </div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <!-- TODO -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Comments -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Comments</strong>
+      </div>
+      <div class="panel-body"><%= simple_format @device.comments %></div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <!-- Device Bays -->
+    <% if @device.parent? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Device Bays</strong>
+          </div>
+          <% if @device.device_bays.empty? %>
+              <div class="panel-body">None</div>
+          <% else %>
+              <table class="table table-hover panel-body">
+                <tbody>
+                <!-- TODO: list device bays -->
+                </tbody>
+              </table>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>
