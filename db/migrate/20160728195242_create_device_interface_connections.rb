@@ -8,9 +8,11 @@ class CreateDeviceInterfaceConnections < ActiveRecord::Migration
       t.timestamps null: false
     end
 
+    add_index :device_interface_connections, [:interface_a, :interface_b],
+              unique: true
     add_foreign_key :device_interface_connections, :device_interfaces,
-                    column: :interface_a
+                    column: :interface_a, on_delete: :cascade
     add_foreign_key :device_interface_connections, :device_interfaces,
-                    column: :interface_b
+                    column: :interface_b, on_delete: :cascade
   end
 end

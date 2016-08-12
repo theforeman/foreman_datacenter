@@ -11,6 +11,7 @@ module ForemanDatacenter
     has_many :power_ports, :class_name => 'ForemanDatacenter::PowerPort'
     has_many :console_server_ports, :class_name => 'ForemanDatacenter::ConsoleServerPort'
     has_many :console_ports, :class_name => 'ForemanDatacenter::ConsolePort'
+    has_many :interfaces, :class_name => 'ForemanDatacenter::DeviceInterface'
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]

@@ -1,7 +1,4 @@
-Rails.application.routes.draw do
-  # todo: remove later
-  get 'new_action', to: 'foreman_datacenter/hosts#new_action'
-
+Foreman::Application.routes.draw do
   scope 'datacenter', module: :foreman_datacenter do
     resources :sites
     resources :racks do
@@ -29,12 +26,10 @@ Rails.application.routes.draw do
     end
     resources :devices do
       collection do
-        get :device_types
-        get :racks
+        get :device_types, :racks
       end
       member do
-        get :inventory
-        get :lldp_neighbors
+        get :inventory, :lldp_neighbors
       end
       resources :device_bays, except: [:show, :index], shallow: true do
         member do
@@ -42,6 +37,19 @@ Rails.application.routes.draw do
           patch :populate
           delete :depopulate
         end
+      end
+      resources :device_interfaces, except: [:show, :index], shallow: true do
+        resources :device_interface_connections, except: [:show, :edit, :update, :index],
+                  shallow: true do
+          member do
+            patch :planned, :connected
+          end
+        end
+      end
+    end
+    resources :device_interface_connections, only: [:index], path: 'connections' do
+      collection do
+        get :devices, :interfaces
       end
     end
   end

@@ -1,0 +1,90 @@
+<%= form_for @device_interface_connection, as: :device_interface_connection,
+             url: device_interface_device_interface_connections_path(@device_interface_connection.first_interface.id) do |f| %>
+    <%= base_errors_for @device_interface_connection %>
+
+    <div class="row">
+      <!-- A Side -->
+
+      <%= f.hidden_field :interface_a %>
+
+      <div class="col-md-5">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center"><strong>A Side</strong></div>
+
+          <div class="panel-body">
+            <div class="clearfix">
+              <div class="form-group">
+                <label class="col-md-2 control-label required">Rack</label>
+                <div class="col-md-4"><%= @device_interface_connection.first_rack.name %></div>
+              </div>
+            </div>
+
+            <div class="clearfix">
+              <div class="form-group">
+                <label class="col-md-2 control-label required">Device</label>
+                <div class="col-md-4"><%= @device_interface_connection.first_device.name %></div>
+              </div>
+            </div>
+
+            <div class="clearfix">
+              <div class="form-group">
+                <label class="col-md-2 control-label required">Interface</label>
+                <div class="col-md-4"><%= @device_interface_connection.first_interface.name %></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-1 text-center">
+        <span class="glyphicon glyphicon-transfer glyphicon-4x"></span>
+      </div>
+
+      <!-- B Side -->
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center"><strong>B Side</strong></div>
+
+          <div class="panel-body">
+            <div class="clearfix">
+              <div class="form-group">
+                <label class="col-md-2 control-label required">Rack</label>
+                <div class="col-md-4">
+                  <%= racks_for_connection_form @device_interface_connection %>
+                </div>
+                <span class="help-block help-inline">First, you need to select a rack</span>
+              </div>
+            </div>
+
+            <div id="devices-container">
+              <div class="clearfix">
+                <div class="form-group">
+                  <label class="col-md-2 control-label required">Device</label>
+                  <div class="col-md-4">
+                    <%= devices_for_connection_form [] %>
+                  </div>
+                  <span class="help-block help-inline">Then choose a device</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="interfaces-container">
+              <%= interfaces_for_connection_form f, [] %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-4">
+        <%= selectable_f f, :connection_status,
+                         ForemanDatacenter::DeviceInterfaceConnection.connection_statuses.keys %>
+
+        <%= submit_or_cancel f, false, cancel_path: device_path(@device_interface_connection.first_device) %>
+      </div>
+    </div>
+
+<% end %>

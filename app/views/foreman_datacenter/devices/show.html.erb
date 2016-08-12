@@ -1,3 +1,5 @@
+<% javascript 'foreman_datacenter/device_interface_connections' %>
+
 <% title h(@device.name) %>
 
 <% title_actions display_link_if_authorized(
@@ -154,6 +156,30 @@
           <% end %>
           <div class="panel-footer text-right">
             <%= link_to 'Add a device bay', new_device_device_bay_path(@device),
+                        class: 'btn btn-primary btn-xs' %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="col-sm-6">
+    <!-- Interfaces -->
+    <% if @device.is_network_device %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Interfaces</strong>
+          </div>
+          <% if @device.interfaces.empty? %>
+              <div class="panel-body">None</div>
+          <% else %>
+              <table class="table table-hover panel-body">
+                <tbody>
+                <%= render partial: 'interface', collection: @device.interfaces %>
+                </tbody>
+              </table>
+          <% end %>
+          <div class="panel-footer text-right">
+            <%= link_to 'Add an interface', new_device_device_interface_path(@device),
                         class: 'btn btn-primary btn-xs' %>
           </div>
         </div>

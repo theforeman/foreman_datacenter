@@ -1,0 +1,5 @@
+<%= form_for :device_interface_connection do |f| %>
+    <div id="interfaces-list">
+      <%= interfaces_for_connection_form f, @interfaces %>
+    </div>
+<% end %>

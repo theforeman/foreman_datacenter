@@ -18,15 +18,7 @@ module ForemanDatacenter
 
     initializer 'foreman_datacenter.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_datacenter do
-        requires_foreman '>= 1.4'
-
-        # Add permissions
-        security_block :foreman_datacenter do
-          permission :view_foreman_datacenter, :'foreman_datacenter/hosts' => [:new_action]
-        end
-
-        # Add a new role called 'Discovery' if it doesn't exist
-        role 'ForemanDatacenter', [:view_foreman_datacenter]
+        requires_foreman '>= 1.12'
 
         sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu do
           menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }
@@ -40,7 +32,7 @@ module ForemanDatacenter
           menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/manufacturers', action: :index }
           menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/platforms', action: :index }
           divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
-          menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/hosts', action: :new_action }
+          menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/device_interface_connections', action: :index }
         end
       end
     end
