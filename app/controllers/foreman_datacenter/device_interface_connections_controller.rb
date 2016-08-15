@@ -42,12 +42,6 @@ module ForemanDatacenter
       head :ok
     end
 
-    def devices
-      rack = ForemanDatacenter::Rack.find(params[:rack_id])
-      @devices = rack.devices.select(:id, :name)
-      render partial: 'devices'
-    end
-
     def interfaces
       device = Device.find(params[:device_id])
       @interfaces = device.interfaces.select(:id, :name)

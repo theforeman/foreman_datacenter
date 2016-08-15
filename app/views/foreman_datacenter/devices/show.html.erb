@@ -1,4 +1,4 @@
-<% javascript 'foreman_datacenter/device_interface_connections' %>
+<% javascript 'foreman_datacenter/devices' %>
 
 <% title h(@device.name) %>
 
@@ -160,9 +160,7 @@
           </div>
         </div>
     <% end %>
-  </div>
 
-  <div class="col-sm-6">
     <!-- Interfaces -->
     <% if @device.is_network_device %>
         <div class="panel panel-default">
@@ -180,6 +178,28 @@
           <% end %>
           <div class="panel-footer text-right">
             <%= link_to 'Add an interface', new_device_device_interface_path(@device),
+                        class: 'btn btn-primary btn-xs' %>
+          </div>
+        </div>
+    <% end %>
+
+    <!-- Console Server Ports -->
+    <% if @device.is_console_server %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Console Server Ports</strong>
+          </div>
+          <% if @device.console_server_ports.empty? %>
+              <div class="panel-body">None</div>
+          <% else %>
+              <table class="table table-hover panel-body">
+                <tbody>
+                <%= render partial: 'console_server_port', collection: @device.console_server_ports %>
+                </tbody>
+              </table>
+          <% end %>
+          <div class="panel-footer text-right">
+            <%= link_to 'Add a console server port', new_device_console_server_port_path(@device),
                         class: 'btn btn-primary btn-xs' %>
           </div>
         </div>

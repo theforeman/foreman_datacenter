@@ -7,5 +7,13 @@ module ForemanDatacenter
 
     validates :device_id, presence: true
     validates :name, presence: true, length: { maximum: 30 }
+
+    def connect(port, connection_status)
+      update(console_server_port: port, connection_status: connection_status)
+    end
+
+    def disconnect
+      update(console_server_port: nil)
+    end
   end
 end

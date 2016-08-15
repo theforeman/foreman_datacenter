@@ -47,27 +47,9 @@
           <div class="panel-heading text-center"><strong>B Side</strong></div>
 
           <div class="panel-body">
-            <div class="clearfix">
-              <div class="form-group">
-                <label class="col-md-2 control-label required">Rack</label>
-                <div class="col-md-4">
-                  <%= racks_for_connection_form @device_interface_connection %>
-                </div>
-                <span class="help-block help-inline">First, you need to select a rack</span>
-              </div>
-            </div>
-
-            <div id="devices-container">
-              <div class="clearfix">
-                <div class="form-group">
-                  <label class="col-md-2 control-label required">Device</label>
-                  <div class="col-md-4">
-                    <%= devices_for_connection_form [] %>
-                  </div>
-                  <span class="help-block help-inline">Then choose a device</span>
-                </div>
-              </div>
-            </div>
+            <%= rack_device_select @device_interface_connection.first_site,
+                                   url: interfaces_device_interface_connections_path,
+                                   target: '#interfaces-container' %>
 
             <div id="interfaces-container">
               <%= interfaces_for_connection_form f, [] %>

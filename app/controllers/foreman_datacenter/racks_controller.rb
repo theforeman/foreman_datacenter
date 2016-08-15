@@ -1,6 +1,6 @@
 module ForemanDatacenter
   class RacksController < ApplicationController
-    before_action :set_rack, only: [:show, :edit, :update, :destroy]
+    before_action :set_rack, only: [:show, :edit, :update, :destroy, :devices]
 
     def index
       @racks = ForemanDatacenter::Rack.

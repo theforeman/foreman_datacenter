@@ -1,0 +1,64 @@
+<tr>
+  <% if console_server_port.console_port %>
+      <td>
+        <i class="fa fa-fw fa-keyboard-o"></i>
+        <%= h console_server_port.name %>
+      </td>
+      <td>
+        <%= link_to console_server_port.console_port.device.name,
+                    device_path(console_server_port.console_port.device) %>
+      </td>
+      <td><%= h console_server_port.console_port.name %></td>
+      <td class="text-right">
+        <% if console_server_port.console_port.planned? %>
+            <%= link_to connected_console_port_path(console_server_port.console_port),
+                        class: 'btn btn-success btn-xs', remote: true,
+                        data: {confirm: 'Are you sure?', action: 'connected'},
+                        method: :patch, title: 'Mark connected' do %>
+                <i class="glyphicon glyphicon-wrench"></i>
+            <% end %>
+        <% else %>
+            <%= link_to planned_console_port_path(console_server_port.console_port),
+                        class: 'btn btn-warning btn-xs', remote: true,
+                        data: {confirm: 'Are you sure?', action: 'planned'},
+                        method: :patch, title: 'Mark planned' do %>
+                <i class="glyphicon glyphicon-ban-circle"></i>
+            <% end %>
+        <% end %>
+        <%= link_to disconnect_console_server_port_path(console_server_port),
+                    class: 'btn btn-danger btn-xs', title: 'Disconnect',
+                    data: {confirm: 'Are you sure?'}, method: :patch do %>
+            <i class="glyphicon glyphicon-remove"></i>
+        <% end %>
+        <%= link_to edit_console_server_port_path(console_server_port),
+                    class: 'btn btn-info btn-xs', title: 'Edit port' do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+        <button class="btn btn-danger btn-xs" disabled>
+          <i class="glyphicon glyphicon-trash"></i>
+        </button>
+      </td>
+  <% else %>
+      <td>
+        <i class="fa fa-fw fa-keyboard-o"></i>
+        <%= h console_server_port.name %>
+      </td>
+      <td class="text-muted">Not connected</td>
+      <td></td>
+      <td class="text-right">
+        <%= link_to new_connection_console_server_port_path(console_server_port),
+                    class: 'btn btn-success btn-xs', title: 'Connect' do %>
+            <i class="glyphicon glyphicon-plus"></i>
+        <% end %>
+        <%= link_to edit_console_server_port_path(console_server_port),
+                    class: 'btn btn-info btn-xs', title: 'Edit port' do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+        <%= link_to console_server_port_path(console_server_port),
+                    class: 'btn btn-danger btn-xs', title: 'Delete port',
+                    data: {confirm: 'Are you sure?'}, method: :delete do %>
+            <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+      </td>
+  <% end %>
+</tr>

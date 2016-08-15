@@ -24,12 +24,20 @@ module ForemanDatacenter
       first_device.rack
     end
 
+    def first_site
+      first_rack.site
+    end
+
     def second_device
       first_interface.device
     end
 
     def second_rack
       second_device.rack
+    end
+
+    def second_site
+      second_rack.site
     end
   end
 end

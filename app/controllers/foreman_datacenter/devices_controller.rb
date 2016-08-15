@@ -54,6 +54,11 @@ module ForemanDatacenter
       render partial: 'racks'
     end
 
+    def for_rack
+      @rack = ForemanDatacenter::Rack.find(params[:rack_id])
+      render partial: 'for_rack'
+    end
+
     private
 
     def set_device

@@ -1,0 +1,22 @@
+<div class="clearfix">
+  <div class="form-group">
+    <label class="col-md-2 control-label required">Rack</label>
+    <div class="col-md-4">
+      <%= racks_list_for_site site %>
+    </div>
+    <span class="help-block help-inline">First, you need to select a rack</span>
+  </div>
+</div>
+
+<div id="devices-container" data-url="<%= options[:url] %>"
+     data-target="<%= options[:target] %>" data-fragment="<%= options[:fragment] %>">
+  <div class="clearfix">
+    <div class="form-group">
+      <label class="col-md-2 control-label required">Device</label>
+      <div class="col-md-4">
+        <%= devices_list_for_rack %>
+      </div>
+      <span class="help-block help-inline">Then choose a device</span>
+    </div>
+  </div>
+</div>
