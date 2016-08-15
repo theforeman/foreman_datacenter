@@ -54,5 +54,9 @@ module ForemanDatacenter
     def parent?
       device_type.try(:subdevice_role) == 'Parent'
     end
+
+    def free_console_ports
+      console_ports.where(console_server_port_id: nil)
+    end
   end
 end
