@@ -57,6 +57,17 @@ Foreman::Application.routes.draw do
           patch :connected, :planned
         end
       end
+      resources :power_outlets, except: [:show, :index], shallow: true do
+        member do
+          get :new_connection
+          patch :connect, :disconnect
+        end
+      end
+      resources :power_ports, except: [:show, :index], shallow: true do
+        member do
+          patch :connected, :planned
+        end
+      end
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       collection do
@@ -64,6 +75,9 @@ Foreman::Application.routes.draw do
       end
     end
     resources :console_ports, only: [:index] do
+      get :for_device, on: :collection
+    end
+    resources :power_ports, only: [:index] do
       get :for_device, on: :collection
     end
   end

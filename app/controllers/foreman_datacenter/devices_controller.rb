@@ -7,8 +7,11 @@ module ForemanDatacenter
     end
 
     def show
-      @device = Device.includes(device_bays: [:installed_device]).
-        find(params[:id])
+      @device = Device.includes(
+        device_bays: [:installed_device],
+        console_server_ports: [:console_port],
+        power_outlets: [:power_port]
+      ).find(params[:id])
     end
 
     def new

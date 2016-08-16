@@ -1,0 +1,17 @@
+<%= form_for(@power_port) do |f| %>
+  <% if @power_port.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@power_port.errors.count, "error") %> prohibited this power_port from being saved:</h2>
+
+      <ul>
+      <% @power_port.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

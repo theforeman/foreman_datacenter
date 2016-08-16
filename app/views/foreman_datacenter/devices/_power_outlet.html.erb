@@ -1,0 +1,60 @@
+<tr>
+  <td>
+    <i class="fa fa-fw fa-bolt"></i>
+    <%= h power_outlet.name %>
+  </td>
+  <% if power_outlet.power_port %>
+      <td>
+        <%= link_to power_outlet.power_port.device.name,
+                    device_path(power_outlet.power_port.device) %>
+      </td>
+      <td><%= power_outlet.power_port.name %></td>
+      <td class="text-right">
+        <% if power_outlet.power_port.planned? %>
+            <%= link_to connected_power_port_path(power_outlet.power_port),
+                        class: 'btn btn-success btn-xs', remote: true,
+                        data: { confirm: 'Are you sure?', action: 'connected' },
+                        method: :patch, title: 'Mark connected' do %>
+                <i class="glyphicon glyphicon-wrench"></i>
+            <% end %>
+        <% else %>
+            <%= link_to planned_power_port_path(power_outlet.power_port),
+                        class: 'btn btn-warning btn-xs', remote: true,
+                        data: { confirm: 'Are you sure?', action: 'planned' },
+                        method: :patch, title: 'Mark planned' do %>
+                <i class="glyphicon glyphicon-ban-circle"></i>
+            <% end %>
+        <% end %>
+        <%= link_to disconnect_power_outlet_path(power_outlet),
+                    class: 'btn btn-danger btn-xs', title: 'Disconnect',
+                    data: { confirm: 'Are you sure?' }, method: :patch do %>
+            <i class="glyphicon glyphicon-remove"></i>
+        <% end %>
+        <%= link_to edit_power_outlet_path(power_outlet),
+                    class: 'btn btn-info btn-xs', title: 'Edit outlet' do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+        <button class="btn btn-danger btn-xs" disabled>
+          <i class="glyphicon glyphicon-trash"></i>
+        </button>
+      </td>
+  <% else %>
+      <td class="text-muted">Not connected</td>
+      <td></td>
+      <td class="text-right">
+        <%= link_to new_connection_power_outlet_path(power_outlet),
+                    class: 'btn btn-success btn-xs', title: 'Connect' do %>
+            <i class="glyphicon glyphicon-plus"></i>
+        <% end %>
+        <%= link_to edit_power_outlet_path(power_outlet),
+                    class: 'btn btn-info btn-xs', title: 'Edit outlet' do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+        <%= link_to power_outlet_path(power_outlet),
+                    class: 'btn btn-danger btn-xs', title: 'Delete outlet',
+                    data: {confirm: 'Are you sure?'}, method: :delete do %>
+            <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+      </td>
+  <% end %>
+</tr>

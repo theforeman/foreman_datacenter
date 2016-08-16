@@ -1,0 +1,5 @@
+<%= form_for :power_port, url: '' do |f| %>
+    <div id="power-ports">
+      <%= power_ports_list_for_device f, @device %>
+    </div>
+<% end %>

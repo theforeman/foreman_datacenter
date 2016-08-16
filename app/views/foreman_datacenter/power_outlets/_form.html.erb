@@ -1,0 +1,15 @@
+<%= form_for @power_outlet, as: :power_outlet, url: (@power_outlet.new_record? ? device_power_outlets_path : power_outlet_path(@power_outlet)) do |f| %>
+    <%= base_errors_for @power_outlet %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device</label>
+        <div class="col-md-4"><%= @power_outlet.device.name %></div>
+      </div>
+    </div>
+
+    <%= f.hidden_field :device_id %>
+    <%= text_f f, :name, required: true %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@power_outlet.device) %>
+<% end %>

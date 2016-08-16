@@ -58,5 +58,9 @@ module ForemanDatacenter
     def free_console_ports
       console_ports.where(console_server_port_id: nil)
     end
+
+    def free_power_ports
+      power_ports.where(power_outlet_id: nil)
+    end
   end
 end

@@ -1,6 +1,6 @@
-<% javascript 'foreman_datacenter/devices' %>
+<% javascript 'foreman_datacenter/ajax' %>
 
-<% title h(@device.name) %>
+<% title @device.name %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
@@ -9,7 +9,7 @@
                  ),
                  display_delete_if_authorized(
                    hash_for_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
-                   :data => {:confirm => 'Are you sure?'},
+                   :data => { :confirm => 'Are you sure?' },
                    :action => :destroy,
                    :class => 'btn btn-danger'
                  ),
@@ -200,6 +200,28 @@
           <% end %>
           <div class="panel-footer text-right">
             <%= link_to 'Add a console server port', new_device_console_server_port_path(@device),
+                        class: 'btn btn-primary btn-xs' %>
+          </div>
+        </div>
+    <% end %>
+
+    <!-- Power Outlets -->
+    <% if @device.is_pdu %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Power Outlets</strong>
+          </div>
+          <% if @device.power_outlets.empty? %>
+              <div class="panel-body">None</div>
+          <% else %>
+              <table class="table table-hover panel-body">
+                <tbody>
+                <%= render partial: 'power_outlet', collection: @device.power_outlets %>
+                </tbody>
+              </table>
+          <% end %>
+          <div class="panel-footer text-right">
+            <%= link_to 'Add a power outlet', new_device_power_outlet_path(@device),
                         class: 'btn btn-primary btn-xs' %>
           </div>
         </div>
