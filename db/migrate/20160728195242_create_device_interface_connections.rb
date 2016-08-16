@@ -9,7 +9,7 @@ class CreateDeviceInterfaceConnections < ActiveRecord::Migration
     end
 
     add_index :device_interface_connections, [:interface_a, :interface_b],
-              unique: true
+              unique: true, name: 'uniq_connection'
     add_foreign_key :device_interface_connections, :device_interfaces,
                     column: :interface_a, on_delete: :cascade
     add_foreign_key :device_interface_connections, :device_interfaces,
