@@ -27,6 +27,13 @@ module ForemanDatacenter
     validates :rack_id, presence: true
     validates :position, numericality: { only_integer: true }, allow_nil: true
 
+    after_create :create_interfaces
+    after_create :create_console_ports
+    after_create :create_power_ports
+    after_create :create_console_server_ports
+    after_create :create_power_outlets
+    after_create :create_device_bays
+
     def site_id
       rack.try(:site_id)
     end
@@ -79,6 +86,50 @@ module ForemanDatacenter
     def free_power_outlets
       power_outlets.joins('LEFT JOIN power_ports ON power_outlets.id = power_ports.power_outlet_id').
         where(power_ports: { power_outlet_id: nil })
+    end
+
+    protected
+
+    def create_interfaces
+      device_type.interface_templates.each do |template|
+        interfaces.create(template.attrs_to_copy)
+      end
+    end
+
+    def create_console_ports
+      device_type.console_port_templates.each do |template|
+        console_ports.create(template.attrs_to_copy)
+      end
+    end
+
+    def create_power_ports
+      device_type.power_port_templates.each do |template|
+        power_ports.create(template.attrs_to_copy)
+      end
+    end
+
+    def create_console_server_ports
+      if device_type.is_console_server?
+        device_type.console_server_port_templates.each do |template|
+          console_server_ports.create(template.attrs_to_copy)
+        end
+      end
+    end
+
+    def create_power_outlets
+      if device_type.is_pdu?
+        device_type.power_outlet_templates.each do |template|
+          power_outlets.create(template.attrs_to_copy)
+        end
+      end
+    end
+
+    def create_device_bays
+      if device_type.parent?
+        device_type.device_bay_templates.each do |template|
+          device_bays.create(template.attrs_to_copy)
+        end
+      end
     end
   end
 end

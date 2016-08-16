@@ -4,5 +4,9 @@ module ForemanDatacenter
 
     validates :device_type_id, presence: true
     validates :name, presence: true, length: { maximum: 30 }
+
+    def attrs_to_copy
+      attributes.slice('name')
+    end
   end
 end
