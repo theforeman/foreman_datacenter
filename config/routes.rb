@@ -29,7 +29,7 @@ Foreman::Application.routes.draw do
         get :device_types, :racks, :for_rack
       end
       member do
-        get :inventory, :lldp_neighbors
+        get :inventory
       end
       resources :device_bays, except: [:show, :index], shallow: true do
         member do
@@ -71,6 +71,7 @@ Foreman::Application.routes.draw do
           patch :connected, :planned, :connect, :disconnect
         end
       end
+      resources :device_modules, except: [:show, :index], shallow: true
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       get :interfaces, on: :collection

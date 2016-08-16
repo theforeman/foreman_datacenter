@@ -16,6 +16,7 @@ module ForemanDatacenter
              :class_name => 'ForemanDatacenter::DeviceInterface'
     has_many :non_management_interfaces, -> { where(mgmt_only: false) },
              :class_name => 'ForemanDatacenter::DeviceInterface'
+    has_many :modules, :class_name => 'ForemanDatacenter::DeviceModule'
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]

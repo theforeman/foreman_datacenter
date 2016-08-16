@@ -1,6 +1,6 @@
 module ForemanDatacenter
   class DevicesController < ApplicationController
-    before_action :set_device, only: [:edit, :update, :destroy]
+    before_action :set_device, only: [:edit, :update, :destroy, :inventory]
 
     def index
       @devices = Device.includes(:device_role, :device_type, rack: [:site]).all
@@ -14,6 +14,9 @@ module ForemanDatacenter
         console_ports: [:console_server_port],
         power_ports: [:power_outlet]
       ).find(params[:id])
+    end
+
+    def inventory
     end
 
     def new
