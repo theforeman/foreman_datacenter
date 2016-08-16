@@ -4,6 +4,11 @@ module ForemanDatacenter
                                             :connected, :planned, :new_connection,
                                             :connect, :disconnect]
 
+    def index
+      @console_ports = ConsolePort.where.not(console_server_port_id: nil).
+        includes(:device, console_server_port: [:device])
+    end
+
     def new
       @console_port = ConsolePort.new(
         device: Device.find(params[:device_id])

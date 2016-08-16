@@ -32,6 +32,8 @@ module ForemanDatacenter
           menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/manufacturers', action: :index }
           menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/platforms', action: :index }
           divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
+          menu :top_menu, :console_connections, :url_hash => { controller: :'foreman_datacenter/console_ports', action: :index }
+          menu :top_menu, :power_connections, :url_hash => { controller: :'foreman_datacenter/power_ports', action: :index }
           menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/device_interface_connections', action: :index }
         end
       end

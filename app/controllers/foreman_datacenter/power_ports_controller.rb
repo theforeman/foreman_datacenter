@@ -4,6 +4,11 @@ module ForemanDatacenter
                                           :planned, :new_connection, :connect,
                                           :disconnect]
 
+    def index
+      @power_ports = PowerPort.where.not(power_outlet_id: nil).
+        includes(:device, power_outlet: [:device])
+    end
+
     def new
       @power_port = PowerPort.new(
         device: Device.find(params[:device_id])

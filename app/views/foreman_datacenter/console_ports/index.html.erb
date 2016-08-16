@@ -1,0 +1,29 @@
+<% title 'Console connections' %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Console server</th>
+        <th>Port</th>
+        <th>Device</th>
+        <th>Console port</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @console_ports.each do |port| %>
+          <tr>
+            <td>
+              <%= link_to port.console_server_port.device.name,
+                          device_path(port.console_server_port.device) %>
+            </td>
+            <td><%= h port.console_server_port.name %></td>
+            <td><%= link_to port.device.name, device_path(port.device) %></td>
+            <td><%= h port.name %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
