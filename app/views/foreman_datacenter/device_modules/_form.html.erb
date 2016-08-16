@@ -1,0 +1,17 @@
+<%= form_for @device_module, as: :device_module, url: (@device_module.new_record? ? device_device_modules_path : device_module_path(@device_module)) do |f| %>
+    <%= base_errors_for @device_module %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device</label>
+        <div class="col-md-4"><%= @device_module.device.name %></div>
+      </div>
+    </div>
+
+    <%= f.hidden_field :device_id %>
+    <%= text_f f, :name, required: true %>
+    <%= text_f f, :part_id, label: 'Part ID' %>
+    <%= text_f f, :serial %>
+
+    <%= submit_or_cancel f, false, cancel_path: inventory_device_path(@device_module.device) %>
+<% end %>

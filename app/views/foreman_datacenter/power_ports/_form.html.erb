@@ -1,0 +1,15 @@
+<%= form_for @power_port, as: :power_port, url: (@power_port.new_record? ? device_power_ports_path : power_port_path(@power_port)) do |f| %>
+    <%= base_errors_for @power_port %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device</label>
+        <div class="col-md-4"><%= @power_port.device.name %></div>
+      </div>
+    </div>
+
+    <%= f.hidden_field :device_id %>
+    <%= text_f f, :name, required: true %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@power_port.device) %>
+<% end %>

@@ -1,0 +1,11 @@
+<%= form_for @device_role, as: :device_role, url: (@device_role.new_record? ? device_roles_path : device_role_path(@device_role)) do |f| %>
+    <%= base_errors_for @device_role %>
+
+    <%= text_f f, :name, required: true %>
+    <%= selectable_f f, :color,
+                     options_for_select(device_role_colors_for_select, @device_role.color),
+                     {:include_blank => _('Choose a color'), :required => true},
+                     {:label => _('Color')} %>
+
+    <%= submit_or_cancel f %>
+<% end %>

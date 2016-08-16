@@ -1,0 +1,11 @@
+<%= form_for @rack_group, as: :rack_group, url: (@rack_group.new_record? ? rack_groups_path : rack_group_path(@rack_group)) do |f| %>
+    <%= base_errors_for @rack_group %>
+
+    <%= text_f f, :name, required: true %>
+    <%= selectable_f f, :site_id,
+                     options_from_collection_for_select(ForemanDatacenter::Site.all, 'id', 'name', @rack_group.site_id),
+                     {:include_blank => _('Choose a site')},
+                     {:label => _('Site'), :required => true} %>
+
+    <%= submit_or_cancel f %>
+<% end %>

@@ -1,0 +1,11 @@
+<%= form_for @platform, as: :platform, url: (@platform.new_record? ? platforms_path : platform_path(@platform)) do |f| %>
+    <%= base_errors_for @platform %>
+
+    <%= text_f f, :name, required: true %>
+    <%= selectable_f f, :rpc_client,
+                     options_for_select(rpc_clients_for_select, @platform.rpc_client),
+                     {:include_blank => _('Choose a RPC client')},
+                     {:label => _('RPC client')} %>
+
+    <%= submit_or_cancel f %>
+<% end %>

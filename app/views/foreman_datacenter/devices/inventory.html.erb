@@ -1,0 +1,66 @@
+<% javascript 'foreman_datacenter/ajax' %>
+
+<% title @device.name %>
+
+<% title_actions display_link_if_authorized(
+                   _('Edit'),
+                   hash_for_edit_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
+                   :class => 'btn btn-warning'
+                 ),
+                 display_delete_if_authorized(
+                   hash_for_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
+                   :data => { :confirm => 'Are you sure?' },
+                   :action => :destroy,
+                   :class => 'btn btn-danger'
+                 ),
+                 help_path %>
+
+<ul class="nav nav-tabs">
+  <li><%= link_to 'Info', device_path(@device) %></li>
+  <li class="active"><%= link_to 'Inventory', inventory_device_path(@device) %></li>
+</ul>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Chassis</strong></div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <tr>
+          <td>Model</td>
+          <td><%= h @device.device_type.model %></td>
+        </tr>
+        <tr>
+          <td>Serial Number</td>
+          <td><%= h @device.serial %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Hardware</strong></div>
+      <table class="table table-hover table-condensed panel-body">
+        <thead>
+        <tr>
+          <th>Module</th>
+          <th>Part Number</th>
+          <th>Serial Number</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          <%= render partial: 'device_module', collection: @device.modules %>
+        </tbody>
+      </table>
+      <div class="panel-footer text-right">
+        <%= link_to new_device_device_module_path(@device),
+                    class: 'btn btn-success btn-xs' do %>
+            <span class="glyphicon glyphicon-plus"></span>
+            Add a module
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

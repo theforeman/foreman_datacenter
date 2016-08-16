@@ -18,25 +18,24 @@ module ForemanDatacenter
 
     initializer 'foreman_datacenter.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_datacenter do
-        requires_foreman '>= 1.4'
+        requires_foreman '>= 1.12'
 
-        # Add permissions
-        security_block :foreman_datacenter do
-          permission :view_foreman_datacenter, :'foreman_datacenter/hosts' => [:new_action]
+        sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu do
+          menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }
+          divider :top_menu, :parent => :datacenter, :after => :sites, :caption => 'Racks'
+          menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/racks', action: :index }
+          menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/rack_groups', action: :index }
+          divider :top_menu, :parent => :datacenter, :after => :rack_groups, :caption => 'Devices'
+          menu :top_menu, :devices, :url_hash => { controller: :'foreman_datacenter/devices', action: :index }
+          menu :top_menu, :device_types, :url_hash => { controller: :'foreman_datacenter/device_types', action: :index }
+          menu :top_menu, :device_roles, :url_hash => { controller: :'foreman_datacenter/device_roles', action: :index }
+          menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/manufacturers', action: :index }
+          menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/platforms', action: :index }
+          divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
+          menu :top_menu, :console_connections, :url_hash => { controller: :'foreman_datacenter/console_ports', action: :index }
+          menu :top_menu, :power_connections, :url_hash => { controller: :'foreman_datacenter/power_ports', action: :index }
+          menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/device_interface_connections', action: :index }
         end
-
-        # Add a new role called 'Discovery' if it doesn't exist
-        role 'ForemanDatacenter', [:view_foreman_datacenter]
-
-        # add menu entry
-        menu :top_menu, :template,
-             url_hash: { controller: :'foreman_datacenter/hosts', action: :new_action },
-             caption: 'ForemanDatacenter',
-             parent: :hosts_menu,
-             after: :hosts
-
-        # add dashboard widget
-        widget 'foreman_datacenter_widget', name: N_('Foreman plugin template widget'), sizex: 4, sizey: 1
       end
     end
 
@@ -54,16 +53,6 @@ module ForemanDatacenter
     end
     initializer 'foreman_datacenter.configure_assets', group: :assets do
       SETTINGS[:foreman_datacenter] = { assets: { precompile: assets_to_precompile } }
-    end
-
-    # Include concerns in this config.to_prepare block
-    config.to_prepare do
-      begin
-        Host::Managed.send(:include, ForemanDatacenter::HostExtensions)
-        HostsHelper.send(:include, ForemanDatacenter::HostsHelperExtensions)
-      rescue => e
-        Rails.logger.warn "ForemanDatacenter: skipping engine hook (#{e})"
-      end
     end
 
     rake_tasks do

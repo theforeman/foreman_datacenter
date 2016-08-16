@@ -1,0 +1,22 @@
+<% javascript 'foreman_datacenter/device_interface_connections' %>
+<% javascript 'foreman_datacenter/shared' %>
+
+<% title "Connect '#{@power_port.device.name}' - '#{@power_port.name}'" %>
+
+<%= form_for :power_port, url: connect_power_port_path(@power_port),
+             method: :patch do |f| %>
+    <%= rack_device_select @power_port.device.site,
+                           url: for_device_power_outlets_path,
+                           target: '#power-outlets-container',
+                           fragment: '#power-outlets' %>
+
+    <div id="power-outlets-container">
+      <%= power_outlets_list_for_device f %>
+    </div>
+
+    <%= selectable_f f, :connection_status,
+                     ForemanDatacenter::PowerPort.connection_statuses.keys, {},
+                     { :label => 'Status' } %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@power_port.device) %>
+<% end %>

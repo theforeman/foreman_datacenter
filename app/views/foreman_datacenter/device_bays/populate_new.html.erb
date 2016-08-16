@@ -1,0 +1,21 @@
+<%= form_for @device_bay, as: :device_bay, url: populate_device_bay_path(@device_bay) do |f| %>
+    <%= base_errors_for @device_bay %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Parent Device</label>
+        <div class="col-md-4"><%= @device_bay.device.name %></div>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Bay</label>
+        <div class="col-md-4"><%= @device_bay.name %></div>
+      </div>
+    </div>
+
+    <%= child_devices_for_device_bay_form f, @device_bay %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@device_bay.device) %>
+<% end %>

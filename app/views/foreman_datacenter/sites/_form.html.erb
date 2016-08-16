@@ -1,0 +1,12 @@
+<%= form_for @site, as: :site, url: (@site.new_record? ? sites_path : site_path(@site)) do |f| %>
+  <%= base_errors_for @site %>
+
+  <%= text_f f, :name, required: true, help_inline: _('Full name of the site') %>
+  <%= text_f f, :facility, help_inline: _('Data center provider and facility (e.g. Equinix NY7)') %>
+  <%= text_f f, :asn, help_inline: _('BGP autonomous system number') %>
+  <%= text_f f, :physical_address, help_inline: _('Physical location of the building (e.g. for GPS)') %>
+  <%= text_f f, :shipping_address, help_inline: _('If different from the physical address') %>
+  <%= textarea_f f, :comments, rows: 10 %>
+
+  <%= submit_or_cancel f %>
+<% end %>

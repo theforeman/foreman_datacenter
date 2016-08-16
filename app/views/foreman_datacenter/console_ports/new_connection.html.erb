@@ -1,0 +1,22 @@
+<% javascript 'foreman_datacenter/device_interface_connections' %>
+<% javascript 'foreman_datacenter/shared' %>
+
+<% title "Connect '#{@console_port.device.name}' - '#{@console_port.name}'" %>
+
+<%= form_for :console_port, url: connect_console_port_path(@console_port),
+             method: :patch do |f| %>
+    <%= rack_device_select @console_port.device.site,
+                           url: for_device_console_server_ports_path,
+                           target: '#console-server-ports-container',
+                           fragment: '#console-server-ports' %>
+
+    <div id="console-server-ports-container">
+      <%= console_ports_list_for_device f %>
+    </div>
+
+    <%= selectable_f f, :connection_status,
+                     ForemanDatacenter::ConsolePort.connection_statuses.keys, {},
+                     { :label => 'Status' } %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@console_port.device) %>
+<% end %>

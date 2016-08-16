@@ -1,0 +1,15 @@
+<%= form_for @device_bay, as: :device_bay, url: (@device_bay.new_record? ? device_device_bays_path : device_bay_path(@device_bay)) do |f| %>
+    <%= base_errors_for @device_bay %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device</label>
+        <div class="col-md-4"><%= @device_bay.device.name %></div>
+      </div>
+    </div>
+
+    <%= f.hidden_field :device_id %>
+    <%= text_f f, :name, required: true %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@device_bay.device) %>
+<% end %>

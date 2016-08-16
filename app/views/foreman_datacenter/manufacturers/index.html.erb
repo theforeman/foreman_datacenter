@@ -1,0 +1,34 @@
+<% title _('Manufacturers') %>
+<% title_actions display_link_if_authorized(_('New manufacturer'), hash_for_new_manufacturer_path, class: 'btn btn-success'), help_path %>
+
+<table class="table table-bordered table-striped table-two-pane">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Device Types</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @manufacturers.each do |manufacturer| %>
+      <tr>
+        <td><%= link_to manufacturer.name, manufacturer_path(manufacturer) %></td>
+        <td><%= manufacturer.device_types.length %></td>
+        <td>
+          <%= action_buttons(
+                display_link_if_authorized(
+                  _("Edit"),
+                  hash_for_edit_manufacturer_path(:id => manufacturer).merge(:auth_object => manufacturer, :authorizer => authorizer)
+                ),
+                display_delete_if_authorized(
+                  hash_for_manufacturer_path(:id => manufacturer).merge(:auth_object => manufacturer, :authorizer => authorizer),
+                  :data => { :confirm => 'Are you sure?'},
+                  :action => :destroy
+                )
+              ) %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,7 @@
+<%= form_for @manufacturer, as: :manufacturer, url: (@manufacturer.new_record? ? manufacturers_path : manufacturer_path(@manufacturer)) do |f| %>
+    <%= base_errors_for @manufacturer %>
+
+    <%= text_f f, :name, required: true %>
+
+    <%= submit_or_cancel f %>
+<% end %>

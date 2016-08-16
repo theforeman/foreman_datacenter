@@ -1,0 +1,5 @@
+<%= form_for :console_server_port, url: '' do |f| %>
+    <div id="console-server-ports">
+      <%= console_server_ports_list_for_device f, @device %>
+    </div>
+<% end %>

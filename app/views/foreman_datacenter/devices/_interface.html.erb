@@ -1,0 +1,67 @@
+<tr>
+  <% if interface.connected? %>
+      <td>
+        <span class="glyphicon glyphicon-transfer"></span>
+        <%= interface.name %>
+      </td>
+      <td>
+        <%= link_to interface.connected_interface.device.name,
+                    device_path(interface.connected_interface.device) %>
+      </td>
+      <td>
+        <%= h interface.connected_interface.name %>
+      </td>
+      <td class="text-right">
+        <% if interface.connection.planned? %>
+            <%= link_to connected_device_interface_connection_path(interface.connection),
+                        class: 'btn btn-success btn-xs', remote: true,
+                        data: {confirm: 'Are you sure?', action: 'connected'},
+                        method: :patch, title: 'Mark connected' do %>
+                <i class="glyphicon glyphicon-wrench"></i>
+            <% end %>
+        <% else %>
+            <%= link_to planned_device_interface_connection_path(interface.connection),
+                        class: 'btn btn-warning btn-xs', remote: true,
+                        data: {confirm: 'Are you sure?', action: 'planned'},
+                        method: :patch, title: 'Mark planned' do %>
+                <i class="glyphicon glyphicon-ban-circle"></i>
+            <% end %>
+        <% end %>
+        <%= link_to device_interface_connection_path(interface.connection),
+                    class: 'btn btn-danger btn-xs', remote: true,
+                    data: {confirm: 'Are you sure?', action: 'destroy'},
+                    method: :delete, title: 'Delete connection' do %>
+            <i class="glyphicon glyphicon-remove"></i>
+        <% end %>
+        <%= link_to edit_device_interface_path(interface),
+                    class: 'btn btn-info btn-xs', title: 'Edit interface' do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+        <button class="btn btn-danger btn-xs" disabled>
+          <i class="glyphicon glyphicon-trash"></i>
+        </button>
+      </td>
+  <% else %>
+      <td>
+        <span class="glyphicon glyphicon-transfer"></span>
+        <%= interface.name %>
+      </td>
+      <td class="text-muted">Not connected</td>
+      <td></td>
+      <td class="text-right">
+        <%= link_to new_device_interface_device_interface_connection_path(interface),
+                    class: 'btn btn-success btn-xs', title: 'Connect' do %>
+            <i class="glyphicon glyphicon-plus"></i>
+        <% end %>
+        <%= link_to edit_device_interface_path(interface),
+                    class: 'btn btn-info btn-xs', title: 'Edit interface' do %>
+            <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+        <%= link_to device_interface_path(interface),
+                    class: 'btn btn-danger btn-xs', title: 'Delete interface',
+                    data: {confirm: 'Are you sure?'}, method: :delete do %>
+            <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+      </td>
+  <% end %>
+</tr>
