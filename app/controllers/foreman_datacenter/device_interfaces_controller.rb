@@ -10,6 +10,15 @@ module ForemanDatacenter
       )
     end
 
+    def new_management
+      @device_interface = DeviceInterface.new(
+        device: Device.find(params[:device_id]),
+        form_factor: DeviceInterface::DEFAULT_FORM_FACTOR,
+        mgmt_only: true
+      )
+      render :new
+    end
+
     def edit
     end
 

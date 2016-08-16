@@ -1,17 +1,15 @@
-<%= form_for(@power_port) do |f| %>
-  <% if @power_port.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@power_port.errors.count, "error") %> prohibited this power_port from being saved:</h2>
+<%= form_for @power_port, as: :power_port, url: (@power_port.new_record? ? device_power_ports_path : power_port_path(@power_port)) do |f| %>
+    <%= base_errors_for @power_port %>
 
-      <ul>
-      <% @power_port.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device</label>
+        <div class="col-md-4"><%= @power_port.device.name %></div>
+      </div>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.hidden_field :device_id %>
+    <%= text_f f, :name, required: true %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@power_port.device) %>
 <% end %>

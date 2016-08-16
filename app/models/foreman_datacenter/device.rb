@@ -12,16 +12,20 @@ module ForemanDatacenter
     has_many :console_server_ports, :class_name => 'ForemanDatacenter::ConsoleServerPort'
     has_many :console_ports, :class_name => 'ForemanDatacenter::ConsolePort'
     has_many :interfaces, :class_name => 'ForemanDatacenter::DeviceInterface'
+    has_many :management_interfaces, -> { where(mgmt_only: true) },
+             :class_name => 'ForemanDatacenter::DeviceInterface'
+    has_many :non_management_interfaces, -> { where(mgmt_only: false) },
+             :class_name => 'ForemanDatacenter::DeviceInterface'
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]
 
     validates :device_type_id, presence: true
     validates :device_role_id, presence: true
-    validates :name, presence: true, uniqueness: true, length: {maximum: 50}
-    validates :serial, length: {maximum: 50}
+    validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
+    validates :serial, length: { maximum: 50 }
     validates :rack_id, presence: true
-    validates :position, numericality: {only_integer: true}, allow_nil: true
+    validates :position, numericality: { only_integer: true }, allow_nil: true
 
     def site_id
       rack.try(:site_id)
@@ -55,12 +59,26 @@ module ForemanDatacenter
       device_type.try(:subdevice_role) == 'Parent'
     end
 
+    def free_interfaces
+      interfaces.where(mgmt_only: false).reject(&:connected?)
+    end
+
     def free_console_ports
       console_ports.where(console_server_port_id: nil)
     end
 
     def free_power_ports
       power_ports.where(power_outlet_id: nil)
+    end
+
+    def free_console_server_ports
+      console_server_ports.joins('LEFT JOIN console_ports ON console_server_ports.id = console_ports.console_server_port_id').
+        where(console_ports: { console_server_port_id: nil })
+    end
+
+    def free_power_outlets
+      power_outlets.joins('LEFT JOIN power_ports ON power_outlets.id = power_ports.power_outlet_id').
+        where(power_ports: { power_outlet_id: nil })
     end
   end
 end

@@ -43,8 +43,7 @@ module ForemanDatacenter
     end
 
     def interfaces
-      device = Device.find(params[:device_id])
-      @interfaces = device.interfaces.select(:id, :name)
+      @interfaces = Device.find(params[:device_id]).free_interfaces
       render partial: 'interfaces'
     end
 

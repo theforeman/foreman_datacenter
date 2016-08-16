@@ -10,7 +10,9 @@ module ForemanDatacenter
       @device = Device.includes(
         device_bays: [:installed_device],
         console_server_ports: [:console_port],
-        power_outlets: [:power_port]
+        power_outlets: [:power_port],
+        console_ports: [:console_server_port],
+        power_ports: [:power_outlet]
       ).find(params[:id])
     end
 

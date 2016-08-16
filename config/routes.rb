@@ -39,6 +39,7 @@ Foreman::Application.routes.draw do
         end
       end
       resources :device_interfaces, except: [:show, :index], shallow: true do
+        get :new_management, on: :collection
         resources :device_interface_connections, except: [:show, :edit, :update, :index],
                   shallow: true do
           member do
@@ -54,7 +55,8 @@ Foreman::Application.routes.draw do
       end
       resources :console_ports, except: [:show, :index], shallow: true do
         member do
-          patch :connected, :planned
+          get :new_connection
+          patch :connect, :disconnect, :connected, :planned
         end
       end
       resources :power_outlets, except: [:show, :index], shallow: true do
@@ -65,19 +67,24 @@ Foreman::Application.routes.draw do
       end
       resources :power_ports, except: [:show, :index], shallow: true do
         member do
-          patch :connected, :planned
+          get :new_connection
+          patch :connected, :planned, :connect, :disconnect
         end
       end
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
-      collection do
-        get :interfaces
-      end
+      get :interfaces, on: :collection
     end
     resources :console_ports, only: [:index] do
       get :for_device, on: :collection
     end
     resources :power_ports, only: [:index] do
+      get :for_device, on: :collection
+    end
+    resources :console_server_ports, only: [] do
+      get :for_device, on: :collection
+    end
+    resources :power_outlets, only: [] do
       get :for_device, on: :collection
     end
   end

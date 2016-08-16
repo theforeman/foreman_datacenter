@@ -124,9 +124,77 @@
       </div>
       <table class="table table-hover panel-body">
         <tbody>
-        <!-- TODO -->
+        <% if @device.management_interfaces.empty? %>
+            <tr class="alert-warning">
+              <td>
+                <i class="fa fa-fw fa-warning"></i>
+                No management interfaces defined!
+              </td>
+              <td class="text-right">
+                <%= link_to new_management_device_device_interfaces_path(@device),
+                            class: 'btn btn-primary btn-xs',
+                            title: 'Add interface' do %>
+                    <span class="glyphicon glyphicon-plus"></span>
+                <% end %>
+              </td>
+            </tr>
+        <% else %>
+            <%= render partial: 'management_interface',
+                       collection: @device.management_interfaces %>
+        <% end %>
+        <% if @device.console_ports.empty? %>
+            <tr class="alert-warning">
+              <td>
+                <i class="fa fa-fw fa-warning"></i>
+                No console ports defined!
+              </td>
+              <td class="text-right">
+                <%= link_to new_device_console_port_path(@device),
+                            class: 'btn btn-primary btn-xs',
+                            title: 'Add console' do %>
+                    <span class="glyphicon glyphicon-plus"></span>
+                <% end %>
+              </td>
+            </tr>
+        <% else %>
+            <%= render partial: 'console_port', collection: @device.console_ports %>
+        <% end %>
+        <% if @device.power_ports.empty? %>
+            <tr class="alert-warning">
+              <td>
+                <i class="fa fa-fw fa-warning"></i>
+                No power ports defined!
+              </td>
+              <td class="text-right">
+                <%= link_to new_device_power_port_path(@device),
+                            class: 'btn btn-primary btn-xs',
+                            title: 'Add power' do %>
+                    <span class="glyphicon glyphicon-plus"></span>
+                <% end %>
+              </td>
+            </tr>
+        <% else %>
+            <%= render partial: 'power_port', collection: @device.power_ports %>
+        <% end %>
         </tbody>
       </table>
+      <div class="panel-footer text-right">
+        <%= link_to new_management_device_device_interfaces_path(@device),
+                    class: 'btn btn-primary btn-xs' do %>
+            <span class="glyphicon glyphicon-plus"></span>
+            Add interface
+        <% end %>
+        <%= link_to new_device_console_port_path(@device),
+                    class: 'btn btn-primary btn-xs' do %>
+            <span class="glyphicon glyphicon-plus"></span>
+            Add console
+        <% end %>
+        <%= link_to new_device_power_port_path(@device),
+                    class: 'btn btn-primary btn-xs' do %>
+            <span class="glyphicon glyphicon-plus"></span>
+            Add power
+        <% end %>
+      </div>
     </div>
 
     <!-- Comments -->
@@ -167,12 +235,12 @@
           <div class="panel-heading">
             <strong>Interfaces</strong>
           </div>
-          <% if @device.interfaces.empty? %>
+          <% if @device.non_management_interfaces.empty? %>
               <div class="panel-body">None</div>
           <% else %>
               <table class="table table-hover panel-body">
                 <tbody>
-                <%= render partial: 'interface', collection: @device.interfaces %>
+                <%= render partial: 'interface', collection: @device.non_management_interfaces %>
                 </tbody>
               </table>
           <% end %>

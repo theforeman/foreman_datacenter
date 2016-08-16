@@ -60,6 +60,11 @@ module ForemanDatacenter
                   notice: 'Console server port was successfully disconnected.'
     end
 
+    def for_device
+      @device = Device.find(params[:device_id])
+      render partial: 'for_device'
+    end
+
     private
 
     def set_console_server_port
