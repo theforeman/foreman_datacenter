@@ -1,0 +1,18 @@
+<table>
+  <tbody>
+  <tr>
+    <td></td>
+    <% device.device_type.width.times do |i| %>
+        <td><%= i + 1 %></td>
+    <% end %>
+  </tr>
+  <% device.device_bays.each do |bay, j| %>
+      <tr>
+        <td><%= j %></td>
+        <% device.device_type.width.times do |i| %>
+            <td></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

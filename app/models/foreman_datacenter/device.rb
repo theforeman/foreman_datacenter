@@ -89,7 +89,18 @@ module ForemanDatacenter
         where(power_ports: { power_outlet_id: nil })
     end
 
-    protected
+    def has_device_bay_at?(position_h, position_v)
+      device_bays.any? do |bay|
+        bay.position_h == position_h && bay.position_v == position_v
+      end
+    end
+
+    def position_exists?(position_h, position_v)
+      (position_h >= 1 && position_h <= device_type.sections) &&
+        (position_v >= 1 && position_v <= device_type.u_height)
+    end
+
+    private
 
     def create_interfaces
       device_type.interface_templates.each do |template|

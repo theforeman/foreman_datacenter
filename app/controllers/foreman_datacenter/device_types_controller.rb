@@ -12,7 +12,8 @@ module ForemanDatacenter
     def new
       @device_type = DeviceType.new(u_height: 1, is_full_depth: true,
                                     is_console_server: false, is_pdu: false,
-                                    is_network_device: true)
+                                    is_network_device: true, width: 1,
+                                    sections: 1)
     end
 
     def edit
@@ -54,7 +55,8 @@ module ForemanDatacenter
     def device_type_params
       params[:device_type].permit(:manufacturer_id, :model, :u_height,
                                   :is_full_depth, :is_console_server,
-                                  :is_pdu, :is_network_device, :subdevice_role)
+                                  :is_pdu, :is_network_device, :subdevice_role,
+                                  :width, :sections)
     end
   end
 end

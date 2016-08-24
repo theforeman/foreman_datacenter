@@ -7,6 +7,9 @@
                      {required: true} %>
     <%= text_f f, :model, required: true %>
     <%= text_f f, :u_height, label: 'Height (U)', type: 'number', min: 0 %>
+    <%= text_f f, :width, type: 'number', min: 1 %>
+    <%= text_f f, :sections, type: 'number', min: 1,
+               help_inline: 'Amount of horizontal sections' %>
 
     <%= checkbox_f f, :is_full_depth, label: 'Is full depth',
                    help_inline: 'Device consumes both front and rear rack faces' %>
