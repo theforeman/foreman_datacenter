@@ -55,6 +55,15 @@ module ForemanDatacenter
       SETTINGS[:foreman_datacenter] = { assets: { precompile: assets_to_precompile } }
     end
 
+    # Include concerns in this config.to_prepare block
+    config.to_prepare do
+      begin
+        Host::Managed.send(:include, ForemanDatacenter::HostExtensions)
+      rescue => e
+        Rails.logger.warn "ForemanDatacenter: skipping engine hook (#{e})"
+      end
+    end
+
     rake_tasks do
       Rake::Task['db:seed'].enhance do
         ForemanDatacenter::Engine.load_seed
