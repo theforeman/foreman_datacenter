@@ -1,6 +1,6 @@
 module ForemanDatacenter
   class DevicesController < ApplicationController
-    before_action :set_device, only: [:edit, :update, :destroy, :inventory]
+    before_action :set_device, only: [:update, :destroy, :inventory]
 
     def index
       @devices = Device.includes(:device_role, :device_type, rack: [:site]).all
@@ -21,9 +21,12 @@ module ForemanDatacenter
 
     def new
       @device = Device.new
+      populate_from_host
     end
 
     def edit
+      @device = Device.find(params[:id])
+      populate_from_host
     end
 
     def create
@@ -76,7 +79,15 @@ module ForemanDatacenter
     def device_params
       params[:device].permit(:device_type_id, :device_role_id, :platform_id,
                              :name, :serial, :rack_id, :position, :face,
-                             :status, :primary_ip4, :primary_ip6, :comments)
+                             :status, :primary_ip4, :primary_ip6, :comments,
+                             :host_id)
+    end
+
+    def populate_from_host
+      if params[:host_id]
+        host = Host.find(params[:host_id])
+        @device.populate_from_host(host)
+      end
     end
   end
 end

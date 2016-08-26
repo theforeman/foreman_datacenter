@@ -59,6 +59,7 @@ module ForemanDatacenter
     config.to_prepare do
       begin
         Host::Managed.send(:include, ForemanDatacenter::HostExtensions)
+        HostsController.send(:include, ForemanDatacenter::HostsControllerExtensions)
       rescue => e
         Rails.logger.warn "ForemanDatacenter: skipping engine hook (#{e})"
       end

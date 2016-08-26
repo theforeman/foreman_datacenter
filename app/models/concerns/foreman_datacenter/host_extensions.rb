@@ -12,5 +12,12 @@ module ForemanDatacenter
       new_device_name = "Unassigned device (former: #{name})"
       device.update(name: new_device_name)
     end
+
+    def fact_value_by_name(name)
+      fact_name = FactName.find_by(name: name)
+      if fact_name
+        fact_values.find_by(fact_name: fact_name)
+      end
+    end
   end
 end

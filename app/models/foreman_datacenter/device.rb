@@ -90,7 +90,14 @@ module ForemanDatacenter
         where(power_ports: { power_outlet_id: nil })
     end
 
-    protected
+    def populate_from_host(host)
+      self.host = host
+      self.name = host.name
+      device_type = DeviceType.for_host(host)
+      self.device_type = device_type if device_type
+    end
+
+    private
 
     def create_interfaces
       device_type.interface_templates.each do |template|
