@@ -4,6 +4,8 @@
         <span class="glyphicon glyphicon-transfer"></span>
         <%= interface.name %>
       </td>
+      <td><%= h interface.mac_address %></td>
+      <td><%= h interface.ip_address %></td>
       <td>
         <%= link_to interface.connected_interface.device.name,
                     device_path(interface.connected_interface.device) %>
@@ -46,6 +48,9 @@
         <span class="glyphicon glyphicon-transfer"></span>
         <%= interface.name %>
       </td>
+      <td><%= h interface.mac_address %></td>
+      <td><%= h interface.ip_address %></td>
+      <td></td>
       <td class="text-muted">Not connected</td>
       <td></td>
       <td class="text-right">

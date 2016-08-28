@@ -11,6 +11,7 @@ module ForemanDatacenter
     def update_device_on_destroy
       new_device_name = "Unassigned device (former: #{name})"
       device.update(name: new_device_name)
+      device.interfaces.clear
     end
 
     def fact_value_by_name(name)
