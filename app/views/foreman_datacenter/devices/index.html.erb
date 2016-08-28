@@ -50,3 +50,5 @@
   <% end %>
   </tbody>
 </table>
+
+<%= will_paginate_with_info @devices, :more => " - "+_("<b class='select_count'>0</b> selected") %>
