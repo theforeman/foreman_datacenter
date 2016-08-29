@@ -103,6 +103,8 @@ module ForemanDatacenter
       self.name = host.name
       device_type = DeviceType.for_host(host)
       self.device_type = device_type if device_type
+      serial = host.fact_value_by_name('serialnumber')
+      self.serial = serial.value if serial
     end
 
     private
