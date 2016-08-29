@@ -104,10 +104,10 @@
         <tr>
           <td>Primary IPv4</td>
           <td>
-            <% if @device.primary_ip4.blank? %>
+            <% if @device.ip_address.blank? %>
                 Not defined
             <% else %>
-                <%= @device.primary_ip4 %></td>
+                <%= @device.ip_address %></td>
             <% end %>
             </tr>
         <tr>
@@ -116,9 +116,20 @@
             <% if @device.primary_ip6.blank? %>
                 Not defined
             <% else %>
-                <%= @device.primary_ip6 %></td>
+                <%= @device.primary_ip6 %>
             <% end %>
-            </tr>
+          </td>
+        </tr>
+        <tr>
+          <td>MAC address</td>
+          <td>
+            <% if @device.mac_address.blank? %>
+                Not defined
+            <% else %>
+                <%= @device.mac_address %>
+            <% end %>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
