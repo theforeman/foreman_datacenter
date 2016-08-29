@@ -18,6 +18,8 @@ module ForemanDatacenter
     has_many :non_management_interfaces, -> { where(mgmt_only: false) },
              :class_name => 'ForemanDatacenter::DeviceInterface'
     has_many :modules, :class_name => 'ForemanDatacenter::DeviceModule'
+    has_one :ipmi_interface, -> { where(name: 'ipmi', mgmt_only: true) },
+            :class_name => 'ForemanDatacenter::DeviceInterface'
     belongs_to_host
 
     enum face: [:front, :rear]
@@ -47,7 +49,11 @@ module ForemanDatacenter
     end
 
     def ip_address
-      primary_ip4 || primary_ip6
+      ipmi_interface.try(:ip_address) || primary_ip4
+    end
+
+    def mac_address
+      ipmi_interface.try(:mac_address)
     end
 
     def manufacturer_id
@@ -114,7 +120,8 @@ module ForemanDatacenter
             name: interface.identifier,
             form_factor: ForemanDatacenter::DeviceInterface::DEFAULT_FORM_FACTOR,
             mac_address: interface.mac,
-            ip_address: interface.ip
+            ip_address: interface.ip,
+            mgmt_only: interface.identifier == 'ipmi'
           )
         end
       end
