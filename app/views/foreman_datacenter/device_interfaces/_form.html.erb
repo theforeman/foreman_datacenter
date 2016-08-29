@@ -14,6 +14,7 @@
     <%= selectable_f f, :form_factor,
                      ForemanDatacenter::DeviceInterface::FORM_FACTORS %>
     <%= text_f f, :mac_address %>
+    <%= text_f f, :ip_address %>
     <%= checkbox_f f, :mgmt_only, label: 'OOB Management',
                    help_inline: 'This interface is used only for out-of-band management' %>
     <%= text_f f, :description %>

@@ -24,6 +24,24 @@ module ForemanDatacenter
       end
     end
 
+    def self.for_host(host)
+      fact = host.fact_value_by_name('productname')
+      if fact
+        device_type = find_by(model: fact.value)
+        if device_type
+          device_type
+        else
+          manufacturer = Manufacturer.for_host(host)
+          if manufacturer
+            create(
+              manufacturer: manufacturer,
+              model: fact.value
+            )
+          end
+        end
+      end
+    end
+
     def parent?
       subdevice_role == 'Parent'
     end

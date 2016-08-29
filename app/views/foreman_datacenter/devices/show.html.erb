@@ -13,6 +13,13 @@
                    :action => :destroy,
                    :class => 'btn btn-danger'
                  ),
+                 display_link_if_authorized(
+                   _('Import from host'),
+                   @device.host ?
+                     hash_for_edit_device_path(@device, host_id: @device.host.id) :
+                     hash_for_import_to_device_path(target_device_id: @device.id),
+                   :class => 'btn btn-success'
+                 ),
                  help_path %>
 
 <ul class="nav nav-tabs">

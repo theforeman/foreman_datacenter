@@ -59,7 +59,7 @@ module ForemanDatacenter
 
     def device_interface_params
       params[:device_interface].
-        permit(:device_id, :name, :form_factor, :mac_address, :mgmt_only, :description)
+        permit(:device_id, :name, :form_factor, :mac_address, :mgmt_only, :description, :ip_address)
     end
   end
 end

@@ -1,0 +1,60 @@
+<div class="row form-group">
+  <div class="title_filter col-md-6">
+    <%= render "common/searchbar",
+               auto_complete_controller_name: 'import_to_device' %>
+  </div>
+</div>
+
+<% if @target_device %>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <label class="col-md-2 control-label required">Target Device</label>
+        <div class="col-md-4"><%= @target_device.name %></div>
+      </div>
+    </div>
+<% end %>
+
+<table class="table table-bordered table-striped table-fixed">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Operating System</th>
+    <th>Environment</th>
+    <th>Model</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @hosts.each do |host| %>
+      <tr>
+        <td><%= link_to host %></td>
+        <td><%= h host.operatingsystem %></td>
+        <td><%= h host.environment %></td>
+        <td><%= model_name host %></td>
+        <td class="text-right">
+          <% if @target_device %>
+              <% if host.device %>
+                  <span class="text-muted">Already has assigned device</span>
+              <% else %>
+                  <%= link_to 'Import to device',
+                              edit_device_path(@target_device, host_id: host.id),
+                              class: 'btn btn-sm btn-success' %>
+              <% end %>
+          <% else %>
+              <% if host.device %>
+                  <%= link_to 'Update assigned device',
+                              edit_device_path(host.device, host_id: host.id),
+                              class: 'btn btn-sm btn-info' %>
+              <% else %>
+                  <%= link_to 'Import to device',
+                              new_device_path(host_id: host.id),
+                              class: 'btn btn-sm btn-success' %>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate_with_info @hosts, :more => " - "+_("<b class='select_count'>0</b> selected") %>

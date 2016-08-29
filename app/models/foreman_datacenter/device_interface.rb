@@ -11,6 +11,7 @@ module ForemanDatacenter
     validates :name, presence: true, length: {maximum: 30}
     validates :form_factor, inclusion: {in: FORM_FACTORS}
     validates :mac_address, length: {maximum: 128}
+    validates :ip_address, length: {maximum: 128}
     validates :description, length: {maximum: 100}
 
     def connection

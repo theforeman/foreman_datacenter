@@ -3,7 +3,8 @@ module ForemanDatacenter
     before_action :set_device_type, only: [:show, :edit, :update, :destroy]
 
     def index
-      @device_types = DeviceType.includes(:manufacturer).all
+      @device_types = DeviceType.includes(:manufacturer).
+        paginate(:page => params[:page])
     end
 
     def show

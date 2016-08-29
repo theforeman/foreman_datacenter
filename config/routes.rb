@@ -1,4 +1,8 @@
 Foreman::Application.routes.draw do
+  # TODO: find a better way to do this
+  get 'datacenter/import_to_device', to: 'hosts#import_to_device',
+      as: 'import_to_device'
+
   scope 'datacenter', module: :foreman_datacenter do
     resources :sites
     resources :racks do

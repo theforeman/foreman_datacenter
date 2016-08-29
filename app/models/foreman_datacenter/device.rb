@@ -11,12 +11,14 @@ module ForemanDatacenter
     has_many :power_ports, :class_name => 'ForemanDatacenter::PowerPort'
     has_many :console_server_ports, :class_name => 'ForemanDatacenter::ConsoleServerPort'
     has_many :console_ports, :class_name => 'ForemanDatacenter::ConsolePort'
-    has_many :interfaces, :class_name => 'ForemanDatacenter::DeviceInterface'
+    has_many :interfaces, :class_name => 'ForemanDatacenter::DeviceInterface',
+             dependent: :destroy
     has_many :management_interfaces, -> { where(mgmt_only: true) },
              :class_name => 'ForemanDatacenter::DeviceInterface'
     has_many :non_management_interfaces, -> { where(mgmt_only: false) },
              :class_name => 'ForemanDatacenter::DeviceInterface'
     has_many :modules, :class_name => 'ForemanDatacenter::DeviceModule'
+    belongs_to_host
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]
@@ -29,6 +31,7 @@ module ForemanDatacenter
     validates :position, numericality: { only_integer: true }, allow_nil: true
 
     after_create :create_interfaces
+    after_create :import_interfaces_from_host
     after_create :create_console_ports
     after_create :create_power_ports
     after_create :create_console_server_ports
@@ -89,11 +92,31 @@ module ForemanDatacenter
         where(power_ports: { power_outlet_id: nil })
     end
 
-    protected
+    def populate_from_host(host)
+      self.host = host
+      self.name = host.name
+      device_type = DeviceType.for_host(host)
+      self.device_type = device_type if device_type
+    end
+
+    private
 
     def create_interfaces
       device_type.interface_templates.each do |template|
         interfaces.create(template.attrs_to_copy)
+      end
+    end
+
+    def import_interfaces_from_host
+      if host
+        host.interfaces.each do |interface|
+          interfaces.create(
+            name: interface.identifier,
+            form_factor: ForemanDatacenter::DeviceInterface::DEFAULT_FORM_FACTOR,
+            mac_address: interface.mac,
+            ip_address: interface.ip
+          )
+        end
       end
     end
 
