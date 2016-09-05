@@ -134,6 +134,56 @@
       </table>
     </div>
 
+    <!-- Management device -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Management Device</strong>
+      </div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <% if @device.management_device %>
+            <tr>
+              <td>Name</td>
+              <td><%= h @device.management_device.name %></td>
+            </tr>
+            <tr>
+              <td>Login</td>
+              <td><%= h @device.management_device.login %></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><%= h @device.management_device.password %></td>
+            </tr>
+        <% else %>
+            <tr>
+              <td>None</td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="panel-footer text-right">
+        <% if @device.management_device %>
+            <%= link_to edit_management_device_path(@device.management_device),
+                        class: 'btn btn-success btn-xs' do %>
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit
+            <% end %>
+            <%= link_to management_device_path(@device.management_device),
+                        class: 'btn btn-danger btn-xs',
+                        data: {confirm: 'Are you sure?'}, method: :delete do %>
+                <i class="glyphicon glyphicon-trash"></i>
+                Destroy
+            <% end %>
+        <% else %>
+            <%= link_to new_device_management_device_path(@device),
+                        class: 'btn btn-primary btn-xs' do %>
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+
     <!-- Critical Connections -->
     <div class="panel panel-default">
       <div class="panel-heading">

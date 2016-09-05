@@ -21,6 +21,7 @@ module ForemanDatacenter
     has_one :ipmi_interface, -> { where(name: 'ipmi', mgmt_only: true) },
             :class_name => 'ForemanDatacenter::DeviceInterface'
     belongs_to_host
+    has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]

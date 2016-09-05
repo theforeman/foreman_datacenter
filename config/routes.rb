@@ -76,6 +76,8 @@ Foreman::Application.routes.draw do
         end
       end
       resources :device_modules, except: [:show, :index], shallow: true
+      resources :management_devices, only: [:new, :create, :edit, :update, :destroy],
+                shallow: true
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       get :interfaces, on: :collection
