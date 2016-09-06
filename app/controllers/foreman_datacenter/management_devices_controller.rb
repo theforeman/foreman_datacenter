@@ -46,7 +46,8 @@ module ForemanDatacenter
     end
 
     def management_device_params
-      params[:management_device].permit(:device_id, :name, :login, :password)
+      params[:management_device].
+        permit(:device_id, :console_url, :login, :password)
     end
   end
 end
