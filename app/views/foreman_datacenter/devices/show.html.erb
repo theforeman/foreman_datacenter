@@ -1,4 +1,5 @@
 <% javascript 'foreman_datacenter/ajax' %>
+<% javascript 'foreman_datacenter/management_devices' %>
 
 <% title @device.name %>
 
@@ -231,8 +232,8 @@
         <tbody>
         <% if @device.management_device %>
             <tr>
-              <td>Name</td>
-              <td><%= h @device.management_device.name %></td>
+              <td>Console URL</td>
+              <td><%= h @device.management_device.console_url %></td>
             </tr>
             <tr>
               <td>Login</td>
@@ -240,7 +241,11 @@
             </tr>
             <tr>
               <td>Password</td>
-              <td><%= h @device.management_device.password %></td>
+              <td>
+                <button class="btn btn-primary btn-xs" data-reveal-password data-password="<%= h @device.management_device.password %>">
+                  Reveal
+                </button>
+              </td>
             </tr>
         <% else %>
             <tr>
