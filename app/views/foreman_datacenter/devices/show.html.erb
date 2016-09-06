@@ -28,7 +28,7 @@
 </ul>
 
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-md-6">
     <!-- Device -->
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -63,72 +63,6 @@
         <tr>
           <td>Last Updated</td>
           <td><%= @device.updated_at.to_s(:long) %></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Management -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>Management</strong>
-      </div>
-      <table class="table table-hover panel-body">
-        <tbody>
-        <tr>
-          <td>Role</td>
-          <td>
-            <%= link_to @device.device_role.name, device_role_path(@device.device_role) %>
-          </td>
-        </tr>
-        <tr>
-          <td>Platform</td>
-          <td>
-            <% if @device.platform %>
-                <%= link_to @device.platform.name, platform_path(@device.platform) %>
-            <% else %>
-                <span class="text-warning">Not assigned</span>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>Status</td>
-          <td>
-            <% if @device.active? %>
-                <span class="label label-success">Active</span>
-            <% elsif @device.offline? %>
-                <span class="label label-danger">Offline</span>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>Primary IPv4</td>
-          <td>
-            <% if @device.ip_address.blank? %>
-                Not defined
-            <% else %>
-                <%= @device.ip_address %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <td>Primary IPv6</td>
-          <td>
-            <% if @device.primary_ip6.blank? %>
-                Not defined
-            <% else %>
-                <%= @device.primary_ip6 %>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>MAC address</td>
-          <td>
-            <% if @device.mac_address.blank? %>
-                Not defined
-            <% else %>
-                <%= @device.mac_address %>
-            <% end %>
-          </td>
         </tr>
         </tbody>
       </table>
@@ -219,6 +153,124 @@
         <% end %>
       </div>
     </div>
+  </div>
+
+  <div class="col-md-6">
+    <!-- Management -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Management</strong>
+      </div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <tr>
+          <td>Role</td>
+          <td>
+            <%= link_to @device.device_role.name, device_role_path(@device.device_role) %>
+          </td>
+        </tr>
+        <tr>
+          <td>Platform</td>
+          <td>
+            <% if @device.platform %>
+                <%= link_to @device.platform.name, platform_path(@device.platform) %>
+            <% else %>
+                <span class="text-warning">Not assigned</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>
+            <% if @device.active? %>
+                <span class="label label-success">Active</span>
+            <% elsif @device.offline? %>
+                <span class="label label-danger">Offline</span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>Primary IPv4</td>
+          <td>
+            <% if @device.ip_address.blank? %>
+                Not defined
+            <% else %>
+                <%= @device.ip_address %></td>
+            <% end %>
+            </tr>
+        <tr>
+          <td>Primary IPv6</td>
+          <td>
+            <% if @device.primary_ip6.blank? %>
+                Not defined
+            <% else %>
+                <%= @device.primary_ip6 %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>MAC address</td>
+          <td>
+            <% if @device.mac_address.blank? %>
+                Not defined
+            <% else %>
+                <%= @device.mac_address %>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Management device -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Management Device</strong>
+      </div>
+      <table class="table table-hover panel-body">
+        <tbody>
+        <% if @device.management_device %>
+            <tr>
+              <td>Name</td>
+              <td><%= h @device.management_device.name %></td>
+            </tr>
+            <tr>
+              <td>Login</td>
+              <td><%= h @device.management_device.login %></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><%= h @device.management_device.password %></td>
+            </tr>
+        <% else %>
+            <tr>
+              <td>None</td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="panel-footer text-right">
+        <% if @device.management_device %>
+            <%= link_to edit_management_device_path(@device.management_device),
+                        class: 'btn btn-success btn-xs' do %>
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit
+            <% end %>
+            <%= link_to management_device_path(@device.management_device),
+                        class: 'btn btn-danger btn-xs',
+                        data: { confirm: 'Are you sure?' }, method: :delete do %>
+                <i class="glyphicon glyphicon-trash"></i>
+                Destroy
+            <% end %>
+        <% else %>
+            <%= link_to new_device_management_device_path(@device),
+                        class: 'btn btn-primary btn-xs' do %>
+                <span class="glyphicon glyphicon-plus"></span>
+                Add
+            <% end %>
+        <% end %>
+      </div>
+    </div>
 
     <!-- Comments -->
     <div class="panel panel-default">
@@ -228,8 +280,10 @@
       <div class="panel-body"><%= simple_format @device.comments %></div>
     </div>
   </div>
+</div>
 
-  <div class="col-sm-6">
+<div class="row">
+  <div class="col-md-12">
     <!-- Device Bays -->
     <% if @device.parent? %>
         <div class="panel panel-default">

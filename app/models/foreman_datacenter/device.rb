@@ -21,6 +21,7 @@ module ForemanDatacenter
     has_one :ipmi_interface, -> { where(name: 'ipmi', mgmt_only: true) },
             :class_name => 'ForemanDatacenter::DeviceInterface'
     belongs_to_host
+    has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]
@@ -101,8 +102,12 @@ module ForemanDatacenter
     def populate_from_host(host)
       self.host = host
       self.name = host.name
+
       device_type = DeviceType.for_host(host)
       self.device_type = device_type if device_type
+
+      self.device_role = DeviceRole.for_host unless self.device_role
+
       serial = host.fact_value_by_name('serialnumber')
       self.serial = serial.value if serial
     end

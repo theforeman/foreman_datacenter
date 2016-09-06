@@ -3,7 +3,7 @@ module ForemanDatacenter
     FORM_FACTORS = ['Virtual', '10/100M (100BASE-TX)',
                     '1GE (1000BASE-T)', '1GE (SFP)', '10GE (10GBASE-T)',
                     '10GE (SFP+)', '10GE (XFP)', '40GE (QSFP+)']
-    DEFAULT_FORM_FACTOR = '10GE (SFP+)'
+    DEFAULT_FORM_FACTOR = '1GE (1000BASE-T)'
 
     belongs_to :device, :class_name => 'ForemanDatacenter::Device'
 

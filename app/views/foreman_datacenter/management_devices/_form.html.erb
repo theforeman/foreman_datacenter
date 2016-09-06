@@ -1,0 +1,18 @@
+<%= form_for @management_device, as: :management_device,
+             url: (@management_device.new_record? ? device_management_devices_path(@management_device.device) : management_device_path(@management_device)) do |f| %>
+    <%= base_errors_for @management_device %>
+
+    <div class="clearfix">
+      <div class="form-group">
+        <label class="col-md-2 control-label required">Device</label>
+        <div class="col-md-4"><%= @management_device.device.name %></div>
+      </div>
+    </div>
+    <%= f.hidden_field :device_id %>
+
+    <%= text_f f, :name, required: true %>
+    <%= text_f f, :login %>
+    <%= text_f f, :password %>
+
+    <%= submit_or_cancel f, false, cancel_path: device_path(@management_device.device) %>
+<% end %>
