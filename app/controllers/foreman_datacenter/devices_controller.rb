@@ -3,7 +3,7 @@ module ForemanDatacenter
     before_action :set_device, only: [:update, :destroy, :inventory]
 
     def index
-      @devices = Device.includes(:device_role, :device_type, rack: [:site]).
+      @devices = Device.includes(:ipmi_interface, :device_role, :device_type, rack: [:site]).
         paginate(:page => params[:page])
     end
 
