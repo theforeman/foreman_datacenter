@@ -9,5 +9,13 @@ module ForemanDatacenter
     validates :facility_id, length: { maximum: 30 }
     validates :height, presence: true
     validates_numericality_of :height, only_integer: true
+
+    def device_at(position)
+      devices.find { |d| d.position == position }
+    end
+
+    def positioned_devices
+      height.downto(1).map { |position| [position, device_at(position)] }
+    end
   end
 end
