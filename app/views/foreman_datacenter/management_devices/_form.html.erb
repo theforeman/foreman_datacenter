@@ -12,7 +12,7 @@
 
     <%= text_f f, :console_url, required: true %>
     <%= text_f f, :login %>
-    <%= text_f f, :password %>
+    <%= text_f f, :password, type: 'password' %>
 
     <%= submit_or_cancel f, false, cancel_path: device_path(@management_device.device) %>
 <% end %>
