@@ -5,6 +5,7 @@ module ForemanDatacenter
     def index
       @racks = ForemanDatacenter::Rack.
         includes(:site, :rack_group, :devices).
+        order(:name).
         all
     end
 

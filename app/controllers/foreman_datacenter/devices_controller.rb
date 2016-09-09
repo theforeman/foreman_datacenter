@@ -4,6 +4,7 @@ module ForemanDatacenter
 
     def index
       @devices = Device.includes(:ipmi_interface, :device_role, :device_type, rack: [:site]).
+        order(:name).
         paginate(:page => params[:page])
     end
 
