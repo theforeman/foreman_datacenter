@@ -1,5 +1,7 @@
 module ForemanDatacenter
   class Device < ActiveRecord::Base
+    include ScopedSearchExtensions
+
     belongs_to :device_type, :class_name => 'ForemanDatacenter::DeviceType'
     belongs_to :device_role, :class_name => 'ForemanDatacenter::DeviceRole'
     belongs_to :platform, :class_name => 'ForemanDatacenter::Platform'
@@ -22,6 +24,7 @@ module ForemanDatacenter
             :class_name => 'ForemanDatacenter::DeviceInterface'
     belongs_to_host
     has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
+    has_one :site, :through => :rack
 
     enum face: [:front, :rear]
     enum status: [:active, :offline]
@@ -41,12 +44,16 @@ module ForemanDatacenter
     after_create :create_power_outlets
     after_create :create_device_bays
 
+    scoped_search on: :name, complete_value: true, default_order: true
+    scoped_search on: :status, complete_value: { active: 0, offline: 1 },
+                  default_order: true
+    scoped_search in: :site, on: :name, complete_value: true, rename: :site
+    scoped_search in: :rack, on: :name, complete_value: true, rename: :rack
+    scoped_search in: :device_role, on: :name, complete_value: true, rename: :role
+    scoped_search in: :device_type, on: :model, complete_value: true, rename: :type
+
     def site_id
       rack.try(:site_id)
-    end
-
-    def site
-      rack.site
     end
 
     def ip_address

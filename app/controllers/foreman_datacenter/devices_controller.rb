@@ -1,10 +1,17 @@
 module ForemanDatacenter
   class DevicesController < ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+
     before_action :set_device, only: [:update, :destroy, :inventory]
 
     def index
-      @devices = Device.includes(:ipmi_interface, :device_role, :device_type, rack: [:site]).
-        order(:name).
+      begin
+        search = resource_base.search_for(params[:search], :order => params[:order])
+      rescue => e
+        error e.to_s
+        search = resource_base.search_for ''
+      end
+      @devices = search.includes(:ipmi_interface, :device_role, :device_type, :site, :rack).
         paginate(:page => params[:page])
     end
 
