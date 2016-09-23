@@ -1,9 +1,17 @@
 module ForemanDatacenter
   class DevicesController < ApplicationController
-    before_action :set_device, only: [:update, :destroy, :inventory]
+    include Foreman::Controller::AutoCompleteSearch
+
+    before_action :set_device, only: [:update, :destroy, :inventory, :destroy_interfaces]
 
     def index
-      @devices = Device.includes(:ipmi_interface, :device_role, :device_type, rack: [:site]).
+      begin
+        search = resource_base.search_for(params[:search], :order => params[:order])
+      rescue => e
+        error e.to_s
+        search = resource_base.search_for ''
+      end
+      @devices = search.includes(:ipmi_interface, :device_role, :device_type, :site, :rack).
         paginate(:page => params[:page])
     end
 
@@ -69,6 +77,13 @@ module ForemanDatacenter
     def for_rack
       @rack = ForemanDatacenter::Rack.find(params[:rack_id])
       render partial: 'for_rack'
+    end
+
+    def destroy_interfaces
+      @device.non_management_interfaces.
+        where(id: params[:interfaces]).
+        destroy_all
+      redirect_to device_url(@device)
     end
 
     private

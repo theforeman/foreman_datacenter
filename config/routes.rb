@@ -31,9 +31,11 @@ Foreman::Application.routes.draw do
     resources :devices do
       collection do
         get :device_types, :racks, :for_rack
+        get :auto_complete_search
       end
       member do
         get :inventory
+        delete :destroy_interfaces
       end
       resources :device_bays, except: [:show, :index], shallow: true do
         member do

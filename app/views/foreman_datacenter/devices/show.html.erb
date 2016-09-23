@@ -219,62 +219,63 @@
             <% end %>
           </td>
         </tr>
-        </tbody>
-      </table>
-    </div>
 
-    <!-- Management device -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong>Management Device</strong>
-      </div>
-      <table class="table table-hover panel-body">
-        <tbody>
+        <!-- Management device -->
+        <tr>
+          <td><strong>Management device</strong></td>
+          <td></td>
+        </tr>
         <% if @device.management_device %>
             <tr>
               <td>Console URL</td>
-              <td><%= h @device.management_device.console_url %></td>
+              <td><%= h @device.console_url %></td>
             </tr>
             <tr>
               <td>Login</td>
-              <td><%= h @device.management_device.login %></td>
+              <td><%= h @device.login %></td>
             </tr>
             <tr>
               <td>Password</td>
               <td>
-                <button class="btn btn-primary btn-xs" data-reveal-password data-password="<%= h @device.management_device.password %>">
+                <button class="btn btn-primary btn-xs" data-reveal-password data-password="<%= h @device.password %>">
                   Reveal
                 </button>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="text-right">
+                <%= link_to edit_management_device_path(@device.management_device),
+                            class: 'btn btn-success btn-xs' do %>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    Edit
+                <% end %>
+                <%= link_to management_device_path(@device.management_device),
+                            class: 'btn btn-danger btn-xs',
+                            data: { confirm: 'Are you sure?' }, method: :delete do %>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    Destroy
+                <% end %>
               </td>
             </tr>
         <% else %>
             <tr>
               <td>None</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="text-right">
+                <%= link_to new_device_management_device_path(@device),
+                            class: 'btn btn-primary btn-xs' do %>
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add
+                <% end %>
+              </td>
             </tr>
         <% end %>
         </tbody>
       </table>
-      <div class="panel-footer text-right">
-        <% if @device.management_device %>
-            <%= link_to edit_management_device_path(@device.management_device),
-                        class: 'btn btn-success btn-xs' do %>
-                <span class="glyphicon glyphicon-pencil"></span>
-                Edit
-            <% end %>
-            <%= link_to management_device_path(@device.management_device),
-                        class: 'btn btn-danger btn-xs',
-                        data: { confirm: 'Are you sure?' }, method: :delete do %>
-                <i class="glyphicon glyphicon-trash"></i>
-                Destroy
-            <% end %>
-        <% else %>
-            <%= link_to new_device_management_device_path(@device),
-                        class: 'btn btn-primary btn-xs' do %>
-                <span class="glyphicon glyphicon-plus"></span>
-                Add
-            <% end %>
-        <% end %>
-      </div>
     </div>
 
     <!-- Comments -->
@@ -317,19 +318,24 @@
           <div class="panel-heading">
             <strong>Interfaces</strong>
           </div>
-          <% if @device.non_management_interfaces.empty? %>
-              <div class="panel-body">None</div>
-          <% else %>
-              <table class="table table-hover panel-body">
-                <tbody>
-                <%= render partial: 'interface', collection: @device.non_management_interfaces %>
-                </tbody>
-              </table>
+          <%= form_tag destroy_interfaces_device_path(@device), method: :delete do %>
+              <% if @device.non_management_interfaces.empty? %>
+                  <div class="panel-body">None</div>
+              <% else %>
+                  <table class="table table-hover panel-body">
+                    <tbody>
+                    <%= render partial: 'interface', collection: @device.non_management_interfaces %>
+                    </tbody>
+                  </table>
+              <% end %>
+              <div class="panel-footer text-right">
+                <%= link_to 'Add an interface', new_device_device_interface_path(@device),
+                            class: 'btn btn-primary btn-xs' %>
+                <%= button_tag 'Destroy selected interfaces',
+                               class: 'btn btn-danger btn-xs',
+                               data: {confirm: 'Are you sure?'} %>
+              </div>
           <% end %>
-          <div class="panel-footer text-right">
-            <%= link_to 'Add an interface', new_device_device_interface_path(@device),
-                        class: 'btn btn-primary btn-xs' %>
-          </div>
         </div>
     <% end %>
 
