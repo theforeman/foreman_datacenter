@@ -52,32 +52,14 @@ module ForemanDatacenter
     scoped_search in: :device_role, on: :name, complete_value: true, rename: :role
     scoped_search in: :device_type, on: :model, complete_value: true, rename: :type
 
-    def site_id
-      rack.try(:site_id)
-    end
+    delegate :site_id, to: :rack, allow_nil: true
+    delegate :mac_address, to: :ipmi_interface, allow_nil: true
+    delegate :manufacturer_id, :is_console_server, :is_pdu, :is_network_device,
+             to: :device_type, allow_nil: true
+    delegate :console_url, :login, :password, to: :management_device
 
     def ip_address
       ipmi_interface.try(:ip_address) || primary_ip4
-    end
-
-    def mac_address
-      ipmi_interface.try(:mac_address)
-    end
-
-    def manufacturer_id
-      device_type.try(:manufacturer_id)
-    end
-
-    def is_console_server
-      device_type.try(:is_console_server)
-    end
-
-    def is_pdu
-      device_type.try(:is_pdu)
-    end
-
-    def is_network_device
-      device_type.try(:is_network_device)
     end
 
     def parent?

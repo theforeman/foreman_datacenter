@@ -1,6 +1,7 @@
 <tr>
   <% if interface.connected? %>
       <td>
+        <%= check_box_tag 'interfaces[]', interface.id %>
         <span class="glyphicon glyphicon-transfer"></span>
         <%= interface.name %>
       </td>
@@ -45,6 +46,7 @@
       </td>
   <% else %>
       <td>
+        <%= check_box_tag 'interfaces[]', interface.id %>
         <span class="glyphicon glyphicon-transfer"></span>
         <%= interface.name %>
       </td>

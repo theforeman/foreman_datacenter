@@ -2,7 +2,7 @@ module ForemanDatacenter
   class DevicesController < ApplicationController
     include Foreman::Controller::AutoCompleteSearch
 
-    before_action :set_device, only: [:update, :destroy, :inventory]
+    before_action :set_device, only: [:update, :destroy, :inventory, :destroy_interfaces]
 
     def index
       begin
@@ -77,6 +77,13 @@ module ForemanDatacenter
     def for_rack
       @rack = ForemanDatacenter::Rack.find(params[:rack_id])
       render partial: 'for_rack'
+    end
+
+    def destroy_interfaces
+      @device.non_management_interfaces.
+        where(id: params[:interfaces]).
+        destroy_all
+      redirect_to device_url(@device)
     end
 
     private

@@ -35,6 +35,7 @@ Foreman::Application.routes.draw do
       end
       member do
         get :inventory
+        delete :destroy_interfaces
       end
       resources :device_bays, except: [:show, :index], shallow: true do
         member do
