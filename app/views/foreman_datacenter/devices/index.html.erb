@@ -13,7 +13,6 @@
     <th>Rack</th>
     <th>Role</th>
     <th>Type</th>
-    <th>IP Address</th>
     <th>Action</th>
   </tr>
   </thead>
@@ -32,7 +31,6 @@
         <td><%= h device.rack.name %></td>
         <td><%= h device.device_role.name %></td>
         <td><%= h device.device_type.model %></td>
-        <td><%= h device.ip_address %></td>
         <td>
           <%= action_buttons(
                 display_link_if_authorized(

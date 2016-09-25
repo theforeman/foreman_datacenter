@@ -11,7 +11,7 @@ module ForemanDatacenter
         error e.to_s
         search = resource_base.search_for ''
       end
-      @devices = search.includes(:ipmi_interface, :device_role, :device_type, :site, :rack).
+      @devices = search.includes(:device_role, :device_type, :site, :rack).
         paginate(:page => params[:page])
     end
 
