@@ -22,6 +22,8 @@ module ForemanDatacenter
     has_many :modules, :class_name => 'ForemanDatacenter::DeviceModule'
     has_one :ipmi_interface, -> { where(name: 'ipmi', mgmt_only: true) },
             :class_name => 'ForemanDatacenter::DeviceInterface'
+    has_one :mgmt_interface, -> { where(name: 'mgmt', mgmt_only: true) },
+            :class_name => 'ForemanDatacenter::DeviceInterface'
     belongs_to_host
     has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
     has_one :site, :through => :rack
@@ -53,13 +55,17 @@ module ForemanDatacenter
     scoped_search in: :device_type, on: :model, complete_value: true, rename: :type
 
     delegate :site_id, to: :rack, allow_nil: true
-    delegate :mac_address, to: :ipmi_interface, allow_nil: true
     delegate :manufacturer_id, :is_console_server, :is_pdu, :is_network_device,
              to: :device_type, allow_nil: true
     delegate :console_url, :login, :password, to: :management_device
 
+    def mac_address
+      ipmi_interface.try(:ip_address) || mgmt_interface.try(:mac_address)
+    end
+
     def ip_address
-      ipmi_interface.try(:ip_address) || primary_ip4
+      ipmi_interface.try(:ip_address) || mgmt_interface.try(:ip_address) ||
+        primary_ip4
     end
 
     def parent?
