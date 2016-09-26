@@ -60,7 +60,7 @@ module ForemanDatacenter
     delegate :console_url, :login, :password, to: :management_device
 
     def mac_address
-      ipmi_interface.try(:ip_address) || mgmt_interface.try(:mac_address)
+      ipmi_interface.try(:mac_address) || mgmt_interface.try(:mac_address)
     end
 
     def ip_address
