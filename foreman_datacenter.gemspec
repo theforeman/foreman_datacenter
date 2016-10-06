@@ -16,6 +16,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'deface'
+  s.add_dependency 'prawn', '~> 2.1'
+  s.add_dependency 'rqrcode', '~> 0.10.1'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'rdoc'
   s.add_development_dependency 'rails', ['= 4.2.6']

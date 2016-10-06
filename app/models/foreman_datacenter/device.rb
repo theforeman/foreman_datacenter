@@ -58,6 +58,7 @@ module ForemanDatacenter
     delegate :manufacturer_id, :is_console_server, :is_pdu, :is_network_device,
              to: :device_type, allow_nil: true
     delegate :console_url, :login, :password, to: :management_device
+    delegate :hostname, to: :host, allow_nil: true
 
     def mac_address
       ipmi_interface.try(:mac_address) || mgmt_interface.try(:mac_address)
@@ -105,6 +106,11 @@ module ForemanDatacenter
 
       serial = host.fact_value_by_name('serialnumber')
       self.serial = serial.value if serial
+    end
+
+    def name_without_fqdn
+      match = name.match(/^([^.]*)/)
+      match[1] if match
     end
 
     private

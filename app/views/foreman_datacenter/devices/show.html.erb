@@ -1,27 +1,34 @@
 <% javascript 'foreman_datacenter/ajax' %>
 <% javascript 'foreman_datacenter/management_devices' %>
 
-<% title @device.name %>
+<div class="row">
+  <div class="col-md-8">
+    <h1>
+      <% if @device.host %>
+          <%= link_to @device.name, host_path(@device.host) %>
+      <% else %>
+          <%= @device.name %>
+      <% end %></h1>
+  </div>
+</div>
 
-<% title_actions display_link_if_authorized(
-                   _('Edit'),
-                   hash_for_edit_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
-                   :class => 'btn btn-warning'
-                 ),
-                 display_delete_if_authorized(
-                   hash_for_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
-                   :data => { :confirm => 'Are you sure?' },
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
-                 ),
-                 display_link_if_authorized(
-                   _('Import from host'),
-                   @device.host ?
-                     hash_for_edit_device_path(@device, host_id: @device.host.id) :
-                     hash_for_import_to_device_path(target_device_id: @device.id),
-                   :class => 'btn btn-success'
-                 ),
-                 help_path %>
+<div class="row">
+  <div class="col-md-offset-4 col-md-8 title_action">
+    <div class="btn-toolbar pull-right">
+      <%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-warning' %>
+      <%= link_to 'Delete', device_path(@device), class: 'btn btn-danger',
+                  action: :destroy, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Import from hosts',
+                  @device.host ?
+                    edit_device_path(@device, host_id: @device.host.id) :
+                    import_to_device_path(target_device_id: @device.id),
+                  class: 'btn btn-success' %>
+      <%= link_to 'Download QR PDF file',
+                  qr_code_device_path(@device),
+                  class: 'btn btn-default' %>
+    </div>
+  </div>
+</div>
 
 <ul class="nav nav-tabs">
   <li class="active"><%= link_to 'Info', device_path(@device) %></li>
