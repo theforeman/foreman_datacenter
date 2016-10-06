@@ -21,6 +21,11 @@
                      hash_for_import_to_device_path(target_device_id: @device.id),
                    :class => 'btn btn-success'
                  ),
+                 display_link_if_authorized(
+                   _('Download QR PDF file'),
+                   hash_for_qr_code_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),
+                   :class => 'btn btn-default'
+                 ),
                  help_path %>
 
 <ul class="nav nav-tabs">

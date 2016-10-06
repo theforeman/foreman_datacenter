@@ -1,8 +1,13 @@
+require 'rqrcode'
+require 'prawn'
+require 'prawn/measurement_extensions'
+
 module ForemanDatacenter
   class DevicesController < ApplicationController
     include Foreman::Controller::AutoCompleteSearch
 
-    before_action :set_device, only: [:update, :destroy, :inventory, :destroy_interfaces]
+    before_action :set_device, only: [:update, :destroy, :inventory,
+                                      :destroy_interfaces, :qr_code]
 
     def index
       begin
@@ -86,6 +91,12 @@ module ForemanDatacenter
       redirect_to device_url(@device)
     end
 
+    def qr_code
+      send_data(generate_qr_code(@device),
+                filename: "#{@device.name_without_fqdn}.qr.pdf",
+                type: 'application/pdf')
+    end
+
     private
 
     def set_device
@@ -104,6 +115,21 @@ module ForemanDatacenter
         host = Host.find(params[:host_id])
         @device.populate_from_host(host)
       end
+    end
+
+    def generate_qr_code(device)
+      name = device.name_without_fqdn
+      width = name.size * 5 + 40
+      qr_code = RQRCode::QRCode.new(device_url(device))
+      png = qr_code.as_png(border_modules: 1, size: 240).to_s
+      document = Prawn::Document.new(page_size: [36, width * 2], page_layout: :landscape, margin: 0) do
+        font_size(10)
+        image(StringIO.new(png), width: 36, scale: 1)
+        text_box(name, at: [38, 22])
+        image(StringIO.new(png), width: 36, scale: 1, at: [width, 36])
+        text_box(name, at: [width + 38, 22])
+      end
+      document.render
     end
   end
 end
