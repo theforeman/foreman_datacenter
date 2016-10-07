@@ -119,7 +119,7 @@ module ForemanDatacenter
 
     def generate_qr_code(device)
       name = device.name_without_fqdn
-      width = name.size * 5 + 40
+      width = (name.size * 5.5).round + 40 # magic
       qr_code = RQRCode::QRCode.new(device_url(device))
       png = qr_code.as_png(border_modules: 1, size: 240).to_s
       document = Prawn::Document.new(page_size: [36, width * 2], page_layout: :landscape, margin: 0) do
