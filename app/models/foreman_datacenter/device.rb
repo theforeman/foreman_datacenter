@@ -28,6 +28,9 @@ module ForemanDatacenter
     has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
     has_one :site, :through => :rack
 
+    has_many :comments, :class_name => 'ForemanDatacenter::Comment',
+             dependent: :destroy
+
     enum face: [:front, :rear]
     enum side: [:left, :right, :full]
     enum status: [:active, :offline]

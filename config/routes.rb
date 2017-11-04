@@ -1,4 +1,5 @@
 Foreman::Application.routes.draw do
+
   # TODO: find a better way to do this
   get 'datacenter/import_to_device', to: 'hosts#import_to_device',
       as: 'import_to_device'
@@ -81,6 +82,8 @@ Foreman::Application.routes.draw do
       resources :device_modules, except: [:show, :index], shallow: true
       resources :management_devices, only: [:new, :create, :edit, :update, :destroy],
                 shallow: true
+
+      resources :comments, except: [:show, :index]
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       get :interfaces, on: :collection
