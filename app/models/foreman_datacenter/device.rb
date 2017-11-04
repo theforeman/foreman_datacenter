@@ -29,7 +29,7 @@ module ForemanDatacenter
     has_one :site, :through => :rack
 
     has_many :comments, :class_name => 'ForemanDatacenter::Comment',
-             dependent: :destroy
+             dependent: :destroy, as: :commentable
 
     enum face: [:front, :rear]
     enum side: [:left, :right, :full]

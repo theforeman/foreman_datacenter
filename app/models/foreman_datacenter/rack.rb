@@ -24,7 +24,7 @@ module ForemanDatacenter
       i = 1
       loop do
 	current_device = devs.select{ |d| d[0].include?(i) }
-	current_device == [] ? (result << [[i],[]]; i +=1 ) : (result << current_device[0]; i = current_device[0][0].last + 1)
+	current_device == [] ? (result << [[i],[]]; i +=1 ) : (result << merge_devices(current_device, i); i = i + current_device[0][1].last.size)
 	break if i > height
       end
       device_sorting(result)
@@ -33,7 +33,13 @@ module ForemanDatacenter
     private
 
     def device_sorting(devices)
-      devices.reverse.map { |d| [d[0].reverese, d[1]] }
+      devices.reverse.map { |d| [d[0].reverse, d[1]] }
     end
+
+    def merge_devices(devices, position)
+       devs = [[position],[]]
+       devices.each{|d| devs[1] << d[1][0]}
+       return devs
+     end
   end
 end

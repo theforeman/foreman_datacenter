@@ -5,6 +5,7 @@ Foreman::Application.routes.draw do
       as: 'import_to_device'
 
   scope 'datacenter', module: :foreman_datacenter do
+    resources :comments, only: [:edit, :update]
     resources :sites
     resources :racks do
       get :rack_groups, on: :collection
@@ -83,7 +84,7 @@ Foreman::Application.routes.draw do
       resources :management_devices, only: [:new, :create, :edit, :update, :destroy],
                 shallow: true
 
-      resources :comments, except: [:show]
+      resources :comments, only: [:create, :destroy]
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       get :interfaces, on: :collection
