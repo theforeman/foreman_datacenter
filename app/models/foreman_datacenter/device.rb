@@ -29,6 +29,7 @@ module ForemanDatacenter
     has_one :site, :through => :rack
 
     enum face: [:front, :rear]
+    enum side: [:left, :right, :full]
     enum status: [:active, :offline]
 
     validates :device_type_id, presence: true

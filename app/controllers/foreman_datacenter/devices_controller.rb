@@ -105,8 +105,8 @@ module ForemanDatacenter
 
     def device_params
       params[:device].permit(:device_type_id, :device_role_id, :platform_id,
-                             :name, :serial, :rack_id, :position, :face,
-                             :status, :primary_ip4, :primary_ip6, :comments,
+                             :name, :serial, :rack_id, :position, :side,
+                             :face, :status, :primary_ip4, :primary_ip6, :comments,
                              :host_id)
     end
 
