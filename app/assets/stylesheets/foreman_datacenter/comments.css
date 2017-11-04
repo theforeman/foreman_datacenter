@@ -4,3 +4,8 @@ ul.none-list {
   margin-top: 5px !important;
 }
 
+ul.none-list-child {
+  list-style-type: none !important;
+  padding-left: 15px !important;
+  margin-top: 5px !important;
+}

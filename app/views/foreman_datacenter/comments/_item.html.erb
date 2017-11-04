@@ -18,7 +18,7 @@
   <small>
     <%= link_to "Reply", new_comment_path(parent_id: comment.id, resource: commentable_data[:resource], resource_id: commentable_data[:id]) %>
     &nbsp;
-    <% if @current_user == comment.user %>
+    <% if @current_user == comment.user or comment.user.nil? %>
       <%= link_to "Edit", "/datacenter/comments/#{comment.id}/edit" %>
       &nbsp;
       <%= link_to "Delete", "/datacenter/#{commentable_data[:resource]}/#{commentable_data[:id]}/comments/#{comment.id}", method: :delete, data: {confirm: "Are you sure?"} %>

@@ -18,7 +18,19 @@ namespace :foreman_datacenter do
       end
     end
   end
+
+  task comments: :environment do
+    # creating new comments from old_comments column and flushing it
+    ForemanDatacenter::Device.all.each do |device|
+      if device.old_comments != ""
+        begin
+          device.comments.create!(content: device.old_comments)
+          device.update_attribute(:old_comments, "")
+        rescue => e
+          puts "#{e}"
+        end
+      end
+    end
+  end
 end
 
-# TODO
-# comments

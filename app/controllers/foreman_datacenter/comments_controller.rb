@@ -26,7 +26,7 @@ module ForemanDatacenter
       @comment = Comment.find(params[:id])
       @device = find_commentable(@comment)
       @submodule = parse_submodule(@comment)
-      if @comment.user == @current_user
+      if @comment.user == @current_user or @comment.user.nil?
         if @comment.update(comment_params)
           process_success :success_redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}"
         else
@@ -39,7 +39,7 @@ module ForemanDatacenter
 
     def destroy
       @comment = Comment.find(params[:id])
-      if @comment.user == @current_user
+      if @comment.user == @current_user or @comment.user.nil?
         if @comment.destroy
           process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}"
         else
@@ -60,7 +60,7 @@ module ForemanDatacenter
       comment = Comment.find(params[:id])
       commentable = comment.commentable_type.constantize.find(comment.commentable_id)
       resource = parse_submodule(comment)
-      if comment.user != @current_user
+      unless comment.user == @current_user or comment.user.nil?
         process_error :redirect => (request.referrer || "/datacenter/#{resource}/#{commentable.id}" || root_path), :error_msg => _("You can edit only your own comments")
         return
       end
@@ -96,4 +96,5 @@ module ForemanDatacenter
 
   end
 end
+
 
