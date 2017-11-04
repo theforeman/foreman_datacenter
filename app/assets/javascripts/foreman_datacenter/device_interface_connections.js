@@ -4,13 +4,13 @@ function connectionsNewRackSelected(item) {
   if (rack === '') {
     return false;
   } else {
-    foreman.tools.showSpinner();
+    tfm.tools.showSpinner();
     var url = $item.data('url');
     var params = $.param({ rack_id: rack });
     var $container = $('#devices-container');
     $container.load(url, params, function () {
       $container.find('select').select2({allowClear: true});
-      foreman.tools.hideSpinner();
+      tfm.tools.hideSpinner();
     });
   }
 }

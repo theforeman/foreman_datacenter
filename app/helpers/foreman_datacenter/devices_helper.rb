@@ -18,8 +18,21 @@ module ForemanDatacenter
       end
       selectable_f f, :device_type_id,
                    options_from_collection_for_select(collection, 'id', 'model', device_type_id),
-                   { include_blank: 'Choose a device type' },
-                   { required: true, label: 'Device Type' }
+                   { include_blank: 'Choose a device type'},
+                   { required: true, label: 'Device Type',
+                   :onchange => 'devicesNewDeviceTypeSelected(this)',
+                   :'data-url' => device_type_size_devices_path }
+    end
+
+    def device_type_size_for_device_form(f, device_type_id)
+      if device_type_id
+        device_type = DeviceType.find(device_type_id)
+        height = device_type.u_height
+      else
+        height = 1
+      end
+     text_f f, :size, type: 'number', min: 0, value: height, id: 'device_type_size', label: 'Size',
+        help_inline: 'For multi-U devices, how many rack units occupied be device.'
     end
 
     def racks_for_device_form(f, site_id, rack_id = nil)

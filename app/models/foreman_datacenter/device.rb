@@ -28,7 +28,11 @@ module ForemanDatacenter
     has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
     has_one :site, :through => :rack
 
+    has_many :comments, :class_name => 'ForemanDatacenter::Comment',
+             dependent: :destroy, as: :commentable
+
     enum face: [:front, :rear]
+    enum side: [:left, :right, :full]
     enum status: [:active, :offline]
 
     validates :device_type_id, presence: true
@@ -113,6 +117,16 @@ module ForemanDatacenter
       match[1] if match
     end
 
+    def positions
+      result = []
+      if size.nil?
+        result << position
+      else
+        size.times{ |p| result << (position + p) } unless position.nil?
+      end
+      return result
+    end
+
     private
 
     def create_interfaces
@@ -170,5 +184,6 @@ module ForemanDatacenter
         end
       end
     end
+
   end
 end

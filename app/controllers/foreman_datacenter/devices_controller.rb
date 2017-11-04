@@ -9,6 +9,8 @@ module ForemanDatacenter
     before_action :set_device, only: [:update, :destroy, :inventory,
                                       :destroy_interfaces, :qr_code]
 
+    before_action :load_resource
+
     def index
       begin
         search = resource_base.search_for(params[:search], :order => params[:order])
@@ -28,6 +30,9 @@ module ForemanDatacenter
         console_ports: [:console_server_port],
         power_ports: [:power_outlet]
       ).find(params[:id])
+      @current_user = User.current
+      @commentable = @device
+      @comment = Comment.new
     end
 
     def inventory
@@ -63,7 +68,7 @@ module ForemanDatacenter
 
     def destroy
       if @device.destroy
-        process_success object: @device
+        process_success success_redirect: "/datacenter/devices"
       else
         process_error object: @device
       end
@@ -72,6 +77,11 @@ module ForemanDatacenter
     def device_types
       @manufacturer_id = params[:manufacturer_id]
       render partial: 'device_types'
+    end
+
+    def device_type_size
+      @device_type_id = params[:device_type_id]
+      render partial: 'device_type_size'
     end
 
     def racks
@@ -105,9 +115,14 @@ module ForemanDatacenter
 
     def device_params
       params[:device].permit(:device_type_id, :device_role_id, :platform_id,
-                             :name, :serial, :rack_id, :position, :face,
-                             :status, :primary_ip4, :primary_ip6, :comments,
-                             :host_id)
+                             :name, :serial, :rack_id, :position, :side,
+                             :face, :status, :primary_ip4, :primary_ip6,
+                             :host_id, :size)
+    end
+
+    def load_resource
+      resource, id = request.path.split('/')[2, 3]
+      @commentable_data = {resource: resource, id: id }
     end
 
     def populate_from_host
@@ -133,3 +148,4 @@ module ForemanDatacenter
     end
   end
 end
+

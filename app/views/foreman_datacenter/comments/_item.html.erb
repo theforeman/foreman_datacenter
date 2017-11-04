@@ -1,0 +1,30 @@
+<strong id="comment-<%= comment.id %>">
+  <small class="text-left pull-left">
+    Posted 
+    <% if comment.user %>
+      by <%= "#{comment.try(:user).try(:firstname)} #{comment.try(:user).try(:lastname)}" %>
+    <% end %>
+      at <%= comment.updated_at.to_formatted_s(:long_ordinal) %>
+  </small>
+
+  <small class="text-right pull-right">
+    <%= link_to "##{comment.id}", "#comment-#{comment.id}" %>
+  </small>
+</strong>
+<br/>
+<div class="text-left pull-left">
+  <%= comment.content %>
+  <br/>
+  <small>
+    <%= link_to "Reply", new_comment_path(parent_id: comment.id, resource: commentable_data[:resource], resource_id: commentable_data[:id]) %>
+    &nbsp;
+    <% if @current_user == comment.user or comment.user.nil? %>
+      <%= link_to "Edit", "/datacenter/comments/#{comment.id}/edit" %>
+      &nbsp;
+      <%= link_to "Delete", "/datacenter/#{commentable_data[:resource]}/#{commentable_data[:id]}/comments/#{comment.id}", method: :delete, data: {confirm: "Are you sure?"} %>
+    <% end %>
+  </small>
+</div>
+<br/>
+<br/>
+

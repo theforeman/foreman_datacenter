@@ -54,8 +54,14 @@
         </div>
         <%= selectable_f f, :face, ForemanDatacenter::Device.faces.keys,
                          { include_blank: 'Choose a rack face', label: 'Rack face' } %>
+        <%= selectable_f f, :side, ForemanDatacenter::Device.sides.keys,
+                         { include_blank: 'Choose a rack side', label: 'Rack side' } %>
         <%= text_f f, :position, type: 'number', min: 0,
                    help_inline: 'For multi-U devices, this is the lowest occupied rack unit.' %>
+        <div id="device-type-size-container">
+          <%= text_f f, :size, type: 'number', min: 0,
+                     help_inline: 'For multi-U devices, how many rack units occupied by device.' %>
+        </div>
       </div>
     </div>
 
@@ -65,14 +71,6 @@
       <div class="panel-body">
         <%= platforms_for_device_form f, @device.platform_id %>
         <%= selectable_f f, :status, ForemanDatacenter::Device.statuses.keys %>
-      </div>
-    </div>
-
-    <!-- Comments -->
-    <div class="panel panel-default">
-      <div class="panel-heading"><strong>Comments</strong></div>
-      <div class="panel-body">
-        <%= textarea_f f, :comments, rows: 10 %>
       </div>
     </div>
 

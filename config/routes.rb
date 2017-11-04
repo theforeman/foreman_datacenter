@@ -1,9 +1,13 @@
 Foreman::Application.routes.draw do
+
   # TODO: find a better way to do this
   get 'datacenter/import_to_device', to: 'hosts#import_to_device',
       as: 'import_to_device'
 
+
   scope 'datacenter', module: :foreman_datacenter do
+    resources :comments, only: [:new, :edit, :create, :update]
+
     resources :sites
     resources :racks do
       get :rack_groups, on: :collection
@@ -30,7 +34,7 @@ Foreman::Application.routes.draw do
     end
     resources :devices do
       collection do
-        get :device_types, :racks, :for_rack
+        get :device_types, :racks, :for_rack, :device_type_size
         get :auto_complete_search
       end
       member do
@@ -81,6 +85,8 @@ Foreman::Application.routes.draw do
       resources :device_modules, except: [:show, :index], shallow: true
       resources :management_devices, only: [:new, :create, :edit, :update, :destroy],
                 shallow: true
+
+      resources :comments, only: [:create, :destroy]
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       get :interfaces, on: :collection
@@ -99,3 +105,4 @@ Foreman::Application.routes.draw do
     end
   end
 end
+

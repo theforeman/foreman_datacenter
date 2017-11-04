@@ -1,6 +1,6 @@
 $(function () {
   function onSend() {
-    foreman.tools.showSpinner();
+    tfm.tools.showSpinner();
   }
 
   function onSuccess() {
@@ -8,7 +8,7 @@ $(function () {
   }
 
   function onComplete() {
-    foreman.tools.hideSpinner();
+    tfm.tools.hideSpinner();
   }
 
   var selectors = 'a[data-action="connected"], a[data-action="planned"], a[data-action="destroy"]';
