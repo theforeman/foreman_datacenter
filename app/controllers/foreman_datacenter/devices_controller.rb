@@ -30,7 +30,7 @@ module ForemanDatacenter
         console_ports: [:console_server_port],
         power_ports: [:power_outlet]
       ).find(params[:id])
-      @user = User.current
+      @current_user = User.current
       @commentable = @device
       @comment = Comment.new
     end
@@ -68,7 +68,7 @@ module ForemanDatacenter
 
     def destroy
       if @device.destroy
-        process_success object: @device
+        process_success success_redirect: "/datacenter/devices"
       else
         process_error object: @device
       end

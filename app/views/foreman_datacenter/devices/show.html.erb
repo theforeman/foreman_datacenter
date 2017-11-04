@@ -17,7 +17,7 @@
     <div class="btn-toolbar pull-right">
       <%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-warning' %>
       <%= link_to 'Delete', device_path(@device), class: 'btn btn-danger',
-                  action: :destroy, data: { confirm: 'Are you sure?' } %>
+                  method: :delete, data: { confirm: 'Are you sure?' } %>
       <%= link_to 'Import from hosts',
                   @device.host ?
                     edit_device_path(@device, host_id: @device.host.id) :

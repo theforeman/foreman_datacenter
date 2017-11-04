@@ -1,6 +1,7 @@
 module ForemanDatacenter
   class CommentsController < ApplicationController
-    before_filter :load_resource, :load_commentable
+    before_filter :load_resource, :load_commentable, :load_current_user
+    before_filter :check_owner, only: [:edit]
 
     def new
       @comment = Comment.new
@@ -25,23 +26,45 @@ module ForemanDatacenter
       @comment = Comment.find(params[:id])
       @device = find_commentable(@comment)
       @submodule = parse_submodule(@comment)
-      if @comment.update(comment_params.merge(user_id: User.current.id))
-        process_success :success_redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}"
+      if @comment.user == @current_user
+        if @comment.update(comment_params)
+          process_success :success_redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}"
+        else
+          process_error :redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}", :error_msg => _("Failed: %s") % (e)
+        end
       else
-        process_error :redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}", :error_msg => _("Failed: %s") % (e)
+          process_error :redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}", :error_msg => _("You can edit only your own comments")
       end
     end
 
     def destroy
-      @comment = ForemanDatacenter::Comment.find(params[:id])
-      if @comment.destroy
-        process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}"
+      @comment = Comment.find(params[:id])
+      if @comment.user == @current_user
+        if @comment.destroy
+          process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}"
+        else
+          process_error :redirect => "/datacenter/#{@resource}/#{@id}", :error_msg => _("Failed: %s") % (e)
+        end
       else
-        process_error :redirect => "/datacenter/#{@resource}/#{@id}", :error_msg => _("Failed: %s") % (e)
+          process_error :redirect => "/datacenter/#{@resource}/#{@id}", :error_msg => _("You can delete only your own comments")
       end
     end
 
     private
+
+    def load_current_user
+      @current_user = User.current
+    end
+
+    def check_owner
+      comment = Comment.find(params[:id])
+      commentable = comment.commentable_type.constantize.find(comment.commentable_id)
+      resource = parse_submodule(comment)
+      if comment.user != @current_user
+        process_error :redirect => (request.referrer || "/datacenter/#{resource}/#{commentable.id}" || root_path), :error_msg => _("You can edit only your own comments")
+        return
+      end
+    end
 
     def load_resource
       if (params[:resource] && params[:resource_id])
