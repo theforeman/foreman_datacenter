@@ -54,7 +54,7 @@
         </tr>
         <tr>
           <td>Position</td>
-          <td><%= @device.position %> / <%= @device.face %> / <%= @device.side %></td>
+          <td><%= @device.positions.join(", ") %> / <%= @device.face %> / <%= @device.side %></td>
         </tr>
         <tr>
           <td>Device Type</td>

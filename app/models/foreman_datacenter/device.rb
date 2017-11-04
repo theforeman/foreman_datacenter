@@ -171,5 +171,11 @@ module ForemanDatacenter
         end
       end
     end
+
+    # def positions
+    #   result = []
+    #   size.times{ |p| result << (position + p) }
+    #   return result
+    # end
   end
 end
