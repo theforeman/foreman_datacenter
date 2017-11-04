@@ -1,22 +1,22 @@
-<strong>
-        <small class="text-left pull-left">
-                Posted by ... <%#= "#{@user.firstname} #{@user.lastname}" %> at <%= comment.updated_at %>
-        </small>
+<strong id="comment-<%= comment.id %>">
+  <small class="text-left pull-left">
+    Posted by ... <%#= "#{@user.firstname} #{@user.lastname}" %> at <%= comment.updated_at %>
+</small>
 
-        <small class="text-right pull-right">
-                <%= link_to "##{comment.id}", "#comment-#{comment.id}" %>
-        </small>
+<small class="text-right pull-right">
+  <%= link_to "##{comment.id}", "#comment-#{comment.id}" %>
+</small>
 </strong>
 <br/>
 <div class="text-left pull-left">
-        <%= comment.content %>
+  <%= comment.content %>
   <br/>
   <small>
     <%= link_to "Reply", new_comment_path(parent_id: comment.id, resource: commentable_data[:resource], resource_id: commentable_data[:id]) %>
     &nbsp;
     <%= link_to "Edit", "/datacenter/comments/#{comment.id}/edit" %>
     &nbsp;
-                <%= link_to "Delete", "/datacenter/#{commentable_data[:resource]}/#{commentable_data[:id]}/comments/#{comment.id}", method: :delete, data: {confirm: "Are you sure?"} %>
+    <%= link_to "Delete", "/datacenter/#{commentable_data[:resource]}/#{commentable_data[:id]}/comments/#{comment.id}", method: :delete, data: {confirm: "Are you sure?"} %>
   </small>
 </div>
 <br/>
