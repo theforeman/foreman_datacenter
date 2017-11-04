@@ -9,7 +9,7 @@ module ForemanDatacenter
     end
 
     def update_device_on_destroy
-      if device 
+      if device
         new_device_name = "Unassigned device (former: #{name})"
         device.update(name: new_device_name)
         # device.interfaces.clear
