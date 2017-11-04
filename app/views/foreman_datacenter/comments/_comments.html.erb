@@ -1,0 +1,23 @@
+<% stylesheet 'foreman_datacenter/comments' %>
+
+<table class="table table-hover panel-body table-striped">
+  <tbody>
+    <% comments.roots.each do |c| %>
+                        <tr>
+                                <td>
+                                        <ul class="none-list">
+                                                <li>
+              <%= render 'foreman_datacenter/comments/item', comment: c, commentable_data: commentable_data %>
+                                                </li>
+            <% if c.root.descendants != [] %>
+              <%= render 'foreman_datacenter/comments/children', c: c.root.descendants.arrange, commentable_data: commentable_data %>
+            <% end %>
+                                        </ul>
+                                </td>
+                        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render 'foreman_datacenter/comments/form'%>
+

@@ -2,8 +2,14 @@ module ForemanDatacenter
   class CommentsController < ApplicationController
     before_filter :load_resource, :load_commentable
 
+    def new
+      @comment = Comment.new
+      @parent = Comment.find(params[:parent_id])
+    end
+
     def edit
       @comment = Comment.find(params[:id])
+      @parent = @comment.parent
     end
 
     def create
@@ -38,15 +44,23 @@ module ForemanDatacenter
     private
 
     def load_resource
-      @resource, @id = request.path.split('/')[2, 3]
+      if (params[:resource] && params[:resource_id])
+        @resource, @id = params[:resource], params[:resource_id]
+      else
+        @resource, @id = request.path.split('/')[2, 3]
+      end
     end
 
     def load_commentable
-      @commentable = "foreman_datacenter::#{@resource.capitalize}".singularize.classify.constantize.find(@id.to_i)
+      begin
+        @commentable = "foreman_datacenter::#{@resource.capitalize}".singularize.classify.constantize.find(@id.to_i)
+      rescue
+        @commentable = "foreman_datacenter::#{params[:resource].capitalize}".singularize.classify.constantize.find(params[:resource_id].to_i)
+      end
     end
 
     def comment_params
-      params[:foreman_datacenter_comment].permit(:content, :commntable_type, :commentable_id)
+      params[:foreman_datacenter_comment].permit(:content, :commntable_type, :commentable_id, :parent_id)
     end
 
     def find_commentable(comment)

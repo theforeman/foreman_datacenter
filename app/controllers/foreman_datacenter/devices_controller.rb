@@ -116,7 +116,8 @@ module ForemanDatacenter
     end
 
     def load_resource
-      @resource, @id = request.path.split('/')[2, 3]
+      resource, id = request.path.split('/')[2, 3]
+      @commentable_data = {resource: resource, id: id }
     end
 
     def populate_from_host
@@ -142,3 +143,4 @@ module ForemanDatacenter
     end
   end
 end
+

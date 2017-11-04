@@ -2,12 +2,44 @@
   <%= form_for @comment, url: "/datacenter/comments/#{@comment.id}" do |f| %>
     <div class="clearfix">
       <div class="form-group">
+        <% if @parent %>
+          <%= f.label "Parent comment" %>
+          <p>
+            <%= @parent.content %>
+          </p>
+        <% end %>
         <div class="col-md-5">
-          <%= f.text_area :content, rows: 8, class: "form-control" %>
+          <%= f.text_area :content, rows: 6, class: "form-control" %>
         </div>
       </div>
     </div>
-    <%= f.submit "Edit comment", class: "btn btn-primary remove_form_templates" %>
+    <div class="btn-toolbar">
+      <%= link_to 'Back', url_for(:back), class: 'btn btn-success' %>
+      <%= f.submit "Edit", class: "btn btn-primary remove_form_templates" %>
+    </div>
+  <% end %>
+<% elsif action_name == "new" %>
+  <%= form_for @comment, url: "/datacenter/comments", method: :post do |f| %>
+    <div class="clearfix">
+      <div class="form-group">
+        <% if @parent %>
+          <%= f.label "Parent comment" %>
+          <p>
+            <%= @parent.content %>
+          </p>
+        <% end %>
+        <div class="col-md-5">
+          <%= f.text_area :content, rows: 6, class: "form-control" %>
+          <%= f.hidden_field :parent_id, value: @parent.id %>
+          <%= hidden_field_tag "resource", params[:resource] %>
+          <%= hidden_field_tag "resource_id", params[:resource_id] %>
+        </div>
+      </div>
+    </div>
+    <div class="btn-toolbar">
+      <%= link_to 'Back', url_for(:back), class: 'btn btn-success' %>
+      <%= f.submit "Reply", class: "btn btn-primary remove_form_templates" %>
+    </div>
   <% end %>
 <% else %>
   <%= form_for [@commentable, @comment], url: "/datacenter/devices/#{@commentable.id}/comments" do |f| %>
@@ -18,7 +50,7 @@
         </div>
       </div>
     </div>
-    <%= f.submit "Add comment", class: "btn btn-primary remove_form_templates" %>
+    <%= f.submit "Post", class: "btn btn-primary remove_form_templates" %>
   <% end %>
 <% end %>
 

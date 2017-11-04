@@ -4,8 +4,10 @@ Foreman::Application.routes.draw do
   get 'datacenter/import_to_device', to: 'hosts#import_to_device',
       as: 'import_to_device'
 
+
   scope 'datacenter', module: :foreman_datacenter do
-    resources :comments, only: [:edit, :update]
+    resources :comments, only: [:new, :edit, :create, :update]
+
     resources :sites
     resources :racks do
       get :rack_groups, on: :collection
@@ -103,3 +105,4 @@ Foreman::Application.routes.draw do
     end
   end
 end
+
