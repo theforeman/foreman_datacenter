@@ -1,4 +1,6 @@
 ul.none-list {
   list-style-type: none !important;
+  padding-left: 5px !important;
+  margin-top: 5px !important;
 }
 
