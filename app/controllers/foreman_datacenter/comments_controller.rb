@@ -13,7 +13,7 @@ module ForemanDatacenter
     end
 
     def create
-      @comment = @commentable.comments.new(comment_params)
+      @comment = @commentable.comments.new(comment_params.merge(user_id: User.current.id))
       if @comment.save
         process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}"
       else
@@ -25,7 +25,7 @@ module ForemanDatacenter
       @comment = Comment.find(params[:id])
       @device = find_commentable(@comment)
       @submodule = parse_submodule(@comment)
-      if @comment.update(comment_params)
+      if @comment.update(comment_params.merge(user_id: User.current.id))
         process_success :success_redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}"
       else
         process_error :redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}", :error_msg => _("Failed: %s") % (e)
@@ -60,7 +60,7 @@ module ForemanDatacenter
     end
 
     def comment_params
-      params[:foreman_datacenter_comment].permit(:content, :commntable_type, :commentable_id, :parent_id)
+      params[:foreman_datacenter_comment].permit(:content, :commntable_type, :commentable_id, :parent_id, :user_id)
     end
 
     def find_commentable(comment)
