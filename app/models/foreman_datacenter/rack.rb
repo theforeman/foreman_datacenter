@@ -11,7 +11,7 @@ module ForemanDatacenter
     validates_numericality_of :height, only_integer: true
 
     def device_at(position)
-      devices.find { |d| d.position == position }
+      devices.where(position: position).to_a
     end
 
     def positioned_devices

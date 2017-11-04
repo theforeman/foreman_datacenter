@@ -67,23 +67,7 @@
     </div>
   </div>
 
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading"><strong>Devices</strong></div>
-      <table class="table table-hover panel-body">
-        <tbody>
-        <% @rack.positioned_devices.each do |position, device| %>
-            <tr>
-              <td><%= position %>U</td>
-              <td class="text-right">
-                <% if device %>
-                    <%= link_to device.name, device_path(device) %>
-                <% end %>
-              </td>
-            </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <!-- Devices -->
+  <%= render "device_position", rack: @rack %>
+
 </div>
