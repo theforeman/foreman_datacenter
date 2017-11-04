@@ -122,7 +122,7 @@ module ForemanDatacenter
       if size.nil?
         result << position
       else
-        size.times{ |p| result << (position + p) }
+        size.times{ |p| result << (position + p) } unless position.nil?
       end
       return result
     end
