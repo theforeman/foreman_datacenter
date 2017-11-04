@@ -117,7 +117,7 @@ module ForemanDatacenter
       match[1] if match
     end
 
-    def rack_positions
+    def positions
       result = []
       if size.nil?
         result << position

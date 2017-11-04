@@ -27,7 +27,13 @@ module ForemanDatacenter
 	current_device == [] ? (result << [[i],[]]; i +=1 ) : (result << current_device[0]; i = current_device[0][0].last + 1)
 	break if i > height
       end
-      return result
+      device_sorting(result)
+    end
+
+    private
+
+    def device_sorting(devices)
+      devices.reverse.map { |d| [d[0].reverese, d[1]] }
     end
   end
 end
