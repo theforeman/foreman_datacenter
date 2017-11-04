@@ -10,10 +10,10 @@ function newDeviceSelected(item) {
     if (fragment) url += ' ' + fragment;
     var params = $.param({device_id: id});
     var $targetContainer = $($mainContainer.data('target'));
-    foreman.tools.showSpinner();
+    tfm.tools.showSpinner();
     $targetContainer.load(url, params, function () {
       $targetContainer.find('select').select2({allowClear: true});
-      foreman.tools.hideSpinner();
+      tfm.tools.hideSpinner();
     });
   }
 }
