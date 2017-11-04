@@ -14,8 +14,20 @@ module ForemanDatacenter
       devices.where(position: position).to_a
     end
 
+    # def positioned_devices
+    #   height.downto(1).map { |position| [position, device_at(position)] }
+    # end
+
     def positioned_devices
-      height.downto(1).map { |position| [position, device_at(position)] }
+      devs = devices.map{ |d| [d.positions, [d]] }
+      result = []
+      i = 1
+      loop do
+	current_device = devs.select{ |d| d[0].include?(i) }
+	current_device == [] ? (result << [[i],[]]; i +=1 ) : (result << current_device[0]; i = current_device[0][0].last + 1)
+	break if i > height
+      end
+      return result
     end
   end
 end

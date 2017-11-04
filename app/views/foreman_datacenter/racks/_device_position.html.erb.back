@@ -3,9 +3,9 @@
     <div class="panel-heading"><strong>Devices</strong></div>
     <table class="table table-hover panel-body">
       <tbody>
-        <% @rack.positioned_devices.each do |positions, devices| %>
+        <% @rack.positioned_devices.each do |position, devices| %>
           <tr>
-            <td class="col-md-1"><%= raw(positions.map{|p| "#{p}U"}.join("<br />")) %></td>
+            <td class="col-md-1"><%= position %>U</td>
             <td class="col-md-4">
               <% unless devices.empty? %>
                   <% devices.each do |d| %>

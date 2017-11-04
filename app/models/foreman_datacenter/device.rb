@@ -114,6 +114,16 @@ module ForemanDatacenter
       match[1] if match
     end
 
+    def rack_positions
+      result = []
+      if size.nil?
+        result << position
+      else
+        size.times{ |p| result << (position + p) }
+      end
+      return result
+    end
+
     private
 
     def create_interfaces
@@ -172,10 +182,5 @@ module ForemanDatacenter
       end
     end
 
-    # def positions
-    #   result = []
-    #   size.times{ |p| result << (position + p) }
-    #   return result
-    # end
   end
 end
