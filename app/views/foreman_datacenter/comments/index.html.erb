@@ -1,0 +1,9 @@
+<h1>Comments for device <%= @commentable_type %> #<%= @commentable.id %></h1>
+
+<% @comments.each do |c| %>
+  <%= c.content %>
+  </br>
+  </hr>
+<% end %>
+
+

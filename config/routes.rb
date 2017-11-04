@@ -83,7 +83,7 @@ Foreman::Application.routes.draw do
       resources :management_devices, only: [:new, :create, :edit, :update, :destroy],
                 shallow: true
 
-      resources :comments, except: [:show, :index]
+      resources :comments, except: [:show]
     end
     resources :device_interface_connections, only: [:index], path: 'connections' do
       get :interfaces, on: :collection
