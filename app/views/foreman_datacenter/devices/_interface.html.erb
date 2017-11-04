@@ -14,6 +14,7 @@
       <td>
         <%= h interface.connected_interface.name %>
       </td>
+      <td></td>
       <td class="text-right">
         <% if interface.connection.planned? %>
             <%= link_to connected_device_interface_connection_path(interface.connection),
