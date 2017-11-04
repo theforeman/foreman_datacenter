@@ -58,8 +58,10 @@
                          { include_blank: 'Choose a rack side', label: 'Rack side' } %>
         <%= text_f f, :position, type: 'number', min: 0,
                    help_inline: 'For multi-U devices, this is the lowest occupied rack unit.' %>
-        <%= text_f f, :size, type: 'number', min: 0,
-                   help_inline: 'For multi-U devices, how many rack units occupied by device.' %>
+        <div id="device-type-size-container">
+          <%= text_f f, :size, type: 'number', min: 0,
+                     help_inline: 'For multi-U devices, how many rack units occupied by device.' %>
+        </div>
       </div>
     </div>
 

@@ -34,7 +34,7 @@ Foreman::Application.routes.draw do
     end
     resources :devices do
       collection do
-        get :device_types, :racks, :for_rack
+        get :device_types, :racks, :for_rack, :device_type_size
         get :auto_complete_search
       end
       member do

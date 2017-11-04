@@ -31,3 +31,20 @@ function devicesNewSiteSelected(item) {
     });
   }
 }
+
+function devicesNewDeviceTypeSelected(item) {
+  var $item = $(item);
+  var type = $item.val();
+  if (type === '') {
+    return false;
+  } else {
+    tfm.tools.showSpinner();
+    var url = $item.data('url');
+    var params = $.param({ device_type_id: type });
+    var $container = $('#device-type-size-container');
+    $container.load(url + ' #device-type-size', params, function () {
+      $container.find('select').select2({allowClear: true});
+      tfm.tools.hideSpinner();
+    });
+  }
+}
