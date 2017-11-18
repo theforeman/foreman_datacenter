@@ -10,7 +10,7 @@ Foreman Datacenter plugin documents following:
 * **Devices** - contains all devices (switches, servers, etc.)
 * **Device types** - contains all device types (e.g. HP ProLiant DL180 G6)
 * **Device roles** - e.g. server, switch, etc.
-* **Manufactures** - contains all manufacturers (HP, Dell, etc.)
+* **Manufacturers** - contains all manufacturers (HP, Dell, etc.)
 * **Platforms** - e.g. ipmi, mgmt interface, etc.
 * **Console connections** - lists all e.g. RS232 connections
 * **Power connections** - lists all connections of power cables
