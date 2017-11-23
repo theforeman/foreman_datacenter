@@ -1,3 +1,3 @@
 module ForemanDatacenter
-  VERSION = '0.1.40'.freeze
+  VERSION = '0.1.42'.freeze
 end

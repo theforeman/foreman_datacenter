@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.name        = 'foreman_datacenter'
   s.version     = ForemanDatacenter::VERSION
   s.date        = Date.today.to_s
-  s.authors     = ['Pavel Ivanov']
-  s.email       = ['ivpavig@gmail.com']
+  s.authors     = ['Pavel Ivanov', 'Eugene Loginov']
+  s.email       = ['foreman@cloudevelops.com']
   s.homepage    = 'https://github.com/cloudevelops/foreman_datacenter'
   s.summary     = 'A plugin that lets you document your servers in a datacenter'
   # also update locale/gemspec.rb
