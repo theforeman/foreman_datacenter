@@ -30,7 +30,7 @@
         <td><%= link_to host %></td>
         <td><%= h host.operatingsystem %></td>
         <td><%= h host.environment %></td>
-        <td><%= host.model.name %></td>
+        <td><%= host.try(:model).try(:name) %></td>
         <td class="text-right">
           <% if @target_device %>
               <% if host.device %>
