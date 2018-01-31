@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  name: DC1
+  facility: test facility
+  asn: 1
+  physical_address: test physical address
+  shipping_address: test shipping address
+  comments: test comment
+
+two:
+  id: 2
+  name: DC2
+  facility: another test facility
+  asn: 2
+  physical_address: another test physical address
+  shipping_address: another test shipping address
+  comments: another test comment

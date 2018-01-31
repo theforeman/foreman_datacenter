@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  name: Room 1
+  site_id: 1
+
+one:
+  id: 1
+  name: Room 2
+  site_id: 2
