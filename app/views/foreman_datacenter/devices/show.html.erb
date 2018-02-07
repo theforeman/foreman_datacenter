@@ -42,7 +42,7 @@
       <div class="panel-heading">
         <strong>Device</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <tr>
           <td>Site</td>
@@ -81,7 +81,7 @@
       <div class="panel-heading">
         <strong>Critical Connections</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <% if @device.management_interfaces.empty? %>
             <tr class="alert-warning">
@@ -169,7 +169,7 @@
       <div class="panel-heading">
         <strong>Management</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <tr>
           <td>Role</td>
@@ -299,7 +299,7 @@
           <% if @device.device_bays.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <%= render partial: 'device_bay', collection: @device.device_bays %>
                 </tbody>
@@ -322,7 +322,7 @@
               <% if @device.non_management_interfaces.empty? %>
                   <div class="panel-body">None</div>
               <% else %>
-                  <table class="table table-hover panel-body">
+                  <table class="<%= table_css_classes 'table-hover panel-body' %>">
                     <tbody>
                     <%= render partial: 'interface', collection: @device.non_management_interfaces %>
                     </tbody>
@@ -348,7 +348,7 @@
           <% if @device.console_server_ports.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <%= render partial: 'console_server_port', collection: @device.console_server_ports %>
                 </tbody>
@@ -370,7 +370,7 @@
           <% if @device.power_outlets.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <%= render partial: 'power_outlet', collection: @device.power_outlets %>
                 </tbody>

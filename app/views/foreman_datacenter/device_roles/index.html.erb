@@ -2,7 +2,7 @@
 <%# title_actions display_link_if_authorized(_('New device role'), hash_for_new_device_role_path, class: 'btn btn-success'), help_path %>
 <% title_actions display_link_if_authorized(_('New device role'), hash_for_new_device_role_path, class: 'btn btn-success') %>
 
-<table class="table table-bordered table-striped table-two-pane">
+<table class="<%= table_css_classes 'table-two-pane' %>">
   <thead>
   <tr>
     <th>Name</th>
