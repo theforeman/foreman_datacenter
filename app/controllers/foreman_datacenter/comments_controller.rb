@@ -1,7 +1,7 @@
 module ForemanDatacenter
   class CommentsController < ApplicationController
-    before_filter :load_resource, :load_commentable, :load_current_user
-    before_filter :check_owner, only: [:edit]
+    before_action :load_resource, :load_commentable, :load_current_user
+    before_action :check_owner, only: [:edit]
 
     def new
       @comment = Comment.new
