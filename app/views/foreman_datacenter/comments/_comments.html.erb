@@ -1,6 +1,6 @@
 <% stylesheet 'foreman_datacenter/comments' %>
 
-<table class="table table-hover panel-body table-striped">
+<table class="<%= table_css_classes 'table-hover panel-body' %>">
   <% if comments == [] %>
     <div class="col-md-2">
       <small>No comments yet...</small>

@@ -20,7 +20,7 @@
       <div class="panel-heading">
         <strong>Chassis</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <tr>
           <td>Manufacturer</td>
@@ -47,7 +47,7 @@
       <div class="panel-heading">
         <strong>Function</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <tr>
           <td class="col-sm-3 text-right">
@@ -139,7 +139,7 @@
       <% if @device_type.console_port_templates.empty? %>
           <div class="panel-body">None</div>
       <% else %>
-          <table class="table table-hover panel-body">
+          <table class="<%= table_css_classes 'table-hover panel-body' %>">
             <tbody>
             <% @device_type.console_port_templates.each do |console_port| %>
                 <tr>
@@ -170,7 +170,7 @@
       <% if @device_type.power_port_templates.empty? %>
           <div class="panel-body">None</div>
       <% else %>
-          <table class="table table-hover panel-body">
+          <table class="<%= table_css_classes 'table-hover panel-body' %>">
             <tbody>
             <% @device_type.power_port_templates.each do |power_port| %>
                 <tr>
@@ -201,7 +201,7 @@
       <% if @device_type.management_interfaces.empty? %>
           <div class="panel-body">None</div>
       <% else %>
-          <table class="table table-hover panel-body">
+          <table class="<%= table_css_classes 'table-hover panel-body' %>">
             <tbody>
             <% @device_type.management_interfaces.each do |management_interface| %>
                 <tr>
@@ -235,7 +235,7 @@
           <% if @device_type.device_bay_templates.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <% @device_type.device_bay_templates.each do |device_bay| %>
                     <tr>
@@ -268,7 +268,7 @@
           <% if @device_type.network_interfaces.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <% @device_type.network_interfaces.each do |interface| %>
                     <tr>
@@ -301,7 +301,7 @@
           <% if @device_type.console_server_port_templates.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <% @device_type.console_server_port_templates.each do |console_server_port| %>
                     <tr>
@@ -334,7 +334,7 @@
           <% if @device_type.power_outlet_templates.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="table table-hover panel-body">
+              <table class="<%= table_css_classes 'table-hover panel-body' %>">
                 <tbody>
                 <% @device_type.power_outlet_templates.each do |power_outlet| %>
                     <tr>

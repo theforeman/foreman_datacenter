@@ -20,7 +20,7 @@
       <div class="panel-heading">
         <strong>Site</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <tr>
           <td>Facility</td>
@@ -56,7 +56,7 @@
       <div class="panel-heading">
         <strong>Stats</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <tr>
           <td>Racks</td>
@@ -75,7 +75,7 @@
       <div class="panel-heading">
         <strong>Rack Groups</strong>
       </div>
-      <table class="table table-hover panel-body">
+      <table class="<%= table_css_classes 'table-hover panel-body' %>">
         <tbody>
         <% @site.rack_groups.each do |rack_group| %>
             <tr>
