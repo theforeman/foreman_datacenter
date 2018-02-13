@@ -1,4 +1,4 @@
-class CreateManagementDevices < ActiveRecord::Migration
+class CreateManagementDevices < ActiveRecord::Migration[4.2]
   def change
     create_table :management_devices do |t|
       t.references :device

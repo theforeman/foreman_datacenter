@@ -1,4 +1,4 @@
-class CreatePowerPortTemplates < ActiveRecord::Migration
+class CreatePowerPortTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :power_port_templates do |t|
       t.integer :device_type_id

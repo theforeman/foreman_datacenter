@@ -1,4 +1,4 @@
-class CreateDeviceInterfaceConnections < ActiveRecord::Migration
+class CreateDeviceInterfaceConnections < ActiveRecord::Migration[4.2]
   def change
     create_table :device_interface_connections do |t|
       t.integer :interface_a

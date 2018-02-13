@@ -1,4 +1,4 @@
-class CreateConsolePorts < ActiveRecord::Migration
+class CreateConsolePorts < ActiveRecord::Migration[4.2]
   def change
     create_table :console_ports do |t|
       t.integer :device_id

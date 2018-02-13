@@ -1,4 +1,4 @@
-class CreateRackGroups < ActiveRecord::Migration
+class CreateRackGroups < ActiveRecord::Migration[4.2]
   def change
     create_table :rack_groups do |t|
       t.string :name, limit: 50

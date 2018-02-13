@@ -1,4 +1,4 @@
-class CreatePlatforms < ActiveRecord::Migration
+class CreatePlatforms < ActiveRecord::Migration[4.2]
   def change
     create_table :platforms do |t|
       t.string :name, limit: 50, null: false

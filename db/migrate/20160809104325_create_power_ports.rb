@@ -1,4 +1,4 @@
-class CreatePowerPorts < ActiveRecord::Migration
+class CreatePowerPorts < ActiveRecord::Migration[4.2]
   def change
     create_table :power_ports do |t|
       t.integer :device_id

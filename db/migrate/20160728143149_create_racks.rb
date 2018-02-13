@@ -1,4 +1,4 @@
-class CreateRacks < ActiveRecord::Migration
+class CreateRacks < ActiveRecord::Migration[4.2]
   def change
     create_table :racks do |t|
       t.integer :site_id

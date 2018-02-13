@@ -1,4 +1,4 @@
-class CreateDeviceBayTemplates < ActiveRecord::Migration
+class CreateDeviceBayTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :device_bay_templates do |t|
       t.integer :device_type_id

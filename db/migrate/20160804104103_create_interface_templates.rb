@@ -1,4 +1,4 @@
-class CreateInterfaceTemplates < ActiveRecord::Migration
+class CreateInterfaceTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :interface_templates do |t|
       t.integer :device_type_id

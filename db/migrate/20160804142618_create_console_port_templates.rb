@@ -1,4 +1,4 @@
-class CreateConsolePortTemplates < ActiveRecord::Migration
+class CreateConsolePortTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :console_port_templates do |t|
       t.integer :device_type_id

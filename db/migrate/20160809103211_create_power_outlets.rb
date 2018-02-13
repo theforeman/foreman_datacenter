@@ -1,4 +1,4 @@
-class CreatePowerOutlets < ActiveRecord::Migration
+class CreatePowerOutlets < ActiveRecord::Migration[4.2]
   def change
     create_table :power_outlets do |t|
       t.integer :device_id
