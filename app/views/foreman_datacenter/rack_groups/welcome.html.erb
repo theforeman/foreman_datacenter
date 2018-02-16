@@ -1,0 +1,13 @@
+<% content_for(:title, _("Rack Groups")) %>
+<div class="blank-slate-pf">
+  <div class="blank-slate-pf-icon">
+    <%= icon_text("domain", "", :kind => "pficon") %>
+  </div>
+  <h1><%= _('Rack Groups') %></h1>
+  <p><%= _("Document here group of racks (e.g. one room where this group of racks is stored).") %></p>
+  <p><%= link_to _('Learn more about this in the documentation.'), documentation_url("")%></p>
+  <div class="blank-slate-pf-main-action">
+      <%= new_link(_('Create Rack Group'), {}, { :class => "btn-lg" }) %>
+  </div>
+</div>
+

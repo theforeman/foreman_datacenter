@@ -413,7 +413,7 @@ module ForemanDatacenter
         role "Datacenter Manager", MANAGER
         add_all_permissions_to_default_roles
 
-        sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu do
+        sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu, :icon => 'pficon pficon-enterprise' do
           menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }
           divider :top_menu, :parent => :datacenter, :after => :sites, :caption => 'Racks'
           menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/racks', action: :index }

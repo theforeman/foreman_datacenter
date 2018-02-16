@@ -1,0 +1,13 @@
+<% content_for(:title, _("Platforms")) %>
+<div class="blank-slate-pf">
+  <div class="blank-slate-pf-icon">
+    <%= icon_text("cpu", "", :kind => "pficon") %>
+  </div>
+  <h1><%= _('Platforms') %></h1>
+  <p><%= _("List of platforms (e.g. ipmi, mgmt interface, etc.).") %></p>
+  <p><%= link_to _('Learn more about this in the documentation.'), documentation_url("")%></p>
+  <div class="blank-slate-pf-main-action">
+      <%= new_link(_('Create Platform'), {}, { :class => "btn-lg" }) %>
+  </div>
+</div>
+

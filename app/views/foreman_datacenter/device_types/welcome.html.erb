@@ -1,0 +1,13 @@
+<% content_for(:title, _("Device Types")) %>
+<div class="blank-slate-pf">
+  <div class="blank-slate-pf-icon">
+    <%= icon_text("tasks", "", :kind => "fa") %>
+  </div>
+  <h1><%= _('Device Types') %></h1>
+  <p><%= _("Each device object has a device type (e.g. HP ProLiant DL180 G6).") %></p>
+  <p><%= link_to _('Learn more about this in the documentation.'), documentation_url("")%></p>
+  <div class="blank-slate-pf-main-action">
+      <%= new_link(_('Create Device Type'), {}, { :class => "btn-lg" }) %>
+  </div>
+</div>
+
