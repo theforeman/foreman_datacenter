@@ -1,0 +1,23 @@
+<div class="col-md-5">
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Unpositioned Devices</strong></div>
+    <table class="table table-hover panel-body">
+      <tbody>
+        <% @rack.unpositioned_devices.each do |d| %>
+          <tr>
+            <td class="col-md-4">
+              <div class="<%= "text-" + ((d.side == "full" or d.side.nil?) ? "center" : "right") + " pull-" + ((d.side == "full" or d.side.nil?) ? "center" : d.side) %>">
+                <%= link_to d.name, device_path(d) %>
+                <% if d.side.nil? %>
+                  *
+                <% end %>
+              </div>
+          </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div><h6 class="text-right">* side is not defined</h6></div>
+</div>
+

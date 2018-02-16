@@ -30,6 +30,10 @@ module ForemanDatacenter
       device_sorting(result)
     end
 
+    def unpositioned_devices
+      devices.where(position: nil).to_a
+    end
+
     private
 
     def device_sorting(devices)

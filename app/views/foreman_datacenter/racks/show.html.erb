@@ -70,4 +70,7 @@
   <!-- Devices -->
   <%= render "device_position", rack: @rack %>
 
+  <!-- Unpositioned Devices -->
+  <%= render "unpositioned_devices", rack: @rack if @rack.unpositioned_devices.count != 0 %>
+
 </div>
