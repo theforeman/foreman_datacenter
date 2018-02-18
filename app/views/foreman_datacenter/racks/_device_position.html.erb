@@ -1,28 +1,25 @@
-<div class="col-md-5">
-  <div class="panel panel-default">
-    <div class="panel-heading"><strong>Devices</strong></div>
-    <table class="<%= table_css_classes 'table-hover panel-body' %>">
-      <tbody>
-        <% @rack.positioned_devices.each do |positions, devices| %>
-          <tr>
-            <td class="col-md-1"><%= raw(positions.map{|p| "#{p}U"}.join("<br />")) %></td>
-            <td class="col-md-4">
-              <% unless devices.empty? %>
-                  <% devices.each do |d| %>
-                    <div class="<%= "text-" + ((d.side == "full" or d.side.nil?) ? "center" : "right") + " pull-" + ((d.side == "full" or d.side.nil?) ? "center" : d.side) %>">
-                      <%= link_to d.name, device_path(d) %>
-                      <% if d.side.nil? %>
-                        *
-                      <% end %>
-                    </div>
-                  <% end %>
-              <% end %>
-          </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div><h6 class="text-right">* side is not defined</h6></div>
+<div class="panel panel-default">
+  <div class="panel-heading"><strong>Devices</strong></div>
+  <table class="<%= table_css_classes 'table-hover panel-body' %>">
+    <tbody>
+      <% @rack.positioned_devices.each do |positions, devices| %>
+        <tr>
+          <td class="col-md-1"><%= raw(positions.map{|p| "#{p}U"}.join("<br />")) %></td>
+          <td class="col-md-4">
+            <% unless devices.empty? %>
+                <% devices.each do |d| %>
+                  <div class="<%= "text-" + ((d.side == "full" or d.side.nil?) ? "center" : "right") + " pull-" + ((d.side == "full" or d.side.nil?) ? "center" : d.side) %>">
+		    <span class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>">&nbsp;</span>
+                    <%= link_to d.name, device_path(d) %>
+                    <% if d.side.nil? %>
+                      *
+                    <% end %>
+                  </div>
+                <% end %>
+            <% end %>
+        </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-

@@ -1,3 +1,5 @@
+<% stylesheet 'foreman_datacenter/device_roles' %>
+
 <% title h("Rack #{@rack.name}") %>
 
 <% title_actions display_link_if_authorized(
@@ -67,10 +69,14 @@
     </div>
   </div>
 
-  <!-- Devices -->
-  <%= render "device_position", rack: @rack %>
 
-  <!-- Unpositioned Devices -->
-  <%= render "unpositioned_devices", rack: @rack if @rack.unpositioned_devices.count != 0 %>
+  <div class="col-md-5">
+    <!-- Devices -->
+    <%= render "device_position", rack: @rack %>
+
+    <!-- Unpositioned Devices -->
+    <%= render "unpositioned_devices", rack: @rack if @rack.unpositioned_devices.count != 0 %>
+    <div><h6 class="text-right">* side is not defined</h6></div>
+  </div>
 
 </div>
