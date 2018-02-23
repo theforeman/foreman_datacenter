@@ -1,3 +1,5 @@
+<% stylesheet 'foreman_datacenter/datacenter' %>
+
 <% title h(@platform.name) %>
 
 <% title_actions display_link_if_authorized(
@@ -20,7 +22,7 @@
       <div class="panel-heading">
         <strong>Platform</strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body' %>">
+      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
         <tbody>
         <tr>
           <td>Name</td>
@@ -47,7 +49,7 @@
     <!-- Stats -->
     <div class="panel panel-default">
       <div class="panel-heading"><strong>Stats</strong></div>
-      <table class="<%= table_css_classes 'table-hover panel-body' %>">
+      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
         <tr>
           <td>Devices</td>
           <td><%= @platform.devices.length %></td>
