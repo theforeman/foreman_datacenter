@@ -127,6 +127,23 @@ module ForemanDatacenter
       return result
     end
 
+    def sync_interfaces_with_host
+      if host
+        existed_names = interfaces.map(&:name)
+        host.interfaces.each do |interface|
+          unless existed_names.include?(interface.identifier)
+            interfaces.create(
+              name: interface.identifier,
+              form_factor: ForemanDatacenter::DeviceInterface::DEFAULT_FORM_FACTOR,
+              mac_address: interface.mac,
+              ip_address: interface.ip,
+              mgmt_only: interface.identifier == 'ipmi'
+            )
+          end
+        end
+      end
+    end
+
     private
 
     def create_interfaces
@@ -145,24 +162,6 @@ module ForemanDatacenter
             ip_address: interface.ip,
             mgmt_only: interface.identifier == 'ipmi'
           )
-        end
-      end
-    end
-
-    def sync_interfaces_with_host
-      if host
-        existed_names = interfaces.map(&:name)
-        # abort interfaces.map(&:identifier).inspect
-        host.interfaces.each do |interface|
-          unless existed_names.include?(interface.identifier)
-            interfaces.create(
-              name: interface.identifier,
-              form_factor: ForemanDatacenter::DeviceInterface::DEFAULT_FORM_FACTOR,
-              mac_address: interface.mac,
-              ip_address: interface.ip,
-              mgmt_only: interface.identifier == 'ipmi'
-            )
-          end
         end
       end
     end
