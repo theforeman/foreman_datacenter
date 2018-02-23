@@ -16,7 +16,7 @@ module ForemanDatacenter
     def create
       @comment = @commentable.comments.new(comment_params.merge(user_id: User.current.id))
       if @comment.save
-        process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}"
+        process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}", success_msg: "Comment successfully created."
       else
         process_error :redirect => "/datacenter/#{@resource}/#{@id}", :error_msg => _("Failed: %s") % (e)
       end
@@ -28,7 +28,7 @@ module ForemanDatacenter
       @submodule = parse_submodule(@comment)
       if @comment.user == @current_user or @comment.user.nil?
         if @comment.update(comment_params)
-          process_success :success_redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}"
+          process_success :success_redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}", success_msg: "Comment successfully updated."
         else
           process_error :redirect => "/datacenter/#{@submodule}/#{@comment.commentable_id}#comment-#{@comment.id}", :error_msg => _("Failed: %s") % (e)
         end
@@ -41,7 +41,7 @@ module ForemanDatacenter
       @comment = Comment.find(params[:id])
       if @comment.user == @current_user or @comment.user.nil?
         if @comment.destroy
-          process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}"
+          process_success :success_redirect => "/datacenter/#{@resource}/#{@id}#comment-#{@comment.id}", success_msg: "Comment successfully deleted."
         else
           process_error :redirect => "/datacenter/#{@resource}/#{@id}", :error_msg => _("Failed: %s") % (e)
         end
