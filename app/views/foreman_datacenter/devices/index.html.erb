@@ -2,8 +2,10 @@
 <% stylesheet 'foreman_datacenter/comments' %>
 
 <% title _('Devices') %>
-<% title_actions display_link_if_authorized(_('New device'), hash_for_new_device_path, class: 'btn btn-success'),
-                 display_link_if_authorized(_('Import from host'), hash_for_import_to_device_path, class: 'btn btn-success') %>
+<% title_actions display_link_if_authorized(_('Create device'), hash_for_new_device_path, class: 'btn btn-primary'),
+  display_link_if_authorized(_('Import from host'), hash_for_import_to_device_path, class: 'btn btn-success'),
+  help_button
+%>
 
 <table class="<%= table_css_classes 'table-two-pane' %>">
   <thead>
