@@ -7,7 +7,8 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
 
     before_action :set_device, only: [:update, :destroy, :inventory,
-                                      :destroy_interfaces, :qr_code]
+                                      :destroy_interfaces, :qr_code,
+                                      :sync_interfaces_with_host]
 
     before_action :load_resource
 
@@ -105,6 +106,16 @@ module ForemanDatacenter
       send_data(generate_qr_code(@device),
                 filename: "#{@device.name_without_fqdn}.qr.pdf",
                 type: 'application/pdf')
+    end
+
+    def sync_interfaces_with_host
+      if @device.sync_interfaces_with_host
+        notice("Device successfully synchronized.")
+        redirect_to device_url(@device)
+      else
+        error("Unsuccessful synchronization.")
+        redirect_to device_url(@device)
+      end
     end
 
     private
