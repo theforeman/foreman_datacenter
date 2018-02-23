@@ -42,7 +42,7 @@
     </div>
   <% end %>
 <% else %>
-  <%= form_for [@commentable, @comment], url: "/datacenter/devices/#{@commentable.id}/comments" do |f| %>
+  <%= form_for [@commentable, @comment], url: "/datacenter/devices/#{@commentable.id}/comments", html: {class: "form-horizontal well nonborder"} do |f| %>
     <div class="clearfix">
       <div class="form-group">
         <div class="col-md-5">
