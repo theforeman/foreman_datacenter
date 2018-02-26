@@ -20,7 +20,7 @@ module ForemanDatacenter
         search = resource_base.search_for ''
       end
       @devices = search.includes(:device_role, :device_type, :site, :rack).
-        paginate(:page => params[:page])
+        paginate(:page => params[:page], :per_page => params[:per_page])
     end
 
     def show

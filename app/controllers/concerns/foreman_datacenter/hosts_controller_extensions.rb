@@ -14,7 +14,7 @@ module ForemanDatacenter
         search = resource_base.search_for ''
       end
       @hosts = search.includes(:device, :operatingsystem, :environment, :model, :compute_resource).
-        paginate(:page => params[:page])
+        paginate(:page => params[:page], :per_page => params[:per_page])
     end
 
     private

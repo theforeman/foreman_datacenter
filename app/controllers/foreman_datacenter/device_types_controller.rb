@@ -4,7 +4,7 @@ module ForemanDatacenter
 
     def index
       @device_types = DeviceType.includes(:manufacturer).
-        paginate(:page => params[:page])
+        paginate(:page => params[:page], :per_page => params[:per_page])
     end
 
     def show
