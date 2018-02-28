@@ -337,7 +337,7 @@
               <% end %>
               <div class="panel-footer text-right">
 		<%= link_to 'Sync', sync_interfaces_with_host_device_path(@device),
-                            class: 'btn btn-primary btn-xs' %>
+                            class: 'btn btn-primary btn-xs' if @device.host %>
                 <%= link_to 'Add an interface', new_device_device_interface_path(@device),
                             class: 'btn btn-primary btn-xs' %>
                 <%= button_tag 'Destroy selected interfaces',
