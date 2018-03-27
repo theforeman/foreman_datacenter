@@ -30,6 +30,14 @@ Here you can create a particular device type, for example a model of switch and 
 
 You can either just create a device - then you have to create first Manufacturer, Device Type, Device Role, Platform; or you can import device from Puppet facts (this feature is still in development phase) - you just click **Devices** -> **Import from host** and then will search your host and click **Import to device**. Then you will get a page with additional information about the machine to be filled like location, position in rack, etc. Once device is created, you can list it in **Devices** section and when you click on this device, you can fill in additional information, e.g. connect its interfaces to a switch, etc.
 
+### Possible problem
+
+Sometimes you may encounter a problem that does not work dropdown select field(like this https://github.com/theforeman/foreman_datacenter/issues/12 or this https://github.com/theforeman/foreman_datacenter/issues/9)
+
+Please make assets precompilation manually.
+
+We are working on this problem
+
 ## Contributing
 
 Fork and send a Pull Request. Thanks!
