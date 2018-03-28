@@ -20,6 +20,8 @@ Foreman Datacenter plugin documents following:
 
 See [Plugins Installation](https://theforeman.org/plugins/#2.Installation) for how to install Foreman plugins.
 
+NOTE: after the plugin is installed you have to precompile assets!
+
 ## Usage
 
 ### Create a device type
