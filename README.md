@@ -16,11 +16,32 @@ Foreman Datacenter plugin documents following:
 * **Power connections** - lists all connections of power cables
 * **Interface connections** - lists all connections between interfaces
 
-## Installation
+## Introduction Video presentation
+
+* https://www.youtube.com/watch?v=HVmJ6UYPaz0
+
+## Installation by package
 
 See [Plugins Installation](https://theforeman.org/plugins/#2.Installation) for how to install Foreman plugins.
 
-NOTE: after the plugin is installed you have to precompile assets!
+### Ubuntu/Debian instructions
+```
+apt-get install ruby-foreman-datacenter
+```
+
+### Redhat/Centos instructions
+```
+yum install ruby-foreman-datacenter
+```
+
+NOTE: on both platforms, after the plugin is installed you have to precompile assets!
+```
+foreman-rake assets:precompile
+```
+
+## Installation by gem (on Redhat/Centos systems, has been confirmed on Katello 3.4/Foreman 1.15.6 and 1.16)
+
+### Redhat/Centos instructions
 
 You may need to install additional Gems and feed db:
 ```
@@ -71,7 +92,10 @@ You can either just create a device - then you have to create first Manufacturer
 
 Sometimes you may encounter a problem that does not work dropdown select field(like this https://github.com/theforeman/foreman_datacenter/issues/12 or this https://github.com/theforeman/foreman_datacenter/issues/9)
 
-Please make assets precompilation manually.
+Please make assets precompilation manually as following in foreman installation dir:
+```
+foreman-rake assets:precompile
+```
 
 We are working on this problem
 
