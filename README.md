@@ -39,9 +39,9 @@ NOTE: on both platforms, after the plugin is installed you have to precompile as
 foreman-rake assets:precompile
 ```
 
-## Installation by gem (on Redhat/Centos systems, has been confirmed on Katello 3.4/Foreman 1.15.6 and 1.16)
+## Installation by gem
 
-### Redhat/Centos instructions
+### Redhat/Centos instructions (confirmed on Katello 3.4/Foreman 1.15.6 and 1.16)
 
 You may need to install additional Gems and feed db:
 ```
