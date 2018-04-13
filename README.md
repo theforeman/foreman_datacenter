@@ -22,6 +22,41 @@ See [Plugins Installation](https://theforeman.org/plugins/#2.Installation) for h
 
 NOTE: after the plugin is installed you have to precompile assets!
 
+You may need to install additional Gems and feed db:
+```
+# Install some required gems for precompile assets
+gem install --ignore-dependencies sprockets
+gem install --ignore-dependencies sass
+gem install --ignore-dependencies sass-listen
+gem install --ignore-dependencies rb-fsevent
+gem install --ignore-dependencies rb-inotify
+gem install --ignore-dependencies ffi
+
+# Add repo cause ffi needs ruby22-ruby-devel
+cat > /etc/yum.repos.d/CentOS-SCLo-scl.repo << EOF
+[centos-sclo-sclo-rh]
+name=CentOS-7 - SCLo sclo ruby22
+baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/rh/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
+EOF
+
+# Install ruby22-ruby-devel for ruby gem ffi
+yum install rh-ruby22-ruby-devel
+gem install --ignore-dependencies ffi
+
+# Precompile assets should work now
+foreman-rake assets:precompile
+
+# Now feed database
+RAILS_ENV=production rake db:migrate
+
+# If it fails
+cd /opt/rh/rh-ruby22/root/usr/local/share/gems/gems/foreman_datacenter-0.1.49/db/migrate
+for F in `ls`;do  sed -i ${F} -e 's/\[4.2\]//';done;
+```
+
 ## Usage
 
 ### Create a device type
