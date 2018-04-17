@@ -90,6 +90,11 @@ module ForemanDatacenter
       render partial: 'racks'
     end
 
+    def site_racks
+      @site = Site.find(params[:site_id])
+      render partial: 'site_racks'
+    end
+
     def for_rack
       @rack = ForemanDatacenter::Rack.find(params[:rack_id])
       render partial: 'for_rack'

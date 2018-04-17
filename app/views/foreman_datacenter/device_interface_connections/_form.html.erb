@@ -14,6 +14,13 @@
           <div class="panel-body">
             <div class="clearfix">
               <div class="form-group">
+                <label class="col-md-2 control-label required">Site</label>
+                <div class="col-md-4"><%= @device_interface_connection.first_rack.site.name %></div>
+              </div>
+            </div>
+
+            <div class="clearfix">
+              <div class="form-group">
                 <label class="col-md-2 control-label required">Rack</label>
                 <div class="col-md-4"><%= @device_interface_connection.first_rack.name %></div>
               </div>
@@ -47,9 +54,21 @@
           <div class="panel-heading text-center"><strong>B Side</strong></div>
 
           <div class="panel-body">
-            <%= rack_device_select @device_interface_connection.first_site,
+             <div class="clearfix">
+               <div class="form-group">
+                 <label class="col-md-2 control-label required">Site</label>
+                 <div class="col-md-4">
+                   <%= sites_for_connection_form @device_interface_connection.first_site.id %>
+                 </div>
+                 <span class="help-block help-inline">First, you need to select a site</span>
+               </div>
+             </div>
+
+            <div id="dic-container">
+              <%= rack_device_select @device_interface_connection.first_site,
                                    url: interfaces_device_interface_connections_path,
                                    target: '#interfaces-container' %>
+            </div>
 
             <div id="interfaces-container">
               <%= interfaces_for_connection_form f, [] %>
