@@ -30,13 +30,11 @@ apt-get install ruby-foreman-datacenter
 ```
 
 ### Redhat/Centos instructions
-```
-yum install ruby-foreman-datacenter
-```
 
-NOTE: on both platforms, after the plugin is installed you have to precompile assets!
+Note the package hasn't actually been created yet.
+
 ```
-foreman-rake assets:precompile
+yum install tfm-rubygem-foreman_datacenter
 ```
 
 ## Installation by gem

@@ -45,118 +45,118 @@ module ForemanDatacenter
           # ConsolePorts
           permission :view_console_ports, {
                      :'foreman_datacenter/console_ports' => [:index]},
-                     :resource_type => "ForemanDatacenter::ConsolePorts"
+                     :resource_type => "ForemanDatacenter::ConsolePort"
           permission :create_console_ports, {
                      :'foreman_datacenter/console_ports' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::ConsolePorts"
+                     :resource_type => "ForemanDatacenter::ConsolePort"
           permission :edit_console_ports, {
                      :'foreman_datacenter/console_ports' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::ConsolePorts"
+                     :resource_type => "ForemanDatacenter::ConsolePort"
           permission :destroy_console_ports, {
                      :'foreman_datacenter/console_ports' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::ConsolePorts"
+                     :resource_type => "ForemanDatacenter::ConsolePort"
           # ConsoleServerPortTemplates
           permission :create_console_server_port_templates, {
                      :'foreman_datacenter/console_server_port_templates' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::ConsoleServerPortTemplates"
+                     :resource_type => "ForemanDatacenter::ConsoleServerPortTemplate"
           permission :destroy_console_server_port_templates, {
                      :'foreman_datacenter/console_server_port_templates' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::ConsoleServerPortTemplates"
+                     :resource_type => "ForemanDatacenter::ConsoleServerPortTemplate"
           # ConsoleServerPorts
           permission :create_console_server_ports, {
                      :'foreman_datacenter/console_server_ports' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::ConsoleServerPorts"
+                     :resource_type => "ForemanDatacenter::ConsoleServerPort"
           permission :edit_console_server_ports, {
                      :'foreman_datacenter/console_server_ports' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::ConsoleServerPorts"
+                     :resource_type => "ForemanDatacenter::ConsoleServerPort"
           permission :destroy_console_server_ports, {
                      :'foreman_datacenter/console_server_ports' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::ConsoleServerPorts"
+                     :resource_type => "ForemanDatacenter::ConsoleServerPort"
           permission :console_server_ports_connections, {
                      :'foreman_datacenter/console_server_ports' => [:new_connection, :connect, :disconnect, :for_device]},
-                     :resource_type => "ForemanDatacenter::ConsoleServerPorts"
+                     :resource_type => "ForemanDatacenter::ConsoleServerPort"
           # DeviceBayTemplates /datacenter/device_types/:id/device_bays/...
           permission :create_device_bay_templates, {
                      :'foreman_datacenter/device_bay_templates' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceBayTemplates"
+                     :resource_type => "ForemanDatacenter::DeviceBayTemplate"
           permission :destroy_device_bay_templates, {
                      :'foreman_datacenter/device_bay_templates' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceBayTemplates"
+                     :resource_type => "ForemanDatacenter::DeviceBayTemplate"
           # DeviceBays
           permission :create_device_bays, {
                      :'foreman_datacenter/device_bays' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceBays"
+                     :resource_type => "ForemanDatacenter::DeviceBay"
           permission :edit_device_bays, {
                      :'foreman_datacenter/device_bays' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::DeviceBays"
+                     :resource_type => "ForemanDatacenter::DeviceBay"
           permission :destroy_device_bays, {
                      :'foreman_datacenter/device_bays' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceBays"
+                     :resource_type => "ForemanDatacenter::DeviceBay"
           permission :population, {
                      :'foreman_datacenter/device_bays' => [:populate_new, :populate, :depopulate]},
-                     :resource_type => "ForemanDatacenter::DeviceBays"
+                     :resource_type => "ForemanDatacenter::DeviceBay"
           # DeviceInterfaceConnections
           permission :view_device_interface_connections, {
                      :'foreman_datacenter/device_interface_connections' => [:index]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnections"
+                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnection"
           permission :create_device_interface_connections, {
                      :'foreman_datacenter/device_interface_connections' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnections"
+                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnection"
           permission :edit_device_interface_connections, {
                      :'foreman_datacenter/device_interface_connections' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnections"
+                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnection"
           permission :device_interface_connections_management, {
                      :'foreman_datacenter/device_interface_connections' => [:planned, :connected, :interfaces]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnections"
+                     :resource_type => "ForemanDatacenter::DeviceInterfaceConnection"
           # DeviceInterfaces
           permission :create_device_interfaces, {
                      :'foreman_datacenter/device_interfaces' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaces"
+                     :resource_type => "ForemanDatacenter::DeviceInterface"
           permission :edit_device_interfaces, {
                      :'foreman_datacenter/device_interfaces' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaces"
+                     :resource_type => "ForemanDatacenter::DeviceInterface"
           permission :destroy_device_interfaces, {
                      :'foreman_datacenter/device_interfaces' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaces"
+                     :resource_type => "ForemanDatacenter::DeviceInterface"
           permission :device_interfaces_new_management, {
                      :'foreman_datacenter/device_interfaces' => [:new_management]},
-                     :resource_type => "ForemanDatacenter::DeviceInterfaces"
+                     :resource_type => "ForemanDatacenter::DeviceInterface"
           # DeviceModules
           permission :create_devices_modules, {
                      :'foreman_datacenter/device_modules' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceModules"
+                     :resource_type => "ForemanDatacenter::DeviceModule"
           permission :edit_device_modules, {
                      :'foreman_datacenter/device_modules' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::DeviceModules"
+                     :resource_type => "ForemanDatacenter::DeviceModule"
           permission :destroy_device_modules, {
                      :'foreman_datacenter/device_modules' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceModules"
+                     :resource_type => "ForemanDatacenter::DeviceModule"
           # DeviceRoles
           permission :view_device_roles, {
                      :'foreman_datacenter/device_roles' => [:show, :index]},
-                     :resource_type => "ForemanDatacenter::DeviceRoles"
+                     :resource_type => "ForemanDatacenter::DeviceRole"
           permission :create_devices_roles, {
                      :'foreman_datacenter/device_roles' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceRoles"
+                     :resource_type => "ForemanDatacenter::DeviceRole"
           permission :edit_device_roles, {
                      :'foreman_datacenter/device_roles' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::DeviceRoles"
+                     :resource_type => "ForemanDatacenter::DeviceRole"
           permission :destroy_device_roles, {
                      :'foreman_datacenter/device_roles' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceRoles"
+                     :resource_type => "ForemanDatacenter::DeviceRole"
           # DeviceTypes
           permission :view_device_types, {
                      :'foreman_datacenter/device_types' => [:show, :index]},
-                     :resource_type => "ForemanDatacenter::DeviceTypes"
+                     :resource_type => "ForemanDatacenter::DeviceType"
           permission :create_devices_types, {
                      :'foreman_datacenter/device_types' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::DeviceTypes"
+                     :resource_type => "ForemanDatacenter::DeviceType"
           permission :edit_device_types, {
                      :'foreman_datacenter/device_types' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::DeviceTypes"
+                     :resource_type => "ForemanDatacenter::DeviceType"
           permission :destroy_device_types, {
                      :'foreman_datacenter/device_types' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::DeviceTypes"
+                     :resource_type => "ForemanDatacenter::DeviceType"
           # Devices
           permission :view_devices, {
                      :'foreman_datacenter/devices' => [:show, :index]},
@@ -188,56 +188,56 @@ module ForemanDatacenter
           # InterfaceTemplates /datacenter/device_types/:id/interfaces/...
           permission :create_interface_templates, {
                      :'foreman_datacenter/interface_templates' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::InterfaceTemplates"
+                     :resource_type => "ForemanDatacenter::InterfaceTemplate"
           permission :destroy_interface_templates, {
                      :'foreman_datacenter/interface_templates' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::InterfaceTemplates"
+                     :resource_type => "ForemanDatacenter::InterfaceTemplate"
           permission :new_management, {
                      :'foreman_datacenter/interface_templates' => [:new_management]},
-                     :resource_type => "ForemanDatacenter::InterfaceTemplates"
+                     :resource_type => "ForemanDatacenter::InterfaceTemplate"
           # ManagementDevices
           permission :create_management_devices, {
                      :'foreman_datacenter/management_devices' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::ManagementDevices"
+                     :resource_type => "ForemanDatacenter::ManagementDevice"
           permission :edit_management_devices, {
                      :'foreman_datacenter/management_devices' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::ManagementDevices"
+                     :resource_type => "ForemanDatacenter::ManagementDevice"
           permission :destroy_management_devices, {
                      :'foreman_datacenter/management_devices' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::ManagementDevices"
+                     :resource_type => "ForemanDatacenter::ManagementDevice"
           # Manufacturers
           permission :view_manufacturers, {
                      :'foreman_datacenter/manufacturers' => [:show, :index]},
-                     :resource_type => "ForemanDatacenter::Manufacturers"
+                     :resource_type => "ForemanDatacenter::Manufacturer"
           permission :create_manufacturers, {
                      :'foreman_datacenter/manufacturers' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::Manufacturers"
+                     :resource_type => "ForemanDatacenter::Manufacturer"
           permission :edit_manufacturers, {
                      :'foreman_datacenter/manufacturers' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::Manufacturers"
+                     :resource_type => "ForemanDatacenter::Manufacturer"
           permission :destroy_manufacturers, {
                      :'foreman_datacenter/manufacturers' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::Manufacturers"
+                     :resource_type => "ForemanDatacenter::Manufacturer"
           # Platforms
           permission :view_platforms, {
                      :'foreman_datacenter/platforms' => [:show, :index]},
-                     :resource_type => "ForemanDatacenter::Platforms"
+                     :resource_type => "ForemanDatacenter::Platform"
           permission :create_platforms, {
                      :'foreman_datacenter/platforms' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::Platforms"
+                     :resource_type => "ForemanDatacenter::Platform"
           permission :edit_platforms, {
                      :'foreman_datacenter/platforms' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::Platforms"
+                     :resource_type => "ForemanDatacenter::Platform"
           permission :destroy_platforms, {
                      :'foreman_datacenter/platforms' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::Platforms"
+                     :resource_type => "ForemanDatacenter::Platform"
           # PowerOutletTemplates
           permission :create_power_outlet_templates, {
                      :'foreman_datacenter/power_outlet_templates' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::PowerOutletTemplates"
+                     :resource_type => "ForemanDatacenter::PowerOutletTemplate"
           permission :destroy_power_outlet_templates, {
                      :'foreman_datacenter/power_outlet_templates' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::PowerOutletTemplates"
+                     :resource_type => "ForemanDatacenter::PowerOutletTemplate"
           # PowerOutlets
           permission :create_power_outlets, {
                      :'foreman_datacenter/power_outlets' => [:new, :create]},
@@ -261,19 +261,19 @@ module ForemanDatacenter
           # PowerPorts
           permission :view_power_ports, {
                      :'foreman_datacenter/power_ports' => [:index]},
-                     :resource_type => "ForemanDatacenter::PowerPorts"
+                     :resource_type => "ForemanDatacenter::PowerPort"
           permission :create_power_ports, {
                      :'foreman_datacenter/power_ports' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::PowerPorts"
+                     :resource_type => "ForemanDatacenter::PowerPort"
           permission :edit_power_ports, {
                      :'foreman_datacenter/power_ports' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::PowerPorts"
+                     :resource_type => "ForemanDatacenter::PowerPort"
           permission :destroy_power_ports, {
                      :'foreman_datacenter/power_ports' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::PowerPorts"
+                     :resource_type => "ForemanDatacenter::PowerPort"
           permission :power_ports_connections_management, {
                      :'foreman_datacenter/device_interface_connections' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
-                     :resource_type => "ForemanDatacenter::PowerPorts"
+                     :resource_type => "ForemanDatacenter::PowerPort"
           # RackGroups
           permission :view_rack_groups, {
                      :'foreman_datacenter/rack_groups' => [:show, :index]},
