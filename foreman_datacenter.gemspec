@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib,locale}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'deface'
   s.add_dependency 'prawn', '~> 2.1'
   s.add_dependency 'rqrcode', '~> 0.10.1'
   s.add_development_dependency 'rubocop'

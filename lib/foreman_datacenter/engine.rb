@@ -1,5 +1,3 @@
-require 'deface'
-
 module ForemanDatacenter
   class Engine < ::Rails::Engine
     engine_name 'foreman_datacenter'
