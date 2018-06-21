@@ -28,20 +28,20 @@ module ForemanDatacenter
           # Comments
           permission :create_comments, {
                      :'foreman_datacenter/comments' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::Comments"
+                     :resource_type => "ForemanDatacenter::Comment"
           permission :edit_comments, {
                      :'foreman_datacenter/comments' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::Comments"
+                     :resource_type => "ForemanDatacenter::Comment"
           permission :destroy_comments, {
                      :'foreman_datacenter/comments' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::Comments"
+                     :resource_type => "ForemanDatacenter::Comment"
           # ConsolePortTemplates /datacenter/device_types/:id/console_ports/...
           permission :create_console_port_templates, {
                      :'foreman_datacenter/console_port_templates' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::ConsolePortTemplates"
+                     :resource_type => "ForemanDatacenter::ConsolePortTemplate"
           permission :destroy_console_port_templates, {
                      :'foreman_datacenter/console_port_templates' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::ConsolePortTemplates"
+                     :resource_type => "ForemanDatacenter::ConsolePortTemplate"
           # ConsolePorts
           permission :view_console_ports, {
                      :'foreman_datacenter/console_ports' => [:index]},
@@ -241,23 +241,23 @@ module ForemanDatacenter
           # PowerOutlets
           permission :create_power_outlets, {
                      :'foreman_datacenter/power_outlets' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::PowerOutlets"
+                     :resource_type => "ForemanDatacenter::PowerOutlet"
           permission :edit_power_outlets, {
                      :'foreman_datacenter/power_outlets' => [:edit, :update]},
-                     :resource_type => "ForemanDatacenter::PowerOutlets"
+                     :resource_type => "ForemanDatacenter::PowerOutlet"
           permission :destroy_power_outlets, {
                      :'foreman_datacenter/power_outlets' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::PowerOutlets"
+                     :resource_type => "ForemanDatacenter::PowerOutlet"
           permission :power_outlets_connections, {
                      :'foreman_datacenter/power_outlets' => [:new_connection, :connect, :disconnect, :for_device]},
-                     :resource_type => "ForemanDatacenter::PowerOutlets"
+                     :resource_type => "ForemanDatacenter::PowerOutlet"
           # PowerPortTemplates /datacenter/device_types/:id/power_ports/...
           permission :create_power_port_templates, {
                      :'foreman_datacenter/power_port_templates' => [:new, :create]},
-                     :resource_type => "ForemanDatacenter::PowerPortTemplates"
+                     :resource_type => "ForemanDatacenter::PowerPortTemplate"
           permission :destroy_power_port_templates, {
                      :'foreman_datacenter/power_port_templates' => [:destroy]},
-                     :resource_type => "ForemanDatacenter::PowerPortTemplates"
+                     :resource_type => "ForemanDatacenter::PowerPortTemplate"
           # PowerPorts
           permission :view_power_ports, {
                      :'foreman_datacenter/power_ports' => [:index]},
