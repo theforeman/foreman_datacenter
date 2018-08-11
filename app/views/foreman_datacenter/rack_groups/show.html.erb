@@ -61,7 +61,7 @@
     <div class="panel-heading"><strong>Racks</strong></div>
     <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
       <tbody>
-      <% @rack_group.racks.each do |rack| %>
+        <% @rack_group.racks.to_a.sort_by!{ |r| r.name }.each do |rack| %>
           <tr>
             <td><%= link_to rack.name, rack_path(rack) %></td>
           </tr>
