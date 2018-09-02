@@ -1,26 +1,28 @@
 <% title _("Sites") %>
-<%  title_actions display_link_if_authorized(_("Create Site"), hash_for_new_site_path, class: 'btn btn-primary'), help_button %>
+<% title_actions new_link(_("Create Site")), help_button %>
 
 <table class="<%= table_css_classes 'table-two-pane' %>">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Facility</th>
-      <th>ASN</th>
-      <th>Racks</th>
-      <th>Devices</th>
-      <th>Action</th>
+      <th><%= sort :name, :as => s_("Site|Name")  %></th>
+      <th><%= _("Facility") %></th>
+      <th><%= _("ASN") %></th>
+      <th><%= _("Racks") %></th>
+      <th><%= _("Devices") %></th>
+      <th><%= _("Actions") %></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @sites.each do |site| %>
+    <%# @sites.each do |site| %>
+    <% for site in @sites %>
       <tr>
-        <td><%= link_to(site.name, site_path(site)) %></td>
-        <td><%= h site.facility %></td>
-        <td><%= h site.asn %></td>
-        <td><%= site.racks_count %></td>
-        <td><%= site.devices_count %></td>
+        <td class='display-two-pane ellipsis'><%= link_to_if_authorized(site.name,
+                                        hash_for_edit_site_path(:id => site).merge(:auth_object => site, :authorizer => authorizer)) %></td>
+        <td class='ellipsis'><%= h site.facility %></td>
+        <td class='ellipsis'><%= h site.asn %></td>
+        <td class='ellipsis'><%= site.racks_count %></td>
+        <td class='ellipsis'><%= site.devices_count %></td>
         <td>
           <%= action_buttons(
                   display_link_if_authorized(
@@ -38,3 +40,5 @@
     <% end %>
   </tbody>
 </table>
+<%= will_paginate_with_info @sites %>
+

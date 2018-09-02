@@ -302,16 +302,16 @@ module ForemanDatacenter
                      :'foreman_datacenter/racks' => [:rack_groups]},
                      :resource_type => "ForemanDatacenter::Rack"
           # Sites
-          permission :view_sites, {
+          permission :'view_foreman_datacenter/sites', {
                      :'foreman_datacenter/sites' => [:show, :index]},
                      :resource_type => "ForemanDatacenter::Site"
-          permission :create_sites, {
+          permission :'create_foreman_datacenter/sites', {
                      :'foreman_datacenter/sites' => [:new, :create]},
                      :resource_type => "ForemanDatacenter::Site"
-          permission :edit_sites, {
+          permission :'edit_foreman_datacenter/sites', {
                      :'foreman_datacenter/sites' => [:edit, :update]},
                      :resource_type => "ForemanDatacenter::Site"
-          permission :destroy_sites, {
+          permission :'destroy_foreman_datacenter/sites', {
                      :'foreman_datacenter/sites' => [:destroy]},
                      :resource_type => "ForemanDatacenter::Site"
         end
@@ -403,10 +403,10 @@ module ForemanDatacenter
           :edit_racks,
           :destroy_racks,
           :racks_groups,
-          :view_sites,
-          :create_sites,
-          :edit_sites,
-          :destroy_sites,
+          :'view_foreman_datacenter/sites',
+          :'create_foreman_datacenter/sites',
+          :'edit_foreman_datacenter/sites',
+          :'destroy_foreman_datacenter/sites',
         ]
         role "Datacenter Manager", MANAGER
         add_all_permissions_to_default_roles
