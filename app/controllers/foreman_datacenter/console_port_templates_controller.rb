@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class ConsolePortTemplatesController < ApplicationController
-    before_action :set_console_port_template, only: [:destroy]
+  class ConsolePortTemplatesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::ConsolePortTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
       @console_port_template = ConsolePortTemplate.new(
@@ -26,16 +28,6 @@ module ForemanDatacenter
       else
         process_error object: @console_port_template
       end
-    end
-
-    private
-
-    def set_console_port_template
-      @console_port_template = ConsolePortTemplate.find(params[:id])
-    end
-
-    def console_port_template_params
-      params[:console_port_template].permit(:device_type_id, :name)
     end
   end
 end

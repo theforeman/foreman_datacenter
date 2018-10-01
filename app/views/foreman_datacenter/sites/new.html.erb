@@ -1,3 +1,5 @@
-<% title 'New site' %>
+<% title _("Create Site") %>
+
+<%= breadcrumbs(items: [{caption: _('Sites'), url: '/datacenter/sites'}, {caption: _("Create Site")}]) %>
 
 <%= render 'form' %>

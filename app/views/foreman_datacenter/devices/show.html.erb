@@ -3,18 +3,9 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
 <% stylesheet 'foreman_datacenter/devices' %>
 
-<% content_for(:title, @device.name) %>
+<% title h(@device.to_label) %>
 
-<div class="row">
-  <div class="col-md-8">
-    <h1>
-      <% if @device.host %>
-          <%= link_to @device.name, host_path(@device.host) %>
-      <% else %>
-          <%= @device.name %>
-      <% end %></h1>
-  </div>
-</div>
+<%= breadcrumbs(items: [{caption: _('Devices'), url: '/datacenter/devices'}, {caption: _(@device.to_label)}]) %>
 
 <div class="row">
   <div class="col-md-offset-4 col-md-8 title_action">
@@ -49,6 +40,12 @@
       <!-- table_css_classes removed purposely -->
       <table class="table table-hover panel-body nonmarginbottom">
         <tbody>
+        <% if @device.host %>
+          <tr>
+            <td>Host</td>
+            <td><%= link_to @device.name, host_path(@device.host) %></td>
+          </tr>
+        <% end %>
         <tr>
           <td>Site</td>
           <td><%= link_to @device.site.name, site_path(@device.site) %></td>
@@ -304,13 +301,14 @@
             <strong>Device Bays</strong>
           </div>
           <% if @device.device_bays.empty? %>
-              <div class="panel-body">None</div>
+            <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body' %>">
-                <tbody>
-                <%= render partial: 'device_bay', collection: @device.device_bays %>
-                </tbody>
-              </table>
+            <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while --> 
+            <table class="table table-hover panel-body nonmarginbottom">
+              <tbody>
+              <%= render partial: 'device_bay', collection: @device.device_bays %>
+              </tbody>
+            </table>
           <% end %>
           <div class="panel-footer text-right">
             <%= link_to 'Add a device bay', new_device_device_bay_path(@device),
@@ -358,7 +356,8 @@
           <% if @device.console_server_ports.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body' %>">
+              <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while -->
+              <table class="table table-hover panel-body nonmarginbottom">
                 <tbody>
                 <%= render partial: 'console_server_port', collection: @device.console_server_ports %>
                 </tbody>
@@ -378,13 +377,14 @@
             <strong>Power Outlets</strong>
           </div>
           <% if @device.power_outlets.empty? %>
-              <div class="panel-body">None</div>
+            <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body' %>">
-                <tbody>
-                <%= render partial: 'power_outlet', collection: @device.power_outlets %>
-                </tbody>
-              </table>
+            <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while -->
+            <table class="table table-hover panel-body nonmarginbottom">
+              <tbody>
+              <%= render partial: 'power_outlet', collection: @device.power_outlets %>
+              </tbody>
+            </table>
           <% end %>
           <div class="panel-footer text-right">
             <%= link_to 'Add a power outlet', new_device_power_outlet_path(@device),

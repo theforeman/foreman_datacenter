@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class PowerOutletTemplatesController < ApplicationController
-    before_action :set_power_outlet_template, only: [:destroy]
+  class PowerOutletTemplatesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::PowerOutletTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
       @power_outlet_template = PowerOutletTemplate.new(
@@ -26,16 +28,6 @@ module ForemanDatacenter
       else
         process_error object: @power_outlet_template
       end
-    end
-
-    private
-
-    def set_power_outlet_template
-      @power_outlet_template = PowerOutletTemplate.find(params[:id])
-    end
-
-    def power_outlet_template_params
-      params[:power_outlet_template].permit(:device_type_id, :name)
     end
   end
 end

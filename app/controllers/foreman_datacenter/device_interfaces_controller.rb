@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class DeviceInterfacesController < ApplicationController
-    before_action :set_device_interface, only: [:edit, :update, :destroy]
+  class DeviceInterfacesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::DeviceInterface
+
+    before_action :find_resource, only: [:edit, :update, :destroy]
 
     def new
       device = Device.find(params[:device_id])
@@ -49,17 +51,6 @@ module ForemanDatacenter
       else
         process_error object: @device_interface
       end
-    end
-
-    private
-
-    def set_device_interface
-      @device_interface = DeviceInterface.find(params[:id])
-    end
-
-    def device_interface_params
-      params[:device_interface].
-        permit(:device_id, :name, :form_factor, :mac_address, :mgmt_only, :description, :ip_address)
     end
   end
 end

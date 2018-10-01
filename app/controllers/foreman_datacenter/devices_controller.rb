@@ -3,24 +3,26 @@ require 'prawn'
 require 'prawn/measurement_extensions'
 
 module ForemanDatacenter
-  class DevicesController < ApplicationController
+  class DevicesController < ForemanDatacenter::ApplicationController
     include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::Device
 
-    before_action :set_device, only: [:update, :destroy, :inventory,
+    before_action :find_resource, only: [:update, :destroy, :inventory,
                                       :destroy_interfaces, :qr_code,
                                       :sync_interfaces_with_host]
 
     before_action :load_resource
 
     def index
-      begin
-        search = resource_base.search_for(params[:search], :order => params[:order])
-      rescue => e
-        error e.to_s
-        search = resource_base.search_for ''
-      end
-      @devices = search.includes(:device_role, :device_type, :site, :rack).
-        paginate(:page => params[:page], :per_page => params[:per_page])
+      @devices = resource_base_search_and_page.includes(:device_role, :device_type, :site, :rack)
+      # begin
+      #   search = resource_base.search_for(params[:search], :order => params[:order])
+      # rescue => e
+      #   error e.to_s
+      #   search = resource_base.search_for ''
+      # end
+      # @devices = search.includes(:device_role, :device_type, :site, :rack).
+      #   paginate(:page => params[:page], :per_page => params[:per_page])
     end
 
     def show
@@ -124,17 +126,6 @@ module ForemanDatacenter
     end
 
     private
-
-    def set_device
-      @device = Device.find(params[:id])
-    end
-
-    def device_params
-      params[:device].permit(:device_type_id, :device_role_id, :platform_id,
-                             :name, :serial, :rack_id, :position, :side,
-                             :face, :status, :primary_ip4, :primary_ip6,
-                             :host_id, :size)
-    end
 
     def load_resource
       resource, id = request.path.split('/')[2, 3]

@@ -1,20 +1,20 @@
 <% title _("Rack Groups") %>
-<% title_actions display_link_if_authorized(_("Create Rack Group"), hash_for_new_rack_group_path, class: 'btn btn-primary'), help_button %>
+<% title_actions new_link(_("Create Rack Group")), help_button %>
 
-<table class="<%= table_css_classes 'table-two-pane' %>">
+<table class="<%= table_css_classes 'table-fixed' %>">
   <thead>
-  <tr>
-    <th>Name</th>
-    <th>Site</th>
-    <th>Racks</th>
-    <th>Action</th>
-  </tr>
+    <tr>
+      <th><%= sort :name, :as => s_("Rack Group|Name")  %></th>
+      <th><%= _("Site") %></th>
+      <th><%= _("Racks") %></th>
+      <th class="col-md-1"><%= _("Actions") %></th>
+    </tr>
   </thead>
 
   <tbody>
-  <% @rack_groups.each do |rack_group| %>
+    <% for rack_group in @rack_groups %>
       <tr>
-        <td><%= link_to rack_group.name, rack_group_path(rack_group) %></td>
+        <td class='ellipsis'><%= link_to rack_group.name, rack_group_path(rack_group) %></td>
         <td><%= link_to rack_group.site.name, site_path(rack_group.site) %></td>
         <td><%= rack_group.racks.length %> </td>
         <td>
@@ -31,6 +31,8 @@
               ) %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
+
+<%= will_paginate_with_info @rack_groups %>

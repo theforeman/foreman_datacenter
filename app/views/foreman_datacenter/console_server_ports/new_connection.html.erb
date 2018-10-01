@@ -3,6 +3,8 @@
 
 <% title "Connect '#{@console_server_port.device.name}' - '#{@console_server_port.name}'" %>
 
+<%= breadcrumbs(items: [{caption: _('Device'), url: "/datacenter/devices/#{@console_server_port.device_id}"}, {caption: _("Connect '#{@console_server_port.device.name}' - '#{@console_server_port.name}'")}]) %>
+
 <%= form_for :console_port, url: connect_console_server_port_path(@console_server_port),
              method: :patch do |f| %>
     <%= rack_device_select @console_server_port.device.site,

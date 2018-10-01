@@ -2,6 +2,8 @@
 
 <% title h(@rack_group.name) %>
 
+<%= breadcrumbs(items: [{caption: _('Rack Groups'), url: '/datacenter/rack_groups'}, {caption: _(@rack_group.to_label)}]) %>
+
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_rack_group_path(id: @rack_group),
@@ -15,59 +17,66 @@
                  )
                  help_path %>
 
-<div class="col-md-6">
-  <!-- Rack group details -->
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <strong>Rack Group</strong>
+<div class="row">
+
+  <div class="col-md-6">
+    <!-- Rack group details -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Rack Group</strong>
+      </div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+        <tr>
+          <td>Name</td>
+          <td><%= h @rack_group.name %></td>
+        </tr>
+        <tr>
+          <td>Site</td>
+          <td><%= link_to @rack_group.site.name, site_path(@rack_group.site) %></td>
+        </tr>
+        <tr>
+          <td>Created</td>
+          <td><%= @rack_group.created_at.to_s(:long) %></td>
+        </tr>
+        <tr>
+          <td>Last Updated</td>
+          <td><%= @rack_group.updated_at.to_s(:long) %></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-      <tbody>
-      <tr>
-        <td>Name</td>
-        <td><%= h @rack_group.name %></td>
-      </tr>
-      <tr>
-        <td>Site</td>
-        <td><%= link_to @rack_group.site.name, site_path(@rack_group.site) %></td>
-      </tr>
-      <tr>
-        <td>Created</td>
-        <td><%= @rack_group.created_at.to_s(:long) %></td>
-      </tr>
-      <tr>
-        <td>Last Updated</td>
-        <td><%= @rack_group.updated_at.to_s(:long) %></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="col-md-6">
-  <!-- Stats -->
-  <div class="panel panel-default">
-    <div class="panel-heading"><strong>Stats</strong></div>
-    <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-      <tr>
-        <td>Racks</td>
-        <td><%= @rack_group.racks.length %></td>
-      </tr>
-    </table>
   </div>
 
-  <!-- Racks -->
-  <div class="panel panel-default">
-    <div class="panel-heading"><strong>Racks</strong></div>
-    <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-      <tbody>
-        <% @rack_group.racks.to_a.sort_by!{ |r| r.name }.each do |rack| %>
-          <tr>
-            <td><%= link_to rack.name, rack_path(rack) %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
+  <div class="col-md-6">
+    <!-- Stats -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Stats</strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tr>
+          <td>Racks</td>
+          <td><%= @rack_group.racks.length %></td>
+        </tr>
+      </table>
+    </div>
+  
+    <!-- Racks -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Racks</strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @rack_group.racks.empty? %>
+            <tr><td>No racks yet...</td></tr>
+          <% else %>
+            <% @rack_group.racks.to_a.sort_by!{ |r| r.name }.each do |rack| %>
+              <tr>
+                <td><%= link_to rack.name, rack_path(rack) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>

@@ -1,9 +1,12 @@
 module ForemanDatacenter
-  class RackGroupsController < ApplicationController
-    before_action :set_rack_group, only: [:show, :edit, :update, :destroy]
+  class RackGroupsController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::RackGroup
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @rack_groups = RackGroup.includes(:site, :racks).all
+      @rack_groups = resource_base_search_and_page.includes(:site, :racks)
     end
 
     def show
@@ -40,16 +43,6 @@ module ForemanDatacenter
       else
         process_error object: @rack_group
       end
-    end
-
-    private
-
-    def set_rack_group
-      @rack_group = RackGroup.find(params[:id])
-    end
-
-    def rack_group_params
-      params[:rack_group].permit(:name, :site_id)
     end
   end
 end

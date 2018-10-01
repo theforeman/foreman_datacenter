@@ -1,13 +1,24 @@
 Foreman::Application.routes.draw do
 
+  # API
+  namespace :api, :defaults => {:format => 'json'} do
+    # new v2 routes that point to v2
+    scope "(:apiv)", :module => :v2, :defaults => {:apiv => 'v2'}, :apiv => /v2/, :constraints => ApiConstraints.new(:version => 2, :default => true) do
+      scope 'foreman_datacenter', module: :foreman_datacenter do
+        resources :sites
+      end
+    end
+  end
+
   # TODO: find a better way to do this
   get 'datacenter/import_to_device', to: 'hosts#import_to_device',
       as: 'import_to_device'
 
+  get '/api/:controller/(:action(/*welcome))'
+  # get '/datacenter/(:controller)/help', :action => 'welcome', :as => "help"
 
   scope 'datacenter', module: :foreman_datacenter do
     resources :comments, only: [:new, :edit, :create, :update]
-
     resources :sites
     resources :racks do
       get :rack_groups, on: :collection

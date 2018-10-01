@@ -1,5 +1,7 @@
 <% javascript 'foreman_datacenter/racks' %>
 
-<% title 'Editing rack' %>
+<% title _("Edit %s") % @rack.to_label %>
+
+<%= breadcrumbs(items: [{caption: _('Racks'), url: '/datacenter/racks'}, {caption: _('Edit %s' % @rack.to_label)}]) %>
 
 <%= render 'form' %>

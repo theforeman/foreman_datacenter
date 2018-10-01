@@ -1,21 +1,12 @@
 module ForemanDatacenter
-  class SitesController < ApplicationController
+  class SitesController < ForemanDatacenter::ApplicationController
     include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::Site
 
-    before_action :set_site, only: [:show, :edit, :update, :destroy]
+    before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      begin
-        search = resource_base.search_for(params[:search], :order => params[:order])
-      rescue => e
-        error e.to_s
-        search = resource_base.search_for ''
-      end
-      # @sites = search.includes(:device_role, :device_type, :site, :rack).
-      @sites = search.paginate(:page => params[:page], :per_page => params[:per_page])
-    end
-
-    def show
+      @sites = resource_base_search_and_page
     end
 
     def new
@@ -48,17 +39,6 @@ module ForemanDatacenter
       else
         process_error object: @site
       end
-    end
-
-    private
-
-    def set_site
-      @site = Site.find(params[:id])
-    end
-
-    def site_params
-      params[:site].
-        permit(:name, :facility, :asn, :physical_address, :shipping_address, :comments)
     end
   end
 end

@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class DeviceBayTemplatesController < ApplicationController
-    before_action :set_device_bay_template, only: [:destroy]
+  class DeviceBayTemplatesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::DeviceBayTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
       @device_bay_template = DeviceBayTemplate.new(
@@ -26,16 +28,6 @@ module ForemanDatacenter
       else
         process_error object: @device_bay_template
       end
-    end
-
-    private
-
-    def set_device_bay_template
-      @device_bay_template = DeviceBayTemplate.find(params[:id])
-    end
-
-    def device_bay_template_params
-      params[:device_bay_template].permit(:device_type_id, :name)
     end
   end
 end

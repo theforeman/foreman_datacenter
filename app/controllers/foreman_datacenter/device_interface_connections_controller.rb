@@ -1,12 +1,13 @@
 module ForemanDatacenter
-  class DeviceInterfaceConnectionsController < ApplicationController
-    before_action :set_device_interface_connection,
+  class DeviceInterfaceConnectionsController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
+
+    before_action :find_resource,
                   only: [:destroy, :planned, :connected]
 
     def index
-      @device_interface_connections = DeviceInterfaceConnection.includes(
-        :second_interface, first_interface: [:device]
-      )
+      @device_interface_connections = resource_base_search_and_page.includes(:second_interface, first_interface: [:device])
     end
 
     def new
@@ -48,15 +49,6 @@ module ForemanDatacenter
     end
 
     private
-
-    def set_device_interface_connection
-      @device_interface_connection = DeviceInterfaceConnection.find(params[:id])
-    end
-
-    def device_interface_connection_params
-      params[:device_interface_connection].
-        permit(:interface_a, :interface_b, :connection_status)
-    end
 
     def get_device_interface
       DeviceInterface.find(params[:device_interface_id])

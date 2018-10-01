@@ -1,3 +1,5 @@
-<% title 'New power outlet' %>
+<% title _("Create Power Outlet") %>
+
+<%= breadcrumbs(items: [{caption: _('Device'), url: "/datacenter/devices/#{params['device_id']}"}, {caption: _("Create Power Outlet")}]) %>
 
 <%= render 'form' %>

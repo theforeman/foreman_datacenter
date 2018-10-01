@@ -15,28 +15,36 @@
             <div class="clearfix">
               <div class="form-group">
                 <label class="col-md-2 control-label required">Site</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_rack.site.name %></div>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_rack.site.name %>">
+                </div>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="form-group">
                 <label class="col-md-2 control-label required">Rack</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_rack.name %></div>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_rack.name %>">
+                </div>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="form-group">
                 <label class="col-md-2 control-label required">Device</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_device.name %></div>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_device.name %>">
+                </div>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="form-group">
                 <label class="col-md-2 control-label required">Interface</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_interface.name %></div>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_interface.name %>">
+                </div>
               </div>
             </div>
           </div>

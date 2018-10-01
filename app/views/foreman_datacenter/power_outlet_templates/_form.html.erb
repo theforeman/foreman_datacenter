@@ -4,7 +4,9 @@
     <div class="clearfix">
       <div class="form-group">
         <label class="col-md-2 control-label required">Device Type</label>
-        <div class="col-md-4"><%= @power_outlet_template.device_type.model %></div>
+        <div class="col-md-4">
+          <input disabled class="form-control" value="<%= @power_outlet_template.device_type.model %>">
+        </div>
       </div>
     </div>
 

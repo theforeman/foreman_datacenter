@@ -2,6 +2,8 @@
 
 <% title h(@device_type.model) %>
 
+<%= breadcrumbs(items: [{caption: _('Device Types'), url: '/datacenter/device_types'}, {caption: _(@device_type.to_label)}]) %>
+
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_device_type_path(:id => @device_type),
@@ -22,7 +24,7 @@
       <div class="panel-heading">
         <strong>Chassis</strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
           <td>Manufacturer</td>
@@ -49,7 +51,7 @@
       <div class="panel-heading">
         <strong>Function</strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
           <td class="col-sm-3 text-right">
@@ -141,7 +143,7 @@
       <% if @device_type.console_port_templates.empty? %>
           <div class="panel-body">None</div>
       <% else %>
-          <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
             <tbody>
             <% @device_type.console_port_templates.each do |console_port| %>
                 <tr>
@@ -172,7 +174,7 @@
       <% if @device_type.power_port_templates.empty? %>
           <div class="panel-body">None</div>
       <% else %>
-          <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
             <tbody>
             <% @device_type.power_port_templates.each do |power_port| %>
                 <tr>
@@ -203,7 +205,7 @@
       <% if @device_type.management_interfaces.empty? %>
           <div class="panel-body">None</div>
       <% else %>
-          <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
             <tbody>
             <% @device_type.management_interfaces.each do |management_interface| %>
                 <tr>
@@ -237,7 +239,7 @@
           <% if @device_type.device_bay_templates.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+              <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
                 <tbody>
                 <% @device_type.device_bay_templates.each do |device_bay| %>
                     <tr>
@@ -270,7 +272,7 @@
           <% if @device_type.network_interfaces.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+              <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
                 <tbody>
                 <% @device_type.network_interfaces.each do |interface| %>
                     <tr>
@@ -303,7 +305,7 @@
           <% if @device_type.console_server_port_templates.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+              <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
                 <tbody>
                 <% @device_type.console_server_port_templates.each do |console_server_port| %>
                     <tr>
@@ -336,7 +338,7 @@
           <% if @device_type.power_outlet_templates.empty? %>
               <div class="panel-body">None</div>
           <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+              <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
                 <tbody>
                 <% @device_type.power_outlet_templates.each do |power_outlet| %>
                     <tr>

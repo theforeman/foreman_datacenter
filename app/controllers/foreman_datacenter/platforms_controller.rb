@@ -1,9 +1,12 @@
 module ForemanDatacenter
-  class PlatformsController < ApplicationController
-    before_action :set_platform, only: [:show, :edit, :update, :destroy]
+  class PlatformsController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::Platform
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @platforms = Platform.includes(:devices).all
+      @platforms = resource_base_search_and_page.includes(:devices)
     end
 
     def show
@@ -40,16 +43,6 @@ module ForemanDatacenter
       else
         process_error object: @platform
       end
-    end
-
-    private
-
-    def set_platform
-      @platform = Platform.find(params[:id])
-    end
-
-    def platform_params
-      params[:platform].permit(:name, :rpc_client)
     end
   end
 end

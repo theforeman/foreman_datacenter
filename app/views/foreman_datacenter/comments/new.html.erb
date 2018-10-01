@@ -1,4 +1,6 @@
-<% title 'Reply to comment' %>
+<% title _('Reply') %>
+
+<%= breadcrumbs(items: [{caption: _('Comments'), url: "/datacenter/devices/#{params[:resource_id]}#comment-#{params[:parent_id]}"}, {caption: _('Reply')}]) %>
 
 <%= render 'form' %>
 

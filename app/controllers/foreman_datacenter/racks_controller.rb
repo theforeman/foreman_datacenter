@@ -1,16 +1,16 @@
 module ForemanDatacenter
-  class RacksController < ApplicationController
-    before_action :set_rack, only: [:show, :edit, :update, :destroy, :devices]
+  class RacksController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::Site
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy, :devices]
 
     def index
-      @racks = ForemanDatacenter::Rack.
-        includes(:site, :rack_group, :devices).
-        order(:name).
-        all
+      @racks = resource_base_search_and_page.includes(:site, :rack_group, :devices)
     end
 
     def rack_groups
-      @rack_groups = RackGroup.where(site_id: params[:site_id]).all
+      @rack_groups = ForemanDatacenter::RackGroup.where(site_id: params[:site_id]).all
       render partial: 'rack_groups'
     end
 

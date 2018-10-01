@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class DeviceBaysController < ApplicationController
-    before_action :set_device_bay, only: [:depopulate, :populate,
+  class DeviceBaysController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::DeviceBay
+
+    before_action :find_resource, only: [:depopulate, :populate,
                                           :populate_new, :edit, :update, :destroy]
 
     def new
@@ -59,16 +61,6 @@ module ForemanDatacenter
       else
         process_error object: @device_bay
       end
-    end
-
-    private
-
-    def set_device_bay
-      @device_bay = DeviceBay.find(params[:id])
-    end
-
-    def device_bay_params
-      params[:device_bay].permit(:name, :device_id)
     end
   end
 end

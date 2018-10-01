@@ -1,5 +1,7 @@
 module ForemanDatacenter
-  class CommentsController < ApplicationController
+  class CommentsController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::Comment
+
     before_action :load_resource, :load_commentable, :load_current_user
     before_action :check_owner, only: [:edit]
 

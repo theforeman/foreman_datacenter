@@ -1,29 +1,27 @@
-<% title 'Power connections' %>
+<% title _("Power connections") %>
 
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <table class="<%= table_css_classes 'table-hover' %>">
-      <thead>
+<table class="<%= table_css_classes 'table-fixed' %>">
+  <thead>
+    <tr>
+      <th><%= _("PDU") %></th>
+      <th><%= _("Outlet") %></th>
+      <th><%= _("Device") %></th>
+      <th><%= _("Power port") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for port in @power_ports %>
       <tr>
-        <th>PDU</th>
-        <th>Outlet</th>
-        <th>Device</th>
-        <th>Power port</th>
+        <td class="ellipsis">
+          <%= link_to port.power_outlet.device.name,
+                      device_path(port.power_outlet.device) %>
+        </td>
+        <td><%= h port.power_outlet.name %></td>
+        <td><%= link_to port.device.name, device_path(port.device) %></td>
+        <td><%= h port.name %></td>
       </tr>
-      </thead>
-      <tbody>
-      <% @power_ports.each do |port| %>
-          <tr>
-            <td>
-              <%= link_to port.power_outlet.device.name,
-                          device_path(port.power_outlet.device) %>
-            </td>
-            <td><%= h port.power_outlet.name %></td>
-            <td><%= link_to port.device.name, device_path(port.device) %></td>
-            <td><%= h port.name %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate_with_info @power_ports %>

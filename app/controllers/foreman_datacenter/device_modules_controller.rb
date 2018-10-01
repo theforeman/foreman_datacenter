@@ -1,6 +1,8 @@
 module ForemanDatacenter
   class DeviceModulesController < ApplicationController
-    before_action :set_device_module, only: [:edit, :update, :destroy]
+    include ForemanDatacenter::Controller::Parameters::DeviceModule
+
+    before_action :find_resource, only: [:edit, :update, :destroy]
 
     def new
       @device_module = DeviceModule.new(
@@ -38,16 +40,6 @@ module ForemanDatacenter
       else
         process_error object: @device_module
       end
-    end
-
-    private
-
-    def set_device_module
-      @device_module = DeviceModule.find(params[:id])
-    end
-
-    def device_module_params
-      params[:device_module].permit(:device_id, :name, :part_id, :serial)
     end
   end
 end

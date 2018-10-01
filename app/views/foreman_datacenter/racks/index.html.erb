@@ -1,34 +1,35 @@
 <% javascript 'foreman_datacenter/racks' %>
 
 <% title _("Racks") %>
-<% title_actions display_link_if_authorized(_("Create Rack"), hash_for_new_rack_path, class: 'btn btn-primary'), help_button %>
+<% title_actions new_link(_("Create Rack")), help_button %>
 
-<table class="<%= table_css_classes 'table-two-pane' %>">
+<table class="<%= table_css_classes 'table-fixed' %>">
+
   <thead>
-  <tr>
-    <th>Name</th>
-    <th>Site</th>
-    <th>Group</th>
-    <th>Facility ID</th>
-    <th>Height (U)</th>
-    <th>Devices</th>
-    <th>Action</th>
-  </tr>
+    <tr>
+      <th><%= sort :name, :as => s_("Rack|Name") %></th>
+      <th><%= _("Site") %></th>
+      <th><%= _("Group") %></th>
+      <th><%= _("Facility ID") %></th>
+      <th><%= sort :height, :as => s_("Height (U)") %></th>
+      <th><%= _("Devices") %></th>
+      <th class="col-md-1"><%= _("Action") %></th>
+    </tr>
   </thead>
 
   <tbody>
-  <% @racks.each do |rack| %>
+    <% for rack in @racks %>
       <tr>
-        <td><%= link_to rack.name, rack_path(rack) %></td>
-        <td><%= link_to rack.site.name, site_path(rack.site) %></td>
-        <td>
+        <td class="ellipsis"><%= link_to rack.name, rack_path(rack) %></td>
+        <td class="ellipsis"><%= link_to rack.site.name, site_path(rack.site) %></td>
+        <td class="ellipsis">
           <% if rack.rack_group %>
             <%= link_to rack.rack_group.name, rack_group_path(rack.rack_group) %>
           <% else %>
             —
           <% end %>
         </td>
-        <td><%= h(rack.facility_id || '—') %></td>
+        <td class="ellipsis"><%= h(rack.facility_id || '—') %></td>
         <td><%= rack.height %></td>
         <td><%= rack.devices.length %></td>
         <td>
@@ -45,6 +46,8 @@
               ) %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
+
+<%= will_paginate_with_info @racks %>

@@ -1,6 +1,9 @@
 <% javascript 'foreman_datacenter/ajax' %>
+<% stylesheet 'foreman_datacenter/datacenter' %>
 
-<% title @device.name %>
+<% title h(@device.to_label) %>
+
+<%= breadcrumbs(items: [{caption: _('Devices'), url: '/datacenter/devices'}, {caption: _(@device.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
@@ -23,7 +26,7 @@
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading"><strong>Chassis</strong></div>
-      <table class="<%= table_css_classes 'table-hover panel-body' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
           <td>Model</td>
@@ -40,7 +43,7 @@
   <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading"><strong>Hardware</strong></div>
-      <table class="<%= table_css_classes 'table-hover table-condensed panel-body' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <thead>
         <tr>
           <th>Module</th>

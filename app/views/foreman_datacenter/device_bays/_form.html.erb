@@ -4,7 +4,9 @@
     <div class="clearfix">
       <div class="form-group">
         <label class="col-md-2 control-label required">Device</label>
-        <div class="col-md-4"><%= @device_bay.device.name %></div>
+        <div class="col-md-4">
+          <input disabled class="form-control" value="<%= @device_bay.device.name %>">
+        </div>
       </div>
     </div>
 

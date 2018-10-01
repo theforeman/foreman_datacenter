@@ -1,6 +1,8 @@
 module ForemanDatacenter
   class InterfaceTemplatesController < ApplicationController
-    before_action :set_interface_template, only: [:destroy]
+    include ForemanDatacenter::Controller::Parameters::InterfaceTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
       @interface_template = InterfaceTemplate.new(
@@ -36,17 +38,6 @@ module ForemanDatacenter
       else
         process_error object: @interface_template
       end
-    end
-
-    private
-
-    def set_interface_template
-      @interface_template = InterfaceTemplate.find(params[:id])
-    end
-
-    def interface_template_params
-      params[:interface_template].
-        permit(:device_type_id, :name, :form_factor, :mgmt_only)
     end
   end
 end

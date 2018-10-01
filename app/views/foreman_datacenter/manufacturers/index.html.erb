@@ -1,19 +1,19 @@
 <% title _('Manufacturers') %>
-<% title_actions display_link_if_authorized(_('Create Manufacturer'), hash_for_new_manufacturer_path, class: 'btn btn-primary'), help_button %>
+<% title_actions new_link(_('Create Manufacturer')), help_button %>
 
-<table class="<%= table_css_classes 'table-two-pane' %>">
+<table class="<%= table_css_classes 'table-fixed' %>">
   <thead>
-  <tr>
-    <th>Name</th>
-    <th>Device Types</th>
-    <th>Action</th>
-  </tr>
+    <tr>
+      <th><%= sort :name, :as => s_("Manufacturer|Name") %></th>
+      <th><%= _("Device Types") %></th>
+      <th class="col-md-1"><%= _("Action") %></th>
+    </tr>
   </thead>
 
   <tbody>
-  <% @manufacturers.each do |manufacturer| %>
+    <% for manufacturer in @manufacturers %>
       <tr>
-        <td><%= link_to manufacturer.name, manufacturer_path(manufacturer) %></td>
+        <td class="ellipsis"><%= link_to manufacturer.name, manufacturer_path(manufacturer) %></td>
         <td><%= manufacturer.device_types.length %></td>
         <td>
           <%= action_buttons(
@@ -29,6 +29,8 @@
               ) %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
+
+<%= will_paginate_with_info @manufacturers %>

@@ -1,5 +1,8 @@
 module ForemanDatacenter
   class Platform < ActiveRecord::Base
+    include ScopedSearchExtensions
+    include Authorizable
+
     RPC_CLIENTS = [
         'Juniper Junos (NETCONF)',
         'Cisco IOS (SSH)',
@@ -12,5 +15,7 @@ module ForemanDatacenter
     validates :rpc_client, length: { maximum: 30 },
               inclusion: { in: RPC_CLIENTS, message: "RPC client must be one of: #{RPC_CLIENTS.join(', ')}" },
               allow_blank: true
+
+    scoped_search on: :name, complete_value: true, default_order: true
   end
 end

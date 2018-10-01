@@ -1,6 +1,8 @@
 module ForemanDatacenter
   class Site < ActiveRecord::Base
     include ScopedSearchExtensions
+    include Authorizable
+    
     has_many :racks, :class_name => 'ForemanDatacenter::Rack'
     has_many :rack_groups, :class_name => 'ForemanDatacenter::RackGroup'
 

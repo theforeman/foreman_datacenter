@@ -1,5 +1,8 @@
 module ForemanDatacenter
   class DeviceInterface < ActiveRecord::Base
+    # include ScopedSearchExtensions
+    # include Authorizable
+
     FORM_FACTORS = ['Virtual', '10/100M (100BASE-TX)',
                     '1GE (1000BASE-T)', '1GE (SFP)', '10GE (10GBASE-T)',
                     '10GE (SFP+)', '10GE (XFP)', '40GE (QSFP+)']

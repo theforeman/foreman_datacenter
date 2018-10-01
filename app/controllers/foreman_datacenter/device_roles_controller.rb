@@ -1,9 +1,12 @@
 module ForemanDatacenter
-  class DeviceRolesController < ApplicationController
-    before_action :set_device_role, only: [:show, :edit, :update, :destroy]
+  class DeviceRolesController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::DeviceRole
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @device_roles = DeviceRole.includes(:devices).all
+      @device_roles = resource_base_search_and_page.includes(:devices)
     end
 
     def show
@@ -40,16 +43,6 @@ module ForemanDatacenter
       else
         process_error object: @device_role
       end
-    end
-
-    private
-
-    def set_device_role
-      @device_role = DeviceRole.find(params[:id])
-    end
-
-    def device_role_params
-      params[:device_role].permit(:name, :color)
     end
   end
 end

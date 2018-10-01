@@ -1,10 +1,12 @@
 module ForemanDatacenter
-  class DeviceTypesController < ApplicationController
-    before_action :set_device_type, only: [:show, :edit, :update, :destroy]
+  class DeviceTypesController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::DeviceType
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @device_types = DeviceType.includes(:manufacturer).
-        paginate(:page => params[:page], :per_page => params[:per_page])
+      @device_types = resource_base_search_and_page.includes(:manufacturer)
     end
 
     def show
@@ -44,18 +46,6 @@ module ForemanDatacenter
       else
         process_error object: @device_type
       end
-    end
-
-    private
-
-    def set_device_type
-      @device_type = DeviceType.find(params[:id])
-    end
-
-    def device_type_params
-      params[:device_type].permit(:manufacturer_id, :model, :u_height,
-                                  :is_full_depth, :is_console_server,
-                                  :is_pdu, :is_network_device, :subdevice_role)
     end
   end
 end

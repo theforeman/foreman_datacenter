@@ -1,3 +1,7 @@
+<% title _("Populate New") %>
+
+<%= breadcrumbs(items: [{caption: _('Device'), url: "/datacenter/devices/#{@device_bay.device.id}"}, {caption: _("Populate New")}]) %>
+
 <%= form_for @device_bay, as: :device_bay, url: populate_device_bay_path(@device_bay) do |f| %>
     <%= base_errors_for @device_bay %>
 

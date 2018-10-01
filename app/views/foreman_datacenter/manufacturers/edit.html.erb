@@ -1,3 +1,5 @@
-<% title 'Editing manufacturer' %>
+<% title _("Edit %s") % @manufacturer.to_label %>
+
+<%= breadcrumbs(items: [{caption: _('Manufacturers'), url: '/datacenter/manufacturers'}, {caption: _('Edit %s' % @manufacturer.to_label)}]) %>
 
 <%= render 'form' %>

@@ -1,5 +1,8 @@
 module ForemanDatacenter
   class DeviceType < ActiveRecord::Base
+    include ScopedSearchExtensions
+    include Authorizable
+
     SUBDEVICE_ROLES = ['None', 'Parent', 'Child'].freeze
 
     belongs_to :manufacturer, :class_name => 'ForemanDatacenter::Manufacturer'
@@ -16,6 +19,8 @@ module ForemanDatacenter
     validates :u_height, numericality: { only_integer: true }
     validates :subdevice_role, inclusion: { in: SUBDEVICE_ROLES },
               allow_blank: true
+
+    scoped_search on: :model, complete_value: true, default_order: true
 
     # Ensure that child devices have 0U height
     validate do
@@ -56,6 +61,10 @@ module ForemanDatacenter
 
     def management_interfaces
       interface_templates.select(&:mgmt_only)
+    end
+
+    def to_label
+      model
     end
   end
 end

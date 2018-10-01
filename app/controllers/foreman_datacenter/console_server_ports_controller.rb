@@ -1,8 +1,10 @@
 module ForemanDatacenter
-  class ConsoleServerPortsController < ApplicationController
-    before_action :set_console_server_port, only: [:edit, :update, :destroy,
-                                                   :new_connection, :connect,
-                                                   :disconnect]
+  class ConsoleServerPortsController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::ConsoleServerPort
+
+    before_action :find_resource, only: [:edit, :update, :destroy,
+                                         :new_connection, :connect,
+                                         :disconnect]
 
     def new
       device = Device.find(params[:device_id])
@@ -63,16 +65,6 @@ module ForemanDatacenter
     def for_device
       @device = Device.find(params[:device_id])
       render partial: 'for_device'
-    end
-
-    private
-
-    def set_console_server_port
-      @console_server_port = ConsoleServerPort.find(params[:id])
-    end
-
-    def console_server_port_params
-      params[:console_server_port].permit(:device_id, :name)
     end
   end
 end

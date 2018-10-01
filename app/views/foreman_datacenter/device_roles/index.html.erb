@@ -1,20 +1,20 @@
 <% title _('Device Roles') %>
-<% title_actions display_link_if_authorized(_('Create Device Role'), hash_for_new_device_role_path, class: 'btn btn-primary'), help_button %>
+<% title_actions new_link(_('Create Device Role')), help_button %>
 
-<table class="<%= table_css_classes 'table-two-pane' %>">
+<table class="<%= table_css_classes 'table-fixed' %>">
   <thead>
-  <tr>
-    <th>Name</th>
-    <th>Devices</th>
-    <th>Color</th>
-    <th>Action</th>
-  </tr>
+    <tr>
+      <th><%= sort :name, :as => s_("Device Role|Name") %></th>
+      <th><%= _("Devices") %></th>
+      <th><%= _("Color") %></th>
+      <th class="col-md-1"><%= _("Action") %></th>
+    </tr>
   </thead>
 
   <tbody>
-  <% @device_roles.each do |device_role| %>
+    <% for device_role in @device_roles %>
       <tr>
-        <td><%= link_to device_role.name, device_role_path(device_role) %></td>
+        <td class="ellipsis"><%= link_to device_role.name, device_role_path(device_role) %></td>
         <td><%= device_role.devices.length %></td>
         <td><%= device_role.color %></td>
         <td>
@@ -31,6 +31,8 @@
               ) %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
+
+<%= will_paginate_with_info @device_roles %>

@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class PowerPortTemplatesController < ApplicationController
-    before_action :set_power_port_template, only: [:destroy]
+  class PowerPortTemplatesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::PowerPortTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
       @power_port_template = PowerPortTemplate.new(
@@ -26,16 +28,6 @@ module ForemanDatacenter
       else
         process_error object: @power_port_template
       end
-    end
-
-    private
-
-    def set_power_port_template
-      @power_port_template = PowerPortTemplate.find(params[:id])
-    end
-
-    def power_port_template_params
-      params[:power_port_template].permit(:device_type_id, :name)
     end
   end
 end

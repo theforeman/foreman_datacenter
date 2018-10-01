@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class PowerOutletsController < ApplicationController
-    before_action :set_power_outlet, only: [:edit, :update, :destroy, :new_connection,
+  class PowerOutletsController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::PowerOutlet
+
+    before_action :find_resource, only: [:edit, :update, :destroy, :new_connection,
                                             :connect, :disconnect]
 
     def new
@@ -62,16 +64,6 @@ module ForemanDatacenter
     def for_device
       @device = Device.find(params[:device_id])
       render partial: 'for_device'
-    end
-
-    private
-
-    def set_power_outlet
-      @power_outlet = PowerOutlet.find(params[:id])
-    end
-
-    def power_outlet_params
-      params[:power_outlet].permit(:device_id, :name)
     end
   end
 end
