@@ -11,11 +11,10 @@ module ForemanDatacenter
     end
 
     def create
-      @console_port_template = ConsolePortTemplate.new(console_port_template_params)
+      @console_port_template = ConsolePortTemplate.new(console_port_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @console_port_template.save
-        redirect_to device_type_url(@console_port_template.device_type),
-                    notice: 'New console port template was successfully created'
+        process_success success_redirect: device_type_url(@console_port_template.device_type_id)
       else
         process_error object: @console_port_template
       end
@@ -23,8 +22,7 @@ module ForemanDatacenter
 
     def destroy
       if @console_port_template.destroy
-        redirect_to device_type_url(@console_port_template.device_type),
-                    notice: 'Console port template was successfully destroyed'
+        process_success success_redirect: device_type_url(params[:device_type_id])
       else
         process_error object: @console_port_template
       end

@@ -1,7 +1,7 @@
 module ForemanDatacenter
   class RacksController < ForemanDatacenter::ApplicationController
     include Foreman::Controller::AutoCompleteSearch
-    include ForemanDatacenter::Controller::Parameters::Site
+    include ForemanDatacenter::Controller::Parameters::Rack
 
     before_action :find_resource, only: [:show, :edit, :update, :destroy, :devices]
 
@@ -9,6 +9,7 @@ module ForemanDatacenter
       @racks = resource_base_search_and_page.includes(:site, :rack_group, :devices)
     end
 
+    # action for async selecting rack_group in rack _form
     def rack_groups
       @rack_groups = ForemanDatacenter::RackGroup.where(site_id: params[:site_id]).all
       render partial: 'rack_groups'
@@ -44,21 +45,10 @@ module ForemanDatacenter
 
     def destroy
       if @rack.destroy
-        process_success object: @rack
+        process_success success_redirect: racks_path
       else
         process_error object: @rack
       end
-    end
-
-    private
-
-    def set_rack
-      @rack = ForemanDatacenter::Rack.find(params[:id])
-    end
-
-    def rack_params
-      params[:rack].
-        permit(:site_id, :rack_group_id, :name, :facility_id, :height, :comments)
     end
   end
 end

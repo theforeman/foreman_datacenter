@@ -4,13 +4,12 @@
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Device</label>
+        <label class="col-md-2 control-label required"><%= _("Device") %></label>
         <div class="col-md-4">
           <input disabled class="form-control" value="<%= @management_device.device.name %>">
         </div>
       </div>
     </div>
-    <%= f.hidden_field :device_id %>
 
     <%= text_f f, :console_url, required: true %>
     <%= text_f f, :login %>

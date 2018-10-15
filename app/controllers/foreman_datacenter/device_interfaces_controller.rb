@@ -25,7 +25,7 @@ module ForemanDatacenter
     end
 
     def create
-      @device_interface = DeviceInterface.new(device_interface_params)
+      @device_interface = DeviceInterface.new(device_interface_params.merge(device_id: params[:device_id]))
 
       if @device_interface.save
         redirect_to device_url(id: @device_interface.device_id),

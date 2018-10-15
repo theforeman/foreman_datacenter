@@ -39,7 +39,7 @@ module ForemanDatacenter
 
     def destroy
       if @manufacturer.destroy
-        process_success
+        process_success success_redirect: manufacturers_path
       else
         process_error
       end

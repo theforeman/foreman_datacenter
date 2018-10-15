@@ -4,6 +4,6 @@
 
 <% title _("Connect Interfaces") %>
 
-<%= breadcrumbs(items: [{caption: _('Device'), url: "/datacenter/devices/#{@device_interface_connection.first_device.id}"}, {caption: _("Connect Interfaces")}]) %>
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device_interface_connection.first_device.to_label, url: device_path(@device_interface_connection.first_device)}, {caption: _("Connect Interfaces")}]) %>
 
 <%= render 'form' %>

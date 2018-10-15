@@ -7,14 +7,13 @@
   <thead>
     <tr>
       <th><%= sort :name, :as => s_("Site|Name")  %></th>
-      <th><%= _("Facility") %></th>
+      <th><%= sort :facility, :as => s_("Facility") %></th>
       <th><%= _("ASN") %></th>
       <th><%= _("Racks") %></th>
       <th><%= _("Devices") %></th>
       <th class="col-md-1"><%= _("Actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% for site in @sites %>
       <tr>
@@ -31,7 +30,7 @@
                   ),
                   display_delete_if_authorized(
                       hash_for_site_path(:id => site).merge(:auth_object => site, :authorizer => authorizer),
-                      :data => { :confirm => 'Are you sure?'},
+                      :data => { :confirm => _("Delete %s?") % site.name },
                       :action => :destroy
                   )
               ) %>
@@ -40,4 +39,5 @@
     <% end %>
   </tbody>
 </table>
+
 <%= will_paginate_with_info @sites %>

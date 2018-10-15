@@ -2,8 +2,9 @@ module ForemanDatacenter
   class PowerOutletsController < ForemanDatacenter::ApplicationController
     include ForemanDatacenter::Controller::Parameters::PowerOutlet
 
-    before_action :find_resource, only: [:edit, :update, :destroy, :new_connection,
-                                            :connect, :disconnect]
+    before_action :find_resource, only: [:edit, :update, :destroy,
+                                         :new_connection,
+                                         :connect, :disconnect]
 
     def new
       device = Device.find(params[:device_id])
@@ -14,7 +15,7 @@ module ForemanDatacenter
     end
 
     def create
-      @power_outlet = PowerOutlet.new(power_outlet_params)
+      @power_outlet = PowerOutlet.new(power_outlet_params.merge(device_id: params[:device_id]))
 
       if @power_outlet.save
         redirect_to device_url(id: @power_outlet.device_id),

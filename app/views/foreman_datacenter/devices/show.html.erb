@@ -5,14 +5,14 @@
 
 <% title h(@device.to_label) %>
 
-<%= breadcrumbs(items: [{caption: _('Devices'), url: '/datacenter/devices'}, {caption: _(@device.to_label)}]) %>
+<%= breadcrumbs(items: [{caption: _('Devices'), url: devices_path}, {caption: _(@device.to_label)}]) %>
 
 <div class="row">
   <div class="col-md-offset-4 col-md-8 title_action">
     <div class="btn-toolbar pull-right">
       <%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-warning' %>
       <%= link_to 'Delete', device_path(@device), class: 'btn btn-danger',
-                  method: :delete, data: { confirm: 'Are you sure?' } %>
+                  method: :delete, data: { confirm: _("Delete %s?") % @device.name } %>
       <%= link_to 'Import from hosts',
                   @device.host ?
                     edit_device_path(@device, host_id: @device.host.id) :
@@ -35,43 +35,43 @@
     <!-- Device -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Device</strong>
+        <strong><%= _("Device") %></strong>
       </div>
       <!-- table_css_classes removed purposely -->
       <table class="table table-hover panel-body nonmarginbottom">
         <tbody>
         <% if @device.host %>
           <tr>
-            <td>Host</td>
+            <td><%= _("Host") %></td>
             <td><%= link_to @device.name, host_path(@device.host) %></td>
           </tr>
         <% end %>
         <tr>
-          <td>Site</td>
+          <td><%= _("Site") %></td>
           <td><%= link_to @device.site.name, site_path(@device.site) %></td>
         </tr>
         <tr>
-          <td>Rack</td>
+          <td><%= _("Rack") %></td>
           <td><%= link_to @device.rack.name, rack_path(@device.rack) %></td>
         </tr>
         <tr>
-          <td>Position</td>
+          <td><%= _("Position") %></td>
           <td><%= @device.positions.join(", ") %> / <%= @device.face %> / <%= @device.side %></td>
         </tr>
         <tr>
-          <td>Device Type</td>
+          <td><%= _("Device Type") %></td>
           <td><%= link_to @device.device_type.model, device_type_path(@device.device_type) %></td>
         </tr>
         <tr>
-          <td>Serial</td>
+          <td><%= _("Serial") %></td>
           <td><%= @device.serial %></td>
         </tr>
         <tr>
-          <td>Created</td>
+          <td><%= _("Created") %></td>
           <td><%= @device.created_at.to_s(:long) %></td>
         </tr>
         <tr>
-          <td>Last Updated</td>
+          <td><%= _("Last Updated") %></td>
           <td><%= @device.updated_at.to_s(:long) %></td>
         </tr>
         </tbody>
@@ -81,7 +81,7 @@
     <!-- Critical Connections -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Critical Connections</strong>
+        <strong><%= _("Critical Connections") %></strong>
       </div>
       <!-- table_css_classes removed purposely -->
       <table class="table table-hover panel-body">
@@ -90,7 +90,7 @@
             <tr class="alert-warning">
               <td>
                 <i class="fa fa-fw fa-warning"></i>
-                No management interfaces defined!
+                <%= _('No management interfaces defined!') %>
               </td>
               <td></td>
               <td></td>
@@ -110,7 +110,7 @@
             <tr class="alert-warning">
               <td>
                 <i class="fa fa-fw fa-warning"></i>
-                No console ports defined!
+                <%= _('No console ports defined!') %>
               </td>
               <td></td>
               <td></td>
@@ -129,7 +129,7 @@
             <tr class="alert-warning">
               <td>
                 <i class="fa fa-fw fa-warning"></i>
-                No power ports defined!
+                <%= _('No power ports defined!') %>
               </td>
               <td></td>
               <td></td>
@@ -170,19 +170,19 @@
     <!-- Management -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Management</strong>
+        <strong><%= _("Management") %></strong>
       </div>
       <!-- table_css_classes removed purposely -->
       <table class="table table-hover panel-body nonmarginbottom">
         <tbody>
         <tr>
-          <td>Role</td>
+          <td><%= _("Role") %></td>
           <td>
             <%= link_to @device.device_role.name, device_role_path(@device.device_role) %>
           </td>
         </tr>
         <tr>
-          <td>Platform</td>
+          <td><%= _("Platform") %></td>
           <td>
             <% if @device.platform %>
                 <%= link_to @device.platform.name, platform_path(@device.platform) %>
@@ -192,7 +192,7 @@
           </td>
         </tr>
         <tr>
-          <td>Status</td>
+          <td><%= _("Status") %></td>
           <td>
             <% if @device.active? %>
                 <span class="label label-success">Active</span>
@@ -202,54 +202,49 @@
           </td>
         </tr>
         <tr>
-          <td>Primary IPv4</td>
-          <td>
-            <% if @device.ip_address.blank? %>
-                Not defined
-            <% else %>
-                <%= @device.ip_address %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <td>Primary IPv6</td>
-          <td>
-            <% if @device.primary_ip6.blank? %>
-                Not defined
-            <% else %>
-                <%= @device.primary_ip6 %>
-            <% end %>
-          </td>
+          <td><%= _("Primary IPv4") %></td>
+          <% if @device.ip_address.blank? %>
+            <%= muted_text("Not defined", "td") %>
+          <% else %>
+            <td><%= @device.ip_address %></td>
+          <% end %>
         </tr>
         <tr>
-          <td>MAC address</td>
-          <td>
-            <% if @device.mac_address.blank? %>
-                Not defined
-            <% else %>
-                <%= @device.mac_address %>
-            <% end %>
-          </td>
+          <td><%= _("Primary IPv6") %></td>
+          <% if @device.primary_ip6.blank? %>
+            <%= muted_text("Not defined", "td") %>
+          <% else %>
+            <td><%= @device.primary_ip6 %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td><%= _("MAC address") %></td>
+          <% if @device.mac_address.blank? %>
+            <%= muted_text("Not defined", "td") %>
+          <% else %>
+            <td><%= @device.mac_address %></td>
+          <% end %>
         </tr>
 
         <!-- Management device -->
         <tr>
-          <td><strong>Management device</strong></td>
+          <td><strong><%= _("Management device") %></strong></td>
           <td></td>
         </tr>
         <% if @device.management_device %>
             <tr>
-              <td>Console URL</td>
+              <td><%= _("Console URL") %></td>
               <td><%= h @device.console_url %></td>
             </tr>
             <tr>
-              <td>Login</td>
+              <td><%= _("Login") %></td>
               <td><%= h @device.login %></td>
             </tr>
             <tr>
-              <td>Password</td>
+              <td><%= _("Login") %></td>
               <td>
                 <button class="btn btn-primary btn-xs" data-reveal-password data-password="<%= h @device.password %>">
-                  Reveal
+                  <%= _("Reveal") %>
                 </button>
               </td>
             </tr>
@@ -271,7 +266,7 @@
             </tr>
         <% else %>
             <tr>
-              <td>None</td>
+              <td class="text-muted">None</td>
               <td></td>
             </tr>
             <tr>
@@ -298,10 +293,10 @@
     <% if @device.parent? %>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <strong>Device Bays</strong>
+            <strong><%= _("Device Bays") %></strong>
           </div>
           <% if @device.device_bays.empty? %>
-            <div class="panel-body">None</div>
+            <div class="panel-body"><%= _("None") %></div>
           <% else %>
             <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while --> 
             <table class="table table-hover panel-body nonmarginbottom">
@@ -321,28 +316,28 @@
     <% if @device.is_network_device %>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <strong>Interfaces</strong>
+            <strong><%= _('Interfaces') %></strong>
           </div>
           <%= form_tag destroy_interfaces_device_path(@device), method: :delete do %>
-              <% if @device.non_management_interfaces.empty? %>
-                  <div class="panel-body">None</div>
-              <% else %>
-                  <!-- table_css_classes removed purposely -->
-                  <table class="table table-hover panel-body nonmarginbottom">
-                    <tbody>
-                    <%= render partial: 'interface', collection: @device.non_management_interfaces %>
-                    </tbody>
-                  </table>
-              <% end %>
-              <div class="panel-footer text-right">
-                <%= link_to 'Sync', sync_interfaces_with_host_device_path(@device),
-                            class: 'btn btn-primary btn-xs' if @device.host %>
-                <%= link_to 'Add an interface', new_device_device_interface_path(@device),
-                            class: 'btn btn-primary btn-xs' %>
-                <%= button_tag 'Destroy selected interfaces',
-                               class: 'btn btn-danger btn-xs',
-                               data: {confirm: 'Are you sure?'} %>
-              </div>
+            <!-- table_css_classes removed purposely -->
+            <table class="table table-hover panel-body nonmarginbottom">
+              <tbody>
+                <% if @device.non_management_interfaces.empty? %>
+                  <%= muted_text("None", "tr", "td") %>
+                <% else %>
+                  <%= render partial: 'interface', collection: @device.non_management_interfaces %>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="panel-footer text-right">
+              <%= link_to 'Sync', sync_interfaces_with_host_device_path(@device),
+                          class: 'btn btn-primary btn-xs' if @device.host %>
+              <%= link_to 'Add an interface', new_device_device_interface_path(@device),
+                          class: 'btn btn-primary btn-xs' %>
+              <%= button_tag 'Destroy selected interfaces',
+                             class: 'btn btn-danger btn-xs',
+                             data: {confirm: 'Are you sure?'} %>
+            </div>
           <% end %>
         </div>
     <% end %>
@@ -351,18 +346,18 @@
     <% if @device.is_console_server %>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <strong>Console Server Ports</strong>
+            <strong><%= _("Console Server Ports") %></strong>
           </div>
-          <% if @device.console_server_ports.empty? %>
-              <div class="panel-body">None</div>
-          <% else %>
-              <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while -->
-              <table class="table table-hover panel-body nonmarginbottom">
-                <tbody>
+          <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while -->
+          <table class="table table-hover panel-body nonmarginbottom">
+            <tbody>
+              <% if @device.console_server_ports.empty? %>
+                 <%= muted_text("None", "tr", "td") %>
+              <% else %>
                 <%= render partial: 'console_server_port', collection: @device.console_server_ports %>
-                </tbody>
-              </table>
-          <% end %>
+              <% end %>
+            </tbody>
+          </table>
           <div class="panel-footer text-right">
             <%= link_to 'Add a console server port', new_device_console_server_port_path(@device),
                         class: 'btn btn-primary btn-xs' %>
@@ -374,18 +369,18 @@
     <% if @device.is_pdu %>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <strong>Power Outlets</strong>
+            <strong><%= _("Power Outlets") %></strong>
           </div>
-          <% if @device.power_outlets.empty? %>
-            <div class="panel-body">None</div>
-          <% else %>
-            <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while -->
-            <table class="table table-hover panel-body nonmarginbottom">
-              <tbody>
-              <%= render partial: 'power_outlet', collection: @device.power_outlets %>
-              </tbody>
-            </table>
-          <% end %>
+          <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while -->
+          <table class="table table-hover panel-body nonmarginbottom">
+            <tbody>
+              <% if @device.power_outlets.empty? %>
+                <%= muted_text("None", "tr", "td") %>
+              <% else %>
+                <%= render partial: 'power_outlet', collection: @device.power_outlets %>
+              <% end %>
+            </tbody>
+          </table>
           <div class="panel-footer text-right">
             <%= link_to 'Add a power outlet', new_device_power_outlet_path(@device),
                         class: 'btn btn-primary btn-xs' %>
@@ -393,10 +388,10 @@
         </div>
     <% end %>
 
-   <!-- Comments -->
+    <!-- Comments -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Comments</strong></div>
-      <%= render 'foreman_datacenter/comments/comments', comments: @device.comments, commentable_data: @commentable_data %>
+      <div class="panel-heading"><strong><%= _('Comments') %></strong></div>
+        <%= render 'foreman_datacenter/comments/list', comments: @comments %>
     </div>
   </div>
 </div>

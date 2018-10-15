@@ -24,35 +24,35 @@
 
   <tbody>
     <% for device in @devices %>
-        <tr>
-          <td class="ellipsis"><%= link_to device.name, device_path(device) %></td>
-          <td class="ellipsis">
-            <% if device.active? %>
-                <span class="glyphicon glyphicon-ok-sign text-success" title="Active"></span>
-            <% elsif device.offline? %>
-                <span class="glyphicon glyphicon-minus-sign text-danger" title="Offline"></span>
-            <% end %>
-          </td>
-          <td class="ellipsis"><%= h device.site.name %></td>
-          <td class="ellipsis"><%= h device.rack.name %></td>
-          <td class="ellipsis"><%= h device.device_role.name %></td>
-          <td class="ellipsis"><%= h device.device_type.model %></td>
-          <td>
-            <%= action_buttons(
-                  display_link_if_authorized(
-                    _("Edit"),
-                    hash_for_edit_device_path(:id => device).merge(:auth_object => device, :authorizer => authorizer)
-                  ),
-                  display_delete_if_authorized(
-                    hash_for_device_path(:id => device).merge(:auth_object => device, :authorizer => authorizer),
-                    :data => { :confirm => 'Are you sure?' },
-                    :action => :destroy
-                  )
-                ) %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+      <tr>
+        <td class="ellipsis"><%= link_to device.name, device_path(device) %></td>
+        <td class="ellipsis">
+          <% if device.active? %>
+              <span class="glyphicon glyphicon-ok-sign text-success" title="Active"></span>
+          <% elsif device.offline? %>
+              <span class="glyphicon glyphicon-minus-sign text-danger" title="Offline"></span>
+          <% end %>
+        </td>
+        <td class="ellipsis"><%= h device.site.name %></td>
+        <td class="ellipsis"><%= h device.rack.name %></td>
+        <td class="ellipsis"><%= h device.device_role.name %></td>
+        <td class="ellipsis"><%= h device.device_type.model %></td>
+        <td>
+          <%= action_buttons(
+                display_link_if_authorized(
+                  _("Edit"),
+                  hash_for_edit_device_path(:id => device).merge(:auth_object => device, :authorizer => authorizer)
+                ),
+                display_delete_if_authorized(
+                  hash_for_device_path(:id => device).merge(:auth_object => device, :authorizer => authorizer),
+                  :data => { :confirm => _("Delete %s?") % device.name },
+                  :action => :destroy
+                )
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <%= will_paginate_with_info @devices, :more => " - "+_("<b class='select_count'>0</b> selected") %>

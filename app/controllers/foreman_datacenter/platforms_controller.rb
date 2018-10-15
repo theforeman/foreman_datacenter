@@ -39,7 +39,7 @@ module ForemanDatacenter
 
     def destroy
       if @platform.destroy
-        process_success object: @platform
+        process_success success_redirect: platforms_path
       else
         process_error object: @platform
       end

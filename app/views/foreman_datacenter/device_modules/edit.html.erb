@@ -1,5 +1,5 @@
 <% title _("Edit %s") % @device_module.to_label %>
 
-<%= breadcrumbs(items: [{caption: _('Device Modules'), url: "/datacenter/devices/#{@device_module.device.id}/inventory"}, {caption: _('Edit %s' % @device_module.to_label)}]) %>
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device_module.device.to_label, url: inventory_device_path(@device_module.device)}, {caption: _('Edit %s' % @device_module.to_label)}]) %>
 
 <%= render 'form' %>

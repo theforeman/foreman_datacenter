@@ -1,5 +1,5 @@
 <% title _("Create Console Server Port Template") %>
 
-<%= breadcrumbs(items: [{caption: _('Device Type'), url: "/datacenter/device_types/#{params['device_type_id']}"}, {caption: _("Create Console Server Port Template")}]) %>
+<%= breadcrumbs(items: [{caption: _('Device Type %s') % @console_server_port_template.device_type.to_label, url: device_type_path(@console_server_port_template.device_type)}, {caption: _("Create Console Server Port Template")}]) %>
 
 <%= render 'form' %>

@@ -3,8 +3,7 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
 
-    before_action :find_resource,
-                  only: [:destroy, :planned, :connected]
+    before_action :find_resource, only: [:destroy, :planned, :connected]
 
     def index
       @device_interface_connections = resource_base_search_and_page.includes(:second_interface, first_interface: [:device])
@@ -17,7 +16,7 @@ module ForemanDatacenter
     end
 
     def create
-      @device_interface_connection = DeviceInterfaceConnection.new(device_interface_connection_params)
+      @device_interface_connection = DeviceInterfaceConnection.new(device_interface_connection_params.merge(interface_a: params[:device_interface_id]))
       @device_interface_connection.first_interface = get_device_interface
 
       if @device_interface_connection.save

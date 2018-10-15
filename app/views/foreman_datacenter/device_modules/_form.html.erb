@@ -3,14 +3,13 @@
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Device</label>
+        <label class="col-md-2 control-label required"><%= _('Device') %></label>
         <div class="col-md-4">
           <input disabled class="form-control" value="<%= @device_module.device.name %>">
         </div>
       </div>
     </div>
 
-    <%= f.hidden_field :device_id %>
     <%= text_f f, :name, required: true %>
     <%= text_f f, :part_id, label: 'Part ID' %>
     <%= text_f f, :serial %>

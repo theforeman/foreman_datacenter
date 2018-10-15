@@ -40,7 +40,7 @@
                   ),
                   display_delete_if_authorized(
                       hash_for_rack_path(:id => rack).merge(:auth_object => rack, :authorizer => authorizer),
-                      :data => { :confirm => 'Are you sure?'},
+                      :data => { :confirm => _("Delete %s?") % rack.name },
                       :action => :destroy
                   )
               ) %>

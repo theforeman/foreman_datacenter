@@ -4,21 +4,20 @@
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Device</label>
+        <label class="col-md-2 control-label required"><%= _("Device") %></label>
         <div class="col-md-4">
           <input disabled class="form-control" value="<%= @device_interface.device.name %>">
         </div>
       </div>
     </div>
-    <%= f.hidden_field :device_id %>
 
     <%= text_f f, :name, required: true %>
     <%= selectable_f f, :form_factor,
                      ForemanDatacenter::DeviceInterface::FORM_FACTORS %>
     <%= text_f f, :mac_address %>
     <%= text_f f, :ip_address %>
-    <%= checkbox_f f, :mgmt_only, label: 'OOB Management',
-                   help_inline: 'This interface is used only for out-of-band management' %>
+    <%= checkbox_f f, :mgmt_only, label: _('OOB Management'),
+                   help_inline: _('This interface is used only for out-of-band management') %>
     <%= text_f f, :description %>
 
     <%= submit_or_cancel f, false, cancel_path: device_path(@device_interface.device) %>

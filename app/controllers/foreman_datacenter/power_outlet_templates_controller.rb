@@ -11,11 +11,10 @@ module ForemanDatacenter
     end
 
     def create
-      @power_outlet_template = PowerOutletTemplate.new(power_outlet_template_params)
+      @power_outlet_template = PowerOutletTemplate.new(power_outlet_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @power_outlet_template.save
-        redirect_to device_type_url(@power_outlet_template.device_type),
-                    notice: 'New power outlet template was successfully created'
+        process_success success_redirect: device_type_url(@power_outlet_template.device_type_id)
       else
         process_error object: @power_outlet_template
       end
@@ -23,8 +22,7 @@ module ForemanDatacenter
 
     def destroy
       if @power_outlet_template.destroy
-        redirect_to device_type_url(@power_outlet_template.device_type),
-                    notice: 'Power outlet template was successfully destroyed'
+        process_success success_redirect: device_type_url(params[:device_type_id])
       else
         process_error object: @power_outlet_template
       end

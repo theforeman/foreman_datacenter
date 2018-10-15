@@ -3,7 +3,7 @@
 
 <% title "Connect '#{@console_server_port.device.name}' - '#{@console_server_port.name}'" %>
 
-<%= breadcrumbs(items: [{caption: _('Device'), url: "/datacenter/devices/#{@console_server_port.device_id}"}, {caption: _("Connect '#{@console_server_port.device.name}' - '#{@console_server_port.name}'")}]) %>
+<%= breadcrumbs(items: [{caption: _('Device %s') % @console_server_port.device.to_label, url: device_path(@console_server_port.device)}, {caption: _("Connect '#{@console_server_port.device.name}' - '#{@console_server_port.name}'")}]) %>
 
 <%= form_for :console_port, url: connect_console_server_port_path(@console_server_port),
              method: :patch do |f| %>
@@ -18,7 +18,7 @@
 
     <%= selectable_f f, :connection_status,
                      ForemanDatacenter::ConsolePort.connection_statuses.keys, {},
-                     { :label => 'Status' } %>
+                     { :label => _('Status') } %>
 
     <%= submit_or_cancel f, false, cancel_path: device_path(@console_server_port.device) %>
 <% end %>

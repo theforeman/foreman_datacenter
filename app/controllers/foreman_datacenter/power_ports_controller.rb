@@ -3,7 +3,11 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::PowerPort
 
-    before_action :find_resource, only: [:edit, :update, :destroy, :connected,
+    # before_action :find_resource, only: [:edit, :update, :destroy, :connected,
+    #                                       :planned, :new_connection, :connect,
+    #                                       :disconnect]
+
+    before_action :set_power_port, only: [:edit, :update, :destroy, :connected,
                                           :planned, :new_connection, :connect,
                                           :disconnect]
 
@@ -12,7 +16,7 @@ module ForemanDatacenter
     end
 
     def new
-      @power_port = PowerPort.new(
+      @power_port = ForemanDatacenter::PowerPort.new(
         device: Device.find(params[:device_id])
       )
     end
@@ -21,7 +25,7 @@ module ForemanDatacenter
     end
 
     def create
-      @power_port = PowerPort.new(power_port_params)
+      @power_port = ForemanDatacenter::PowerPort.new(power_port_params.merge(device_id: params[:device_id]))
 
       if @power_port.save
         redirect_to device_url(id: @power_port.device_id),
@@ -81,6 +85,12 @@ module ForemanDatacenter
       @power_port.disconnect
       redirect_to device_url(id: @power_port.device_id),
                   notice: 'Power port was successfully disconnected.'
+    end
+
+    private
+
+    def set_power_port
+      @power_port = PowerPort.find(params[:id])
     end
   end
 end

@@ -2,7 +2,7 @@
 
 <% title h(@device_role.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Device Roles'), url: '/datacenter/device_roles'}, {caption: _(@device_role.to_label)}]) %>
+<%= breadcrumbs(items: [{caption: _('Device Roles'), url: device_roles_path}, {caption: _(@device_role.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
@@ -11,7 +11,7 @@
                  ),
                  display_delete_if_authorized(
                    hash_for_device_role_path(:id => @device_role),
-                   :data => { :confirm => 'Are you sure?'},
+                   :data => { confirm: _("Delete %s?") % @device_role.name },
                    :action => :destroy,
                    :class => 'btn btn-danger'
                  )
@@ -22,24 +22,24 @@
     <!-- Rack group details -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Device role</strong>
+        <strong><%= _("Device role") %></strong>
       </div>
       <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
-          <td>Name</td>
+          <td><%= _("Name") %></td>
           <td><%= h @device_role.name %></td>
         </tr>
         <tr>
-          <td>Color</td>
+          <td><%= _("Color") %></td>
           <td><%= @device_role.color %></td>
         </tr>
         <tr>
-          <td>Created</td>
+          <td><%= _("Created") %></td>
           <td><%= @device_role.created_at.to_s(:long) %></td>
         </tr>
         <tr>
-          <td>Last Updated</td>
+          <td><%= _("Last Updated") %></td>
           <td><%= @device_role.updated_at.to_s(:long) %></td>
         </tr>
         </tbody>
@@ -50,10 +50,10 @@
   <div class="col-md-6">
     <!-- Stats -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Stats</strong></div>
+      <div class="panel-heading"><strong><%= _("Stats") %></strong></div>
       <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
-          <td>Devices</td>
+          <td><%= _("Devices") %></td>
           <td><%= @device_role.devices.length %></td>
         </tr>
       </table>

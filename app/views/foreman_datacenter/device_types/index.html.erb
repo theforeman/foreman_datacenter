@@ -13,24 +13,24 @@
 
   <tbody>
     <% for device_type in @device_types %>
-        <tr>
-          <td class="ellipsis"><%= link_to device_type.model, device_type_path(device_type) %></td>
-          <td><%= device_type.manufacturer.name %></td>
-          <td><%= device_type.u_height %></td>
-          <td>
-            <%= action_buttons(
-                  display_link_if_authorized(
-                    _("Edit"),
-                    hash_for_edit_device_type_path(:id => device_type).merge(:auth_object => device_type, :authorizer => authorizer)
-                  ),
-                  display_delete_if_authorized(
-                    hash_for_device_type_path(:id => device_type).merge(:auth_object => device_type, :authorizer => authorizer),
-                    :data => { :confirm => 'Are you sure?'},
-                    :action => :destroy
-                  )
-                ) %>
-          </td>
-        </tr>
+      <tr>
+        <td class="ellipsis"><%= link_to device_type.model, device_type_path(device_type) %></td>
+        <td><%= device_type.manufacturer.name %></td>
+        <td><%= device_type.u_height %></td>
+        <td>
+          <%= action_buttons(
+                display_link_if_authorized(
+                  _("Edit"),
+                  hash_for_edit_device_type_path(:id => device_type).merge(:auth_object => device_type, :authorizer => authorizer)
+                ),
+                display_delete_if_authorized(
+                  hash_for_device_type_path(:id => device_type).merge(:auth_object => device_type, :authorizer => authorizer),
+                  :data => { :confirm => _("Delete %s?") % device_type.model },
+                  :action => :destroy
+                )
+              ) %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>

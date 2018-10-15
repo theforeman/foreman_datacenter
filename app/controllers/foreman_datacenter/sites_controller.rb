@@ -10,14 +10,14 @@ module ForemanDatacenter
     end
 
     def new
-      @site = Site.new
+      @site = ForemanDatacenter::Site.new
     end
 
     def edit
     end
 
     def create
-      @site = Site.new(site_params)
+      @site = ForemanDatacenter::Site.new(site_params)
       if @site.save
         process_success object: @site
       else
@@ -35,7 +35,7 @@ module ForemanDatacenter
 
     def destroy
       if @site.destroy
-        process_success object: @site
+        process_success success_redirect: sites_path
       else
         process_error object: @site
       end

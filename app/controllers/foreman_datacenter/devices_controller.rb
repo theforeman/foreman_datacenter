@@ -8,10 +8,10 @@ module ForemanDatacenter
     include ForemanDatacenter::Controller::Parameters::Device
 
     before_action :find_resource, only: [:update, :destroy, :inventory,
-                                      :destroy_interfaces, :qr_code,
-                                      :sync_interfaces_with_host]
+                                         :destroy_interfaces, :qr_code,
+                                         :sync_interfaces_with_host]
 
-    before_action :load_resource
+    # before_action :load_resource
 
     def index
       @devices = resource_base_search_and_page.includes(:device_role, :device_type, :site, :rack)
@@ -26,16 +26,19 @@ module ForemanDatacenter
     end
 
     def show
-      @device = Device.includes(
-        device_bays: [:installed_device],
-        console_server_ports: [:console_port],
-        power_outlets: [:power_port],
-        console_ports: [:console_server_port],
-        power_ports: [:power_outlet]
-      ).find(params[:id])
-      @current_user = User.current
+      # @device = Device.includes(
+      #   device_bays: [:installed_device],
+      #   console_server_ports: [:console_port],
+      #   power_outlets: [:power_port],
+      #   console_ports: [:console_server_port],
+      #   power_ports: [:power_outlet]
+      # ).find(params[:id])
+      @device = ForemanDatacenter::Device.includes(console_server_ports:[:console_port]).find(params[:id])
+      @comments = @device.comments
       @commentable = @device
       @comment = Comment.new
+      @resource = request.path.split('/')[2]
+      @current_user = current_user
     end
 
     def inventory
@@ -52,10 +55,11 @@ module ForemanDatacenter
     end
 
     def create
-      @device = Device.new(device_params)
+      @device = Device.new(device_params.merge(host_id: params[:host_id]))
 
       if @device.save
-        process_success object: @device
+        # process_success object: @device
+        process_success success_redirect: device_url(@device)
       else
         process_error object: @device
       end
@@ -127,10 +131,10 @@ module ForemanDatacenter
 
     private
 
-    def load_resource
-      resource, id = request.path.split('/')[2, 3]
-      @commentable_data = {resource: resource, id: id }
-    end
+    # def load_resource
+    #   resource, id = request.path.split('/')[2, 3]
+    #   @commentable_data = {resource: resource, id: id }
+    # end
 
     def populate_from_host
       if params[:host_id]

@@ -3,9 +3,13 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::ConsolePort
 
-    before_action :find_resource, only: [:edit, :update, :destroy,
-                                            :connected, :planned, :new_connection,
-                                            :connect, :disconnect]
+    # before_action :find_resource, only: [:edit, :update, :destroy,
+    #                                      :connected, :planned, :new_connection,
+    #                                      :connect, :disconnect]
+
+    before_action :find_resource, only: [:edit, :update, :destroy]
+    before_action :set_console_port, only: [:new_connection, :connect,
+                                            :connected, :planned, :disconnect]
 
     def index
       @console_ports = resource_base_search_and_page.where.not(console_server_port_id: nil).includes(:device, console_server_port: [:device])
@@ -23,11 +27,10 @@ module ForemanDatacenter
     end
 
     def create
-      @console_port = ConsolePort.new(console_port_params)
+      @console_port = ConsolePort.new(console_port_params.merge(device_id: params[:device_id]))
 
       if @console_port.save
-        redirect_to device_url(id: @console_port.device_id),
-                    notice: 'Console port was successfully created.'
+        process_success success_redirect: device_path(@console_port.device_id)
       else
         process_error object: @console_port
       end
@@ -35,8 +38,7 @@ module ForemanDatacenter
 
     def update
       if @console_port.update(console_port_params)
-        redirect_to device_url(id: @console_port.device_id),
-                    notice: 'Console port was successfully updated.'
+        process_success success_redirect: device_path(@console_port.device_id)
       else
         process_error object: @console_port
       end
@@ -44,8 +46,7 @@ module ForemanDatacenter
 
     def destroy
       if @console_port.destroy
-        redirect_to device_url(id: @console_port.device_id),
-                    notice: 'Console port was successfully destroyed.'
+        process_success success_redirect: device_path(@console_port.device_id)
       else
         process_error object: @console_port
       end
@@ -83,6 +84,12 @@ module ForemanDatacenter
       @console_port.disconnect
       redirect_to device_url(id: @console_port.device_id),
                   notice: 'Console port was successfully disconnected.'
+    end
+
+    private
+
+    def set_console_port
+      @console_port = ForemanDatacenter::ConsolePort.find(params[:id])
     end
   end
 end

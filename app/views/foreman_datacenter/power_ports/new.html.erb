@@ -1,5 +1,5 @@
 <% title _("Create Power Port") %>
 
-<%= breadcrumbs(items: [{caption: _('Device'), url: "/datacenter/devices/#{params['device_id']}"}, {caption: _("Create Power Port")}]) %>
+<%= breadcrumbs(items: [{caption: _('Device %s') % @power_port.device.to_label, url: device_path(@power_port.device)}, {caption: _("Create Power Port")}]) %>
 
 <%= render 'form' %>

@@ -16,4 +16,3 @@ module ForemanDatacenter::Controller::Parameters::Device
     self.class.device_params_filter.filter_params(params, parameter_filter_context)
   end
 end
- 

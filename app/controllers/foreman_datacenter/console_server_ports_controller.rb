@@ -15,7 +15,7 @@ module ForemanDatacenter
     end
 
     def create
-      @console_server_port = ConsoleServerPort.new(console_server_port_params)
+      @console_server_port = ConsoleServerPort.new(console_server_port_params.merge(device_id: params[:device_id]))
 
       if @console_server_port.save
         redirect_to device_url(id: @console_server_port.device_id),

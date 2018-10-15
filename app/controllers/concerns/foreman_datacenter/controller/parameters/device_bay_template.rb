@@ -13,4 +13,3 @@
     self.class.device_bay_template_params_filter.filter_params(params, parameter_filter_context)
   end
 end
- 

@@ -13,5 +13,3 @@
     self.class.device_interface_connection_params_filter.filter_params(params, parameter_filter_context)
   end
 end
- 
-

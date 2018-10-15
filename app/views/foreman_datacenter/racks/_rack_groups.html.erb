@@ -1,8 +1,8 @@
 <%= form_for :rack do |f| %>
-    <div id="rack-groups">
-      <%= selectable_f f, :rack_group_id,
-                       options_from_collection_for_select(@rack_groups, 'id', 'name'),
-                       {:include_blank => _('Choose a rack group')},
-                       {:label => _('Group')} %>
-    </div>
+  <div id="rack-groups">
+    <%= selectable_f f, :rack_group_id,
+                     options_from_collection_for_select(@rack_groups, 'id', 'name'),
+                     {:include_blank => _('Choose a rack group')},
+                     {:label => _('Group')} %>
+  </div>
 <% end %>

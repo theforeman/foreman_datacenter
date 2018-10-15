@@ -4,7 +4,7 @@ module ForemanDatacenter::Controller::Parameters::Platform
   class_methods do
     def platform_params_filter
       Foreman::ParameterFilter.new(::ForemanDatacenter::Platform).tap do |filter|
-        filter.permit :name, :prc_client
+        filter.permit :name, :rpc_client
       end
     end
   end

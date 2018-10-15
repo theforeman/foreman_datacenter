@@ -23,7 +23,7 @@
                 ),
                 display_delete_if_authorized(
                   hash_for_manufacturer_path(:id => manufacturer).merge(:auth_object => manufacturer, :authorizer => authorizer),
-                  :data => { :confirm => 'Are you sure?'},
+                  :data => { :confirm => _("Delete %s?") % manufacturer.name },
                   :action => :destroy
                 )
               ) %>

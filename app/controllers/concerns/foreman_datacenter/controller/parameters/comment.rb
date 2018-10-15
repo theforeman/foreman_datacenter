@@ -14,4 +14,3 @@
     self.class.comment_params_filter.filter_params(params, parameter_filter_context)
   end
 end
- 

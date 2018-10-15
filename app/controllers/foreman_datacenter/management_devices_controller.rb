@@ -13,7 +13,7 @@ module ForemanDatacenter
     end
 
     def create
-      @management_device = ManagementDevice.new(management_device_params)
+      @management_device = ManagementDevice.new(management_device_params.merge(device_id: params[:device_id]))
 
       if @management_device.save
         redirect_to device_url(@management_device.device),

@@ -14,7 +14,7 @@ module ForemanDatacenter
     end
 
     def create
-      @device_module = DeviceModule.new(device_module_params)
+      @device_module = DeviceModule.new(device_module_params.merge(device_id: params[:device_id]))
 
       if @device_module.save
         redirect_to inventory_device_url(id: @device_module.device_id),

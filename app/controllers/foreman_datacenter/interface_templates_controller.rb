@@ -21,11 +21,10 @@ module ForemanDatacenter
     end
 
     def create
-      @interface_template = InterfaceTemplate.new(interface_template_params)
+      @interface_template = InterfaceTemplate.new(interface_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @interface_template.save
-        redirect_to device_type_url(@interface_template.device_type),
-                    notice: 'New interface template was successfully created'
+        process_success success_redirect: device_type_url(@interface_template.device_type_id)
       else
         process_error object: @interface_template
       end
@@ -33,8 +32,7 @@ module ForemanDatacenter
 
     def destroy
       if @interface_template.destroy
-        redirect_to device_type_url(@interface_template.device_type),
-                    notice: 'Interface template was successfully destroyed'
+        process_success success_redirect: device_type_url(params[:device_type_id])
       else
         process_error object: @interface_template
       end

@@ -12,7 +12,7 @@
         <%= link_to device_bay.installed_device.name,
                     device_path(device_bay.installed_device) %>
     <% else %>
-        <span class="text-muted">Vacant</span>
+        <span class="text-muted"><%= _("Vacant") %></span>
     <% end %>
   </td>
   <td class="text-right">

@@ -1,6 +1,5 @@
 <% title _('Reply') %>
 
-<%= breadcrumbs(items: [{caption: _('Comments'), url: "/datacenter/devices/#{params[:resource_id]}#comment-#{params[:parent_id]}"}, {caption: _('Reply')}]) %>
+<%= breadcrumbs(items: [{caption: "#{_(@resource_class)} #{@parent.commentable.to_label}", url: commentable_path(@parent)}, {caption: _('Edit Comment')}]) %>
 
 <%= render 'form' %>
-

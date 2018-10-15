@@ -10,17 +10,23 @@ module ForemanDatacenter
     end
 
     def show
+       # just for test
+      @comments = @rack_group.comments
+      @commentable = @rack_group
+      @comment = Comment.new
+      @resource = request.path.split('/')[2]
+      @current_user = current_user
     end
 
     def new
-      @rack_group = RackGroup.new
+      @rack_group = ForemanDatacenter::RackGroup.new
     end
 
     def edit
     end
 
     def create
-      @rack_group = RackGroup.new(rack_group_params)
+      @rack_group = ForemanDatacenter::RackGroup.new(rack_group_params)
 
       if @rack_group.save
         process_success object: @rack_group
@@ -39,7 +45,7 @@ module ForemanDatacenter
 
     def destroy
       if @rack_group.destroy
-        process_success object: @rack_group
+        process_success success_redirect: "/datacenter/rack_groups"
       else
         process_error object: @rack_group
       end

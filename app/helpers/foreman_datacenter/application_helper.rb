@@ -22,5 +22,19 @@ module ForemanDatacenter
       end
     end
 
+    def recursive_tags(text, tags)
+      return _("#{text}") if tags.empty?
+      ct = tags[0].parameterize.underscore.to_sym
+      # abort "#{text.inspect} | #{tags.inspect}"
+      if tags.length == 1
+        content_tag(ct, _("#{text}"), class: 'text-muted')
+      else
+        content_tag(ct, recursive_tags(text, tags.drop(1)))
+      end
+    end
+
+    def muted_text(text, *ct)
+      recursive_tags(text, ct)
+    end
   end
 end

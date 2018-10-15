@@ -1,3 +1,5 @@
-<% title _("Edit %s") % @power_ports.to_label %>
+<% title _("Edit %s") % @power_port.to_label %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @power_port.device.to_label, url: device_path(@power_port.device)}, {caption: _("Edit %s") % @power_port.to_label}]) %>
 
 <%= render 'form' %>

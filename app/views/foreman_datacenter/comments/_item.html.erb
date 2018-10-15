@@ -16,12 +16,12 @@
   <%= comment.content %>
   <br/>
   <small>
-    <%= link_to "Reply", new_comment_path(parent_id: comment.id, resource: commentable_data[:resource], resource_id: commentable_data[:id]) %>
+    <%= link_to _("Reply"), new_comment_path({'parent_id': comment.id}) %>
     &nbsp;
-    <% if @current_user == comment.user or comment.user.nil? %>
-      <%= link_to "Edit", "/datacenter/comments/#{comment.id}/edit" %>
+    <% if @current_user == comment.user or comment.user.nil? or @current_user.admin? %>
+      <%= link_to _("Edit"), edit_comment_path(comment) %>
       &nbsp;
-      <%= link_to "Delete", "/datacenter/#{commentable_data[:resource]}/#{commentable_data[:id]}/comments/#{comment.id}", method: :delete, data: {confirm: "Are you sure?"} %>
+      <%= link_to _("Delete"), comment_path(comment), method: :delete, data: {confirm: "Are you sure?"} %>
     <% end %>
   </small>
 </div>

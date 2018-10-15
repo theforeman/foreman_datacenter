@@ -15,6 +15,7 @@ module ForemanDatacenter
 
     scoped_search on: :name, complete_value: true, default_order: true
     scoped_search on: :height, validator: ScopedSearch::Validators::INTEGER
+    # scoped_search relation: :site, on: :name
 
     def device_at(position)
       devices.where(position: position).to_a

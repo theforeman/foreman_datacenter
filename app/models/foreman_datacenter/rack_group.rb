@@ -6,6 +6,11 @@ module ForemanDatacenter
     belongs_to :site, :class_name => 'ForemanDatacenter::Site'
     has_many :racks, :class_name => 'ForemanDatacenter::Rack'
 
+    # just for test
+    has_many :comments, :class_name => 'ForemanDatacenter::Comment',
+             dependent: :destroy, as: :commentable
+
+
     validates :site_id, presence: true
     validates :name, presence: true, length: { maximum: 50 }
 

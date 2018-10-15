@@ -3,7 +3,8 @@ module ForemanDatacenter
     include ForemanDatacenter::Controller::Parameters::DeviceBay
 
     before_action :find_resource, only: [:depopulate, :populate,
-                                          :populate_new, :edit, :update, :destroy]
+                                         :populate_new, :edit,
+                                         :update, :destroy]
 
     def new
       @device_bay = DeviceBay.new(device: Device.find(params[:device_id]))
@@ -13,7 +14,7 @@ module ForemanDatacenter
     end
 
     def create
-      @device_bay = DeviceBay.new(device_bay_params)
+      @device_bay = DeviceBay.new(device_bay_params.merge(device_id: params[:device_id]))
 
       if @device_bay.save
         redirect_to device_url(@device_bay.device),

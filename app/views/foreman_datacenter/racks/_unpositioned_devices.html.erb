@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><strong>Unpositioned Devices</strong></div>
+  <div class="panel-heading"><strong><%= _("Unpositioned Devices") %></strong></div>
   <table class="table table-hover panel-body nonmarginbottom">
     <tbody>
       <% @rack.unpositioned_devices.each do |d| %>
@@ -12,7 +12,7 @@
                 *
               <% end %>
             </div>
-        </td>
+          </td>
         </tr>
       <% end %>
     </tbody>
