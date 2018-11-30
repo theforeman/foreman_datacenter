@@ -56,6 +56,21 @@ module Api
           nil
         end
 
+        def action_permission
+          case params[:action]
+            when 'connect'
+              'connect'
+            when 'planned'
+              'planned'
+            when 'connected'
+              'connected'
+            when 'disconnect'
+              'disconnect'
+            else
+              super
+          end
+        end
+
       end
     end
   end

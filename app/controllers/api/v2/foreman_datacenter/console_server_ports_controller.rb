@@ -4,8 +4,7 @@ module Api
       class ConsoleServerPortsController < ForemanDatacenter::BaseController
 	include ::ForemanDatacenter::Controller::Parameters::ConsoleServerPort
 
-        before_action :set_console_server_port, :only => %w{connect connected planned disconnect}
-        before_action :find_resource, :only => %w{show update destroy}
+        before_action :find_resource, :only => %w{show update destroy connect connected planned disconnect}
         add_scoped_search_description_for(::ForemanDatacenter::ConsoleServerPortTemplate)
         param_group :search_and_pagination, ::Api::V2::BaseController
 
@@ -72,13 +71,6 @@ module Api
 	def disconnect
           process_response @console_server_port.console_port.disconnect
 	end
-
-        private
-
-        def set_console_server_port
-          @console_server_port = ::ForemanDatacenter::ConsoleServerPort.find(params[:id])
-        end
-
       end
     end
   end

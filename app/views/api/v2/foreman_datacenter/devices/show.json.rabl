@@ -50,10 +50,6 @@ child :device_modules do
   extends "api/v2/foreman_datacenter/device_modules/base"
 end
 
-child :management_devices do
-  extends "api/v2/foreman_datacenter/managament_devices/base"
-end
-
 child :power_ports do
   extends "api/v2/foreman_datacenter/power_ports/base"
 end
@@ -62,6 +58,6 @@ child :power_outlets do
   extends "api/v2/foreman_datacenter/power_outlets/base"
 end
 
-# child :interfaces do
-#   extends "api/v2/foreman_datacenter/interfaces/base"
-# end
+child :interfaces do
+  extends "api/v2/foreman_datacenter/interfaces/base"
+end

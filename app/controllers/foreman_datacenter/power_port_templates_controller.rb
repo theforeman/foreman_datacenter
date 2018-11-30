@@ -29,4 +29,3 @@ module ForemanDatacenter
     end
   end
 end
-

@@ -15,7 +15,7 @@ module ForemanDatacenter
     scoped_search on: :name, complete_value: true, default_order: true
     scoped_search on: :facility, complete_value: true, default_order: true
 
-    # scoped_search relation: :racks, on: :site_id, ext_method: :find_by_house
+    scoped_search relation: :racks, on: :name, ext_method: :find_by_house
     # scoped_search relation: :racks, on: rack_count
     # named_scope :aa, lambda { |s| abort s.inspect }
     # SELECT count(*) FROM "sites" INNER JOIN "racks" ON "racks"."site_id" = "sites"."id" GROUP BY site_id;
@@ -31,6 +31,14 @@ module ForemanDatacenter
     end
 
     def self.find_by_house#(key, operator, value)
+      Site.includes(:racks)
+        .group(['sites.id', 'racks.site_id'])
+        .order('COUNT(racks.id) DESC')
+        .references(:racks)
+      # User.includes(:offers, :wards)
+      # .group(['user.id', 'offers.id'])
+      # .order('COUNT(offers.id) DESC')
+      # .references(:offers)
       # conditions = sanitize_sql_for_conditions(["racks.id #{operator} ?", value_to_sql(operator, value)])
       # owners = Site.joins(:racks).where(conditions).select('site.id').map(&:id)
 

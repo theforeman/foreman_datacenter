@@ -11,7 +11,7 @@ module ForemanDatacenter
     validates :name, presence: true, length: { maximum: 50 }
     validates :facility_id, length: { maximum: 30 }
     validates :height, presence: true
-    validates_numericality_of :height, only_integer: true
+    validates_numericality_of :height, only_integer: true, greater_than: 0
 
     scoped_search on: :name, complete_value: true, default_order: true
     scoped_search on: :height, validator: ScopedSearch::Validators::INTEGER

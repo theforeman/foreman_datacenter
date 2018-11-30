@@ -4,8 +4,7 @@ module Api
       class ConsolePortsController < ForemanDatacenter::BaseController
 	include ::ForemanDatacenter::Controller::Parameters::ConsolePort
 
-        before_action :set_console_port, :only => %w{connect connected planned disconnect}
-        before_action :find_resource, :only => %w{show update destroy}
+        before_action :find_resource, :only => %w{show update destroy connect connected planned disconnect}
 
         param_group :search_and_pagination, ::Api::V2::BaseController
         add_scoped_search_description_for(::ForemanDatacenter::ConsolePort)
@@ -90,13 +89,6 @@ module Api
 	def planned
           process_response @console_port.planned!
 	end
-
-        private
-
-        def set_console_port
-          @console_port = ::ForemanDatacenter::ConsolePort.find(params[:id])
-        end
-
       end
     end
   end

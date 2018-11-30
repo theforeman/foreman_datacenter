@@ -3,13 +3,9 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::ConsolePort
 
-    # before_action :find_resource, only: [:edit, :update, :destroy,
-    #                                      :connected, :planned, :new_connection,
-    #                                      :connect, :disconnect]
-
-    before_action :find_resource, only: [:edit, :update, :destroy]
-    before_action :set_console_port, only: [:new_connection, :connect,
-                                            :connected, :planned, :disconnect]
+    before_action :find_resource, only: [:edit, :update, :destroy,
+                                         :connected, :planned, :new_connection,
+                                         :connect, :disconnect]
 
     def index
       @console_ports = resource_base_search_and_page.where.not(console_server_port_id: nil).includes(:device, console_server_port: [:device])
@@ -84,12 +80,6 @@ module ForemanDatacenter
       @console_port.disconnect
       redirect_to device_url(id: @console_port.device_id),
                   notice: 'Console port was successfully disconnected.'
-    end
-
-    private
-
-    def set_console_port
-      @console_port = ForemanDatacenter::ConsolePort.find(params[:id])
     end
   end
 end

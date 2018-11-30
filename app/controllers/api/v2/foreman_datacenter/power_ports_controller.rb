@@ -4,8 +4,7 @@ module Api
       class PowerPortsController < ForemanDatacenter::BaseController
 	include ::ForemanDatacenter::Controller::Parameters::PowerPort
 
-        before_action :set_power_port, :only => %w{connect connected planned disconnect}
-        before_action :find_resource, :only => %w{show update destroy}
+        before_action :find_resource, :only => %w{show update destroy connect connected planned disconnect}
 
         param_group :search_and_pagination, ::Api::V2::BaseController
         add_scoped_search_description_for(::ForemanDatacenter::PowerPort)
@@ -89,13 +88,6 @@ module Api
 	def planned
           process_response @power_port.planned!
 	end
-
-        private
-
-        def set_power_port
-          @power_port = ::ForemanDatacenter::PowerPort.find(params[:id])
-        end
-
       end
     end
   end

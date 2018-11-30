@@ -7,6 +7,8 @@ module ForemanDatacenter
 
     def index
       @sites = resource_base_search_and_page
+      # a = Site.includes(:racks).group(['sites.id', 'racks.site_id']).order('COUNT(racks.id) DESC').references(:racks)
+      # abort a.inspect
     end
 
     def new

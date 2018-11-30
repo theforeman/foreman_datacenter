@@ -4,7 +4,7 @@
 
   <%= form_for @comment, url: "/datacenter/comments/#{@comment.id}" do |f| %>
     <%= base_errors_for @comment %>
-    <%= textarea_f f, :content, rows: 10, required: true %>  
+    <%= textarea_f f, :content, rows: 10, required: true %>
     <%= submit_or_cancel(f, false, :cancel_path => commentable_path(@comment)) %>
   <% end %>
 

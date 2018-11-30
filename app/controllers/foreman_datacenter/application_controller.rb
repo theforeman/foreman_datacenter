@@ -64,5 +64,23 @@ module ForemanDatacenter
     rescue NameError
       nil
     end
+
+    def action_permission
+      case params[:action]
+        when 'new_connection'
+          'new_connection'
+        when 'connect'
+          'connect'
+        when 'planned'
+          'planned'
+        when 'connected'
+          'connected'
+        when 'disconnect'
+          'disconnect'
+        else
+          super
+      end
+    end
+
   end
 end

@@ -4,8 +4,7 @@ module Api
       class DeviceInterfaceConnectionsController < ForemanDatacenter::BaseController
 	include ::ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
 
-        before_action :set_device_interface_connection, :only => %w{connected planned}
-        before_action :find_resource, :only => %w{show update destroy}
+        before_action :find_resource, :only => %w{show update destroy connected planned}
         param_group :search_and_pagination, ::Api::V2::BaseController
         api :GET, "/foreman_datacenter/connections/", N_("List all InterfaceConnections")
         api :GET, "/foreman_datacenter/device_intervace_connections/", N_("List all InterfaceConnections")
@@ -65,10 +64,6 @@ module Api
 
         def get_device_interface
           ::ForemanDatacenter::DeviceInterface.find(params[:device_interface_id])
-        end
-
-        def set_device_interface_connection
-          @device_interface_connection = ::ForemanDatacenter::DeviceInterfaceConnection.find(params[:id])
         end
       end
     end

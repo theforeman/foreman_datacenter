@@ -4,8 +4,7 @@ module Api
       class PowerOutletsController < ForemanDatacenter::BaseController
 	include ::ForemanDatacenter::Controller::Parameters::PowerOutlet
 
-        before_action :set_power_outlet, :only => %w{connect disconnect}
-        before_action :find_resource, :only => %w{show update destroy}
+        before_action :find_resource, :only => %w{show update destroy connect disconnect}
         add_scoped_search_description_for(::ForemanDatacenter::PowerOutletTemplate)
         param_group :search_and_pagination, ::Api::V2::BaseController
 
@@ -72,13 +71,6 @@ module Api
 	def disconnect
           process_response @power_outlet.power_port.disconnect
 	end
-
-        private
-
-        def set_power_outlet
-          @power_outlet = ::ForemanDatacenter::PowerOutlet.find(params[:id])
-        end
-
       end
     end
   end
