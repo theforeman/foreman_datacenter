@@ -67,10 +67,6 @@ module ForemanDatacenter
       end
     end
 
-    def load_commentable
-      abort @comment.inspect
-    end
-
     def load_resource(resource = nil, id = nil)
       if resource.nil?
         @resource, @id = request.path.split('/')[2, 3] if resource.nil?

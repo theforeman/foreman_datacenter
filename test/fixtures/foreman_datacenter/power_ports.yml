@@ -1,0 +1,108 @@
+---
+one:
+  id: 1
+  device_id: 1
+  name: PowerPort1_for_Device1
+  power_outlet_id: 1
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_id: 1
+  name: PowerPort2_for_Device1
+  power_outlet_id: 2
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  device_id: 2
+  name: PowerPort1_for_Device2
+  power_outlet_id: 3
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  device_id: 2
+  name: PowerPort2_for_Device2
+  power_outlet_id: 4
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  device_id: 3
+  name: PowerPort1_for_Device3
+  power_outlet_id: 5
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  device_id: 3
+  name: PowerPort2_for_Device3
+  power_outlet_id: 6
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+seven:
+  id: 7
+  device_id: 4
+  name: PowerPort1_for_Device4
+  power_outlet_id: 7
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eight:
+  id: 8
+  device_id: 4
+  name: PowerPort2_for_Device4
+  power_outlet_id: 8
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+nine:
+  id: 9
+  device_id: 5
+  name: PowerPort1_for_Device5
+  power_outlet_id: 9
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+ten:
+  id: 10
+  device_id: 5
+  name: PowerPort2_for_Device5
+  power_outlet_id: 10
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eleven:
+  id: 11
+  device_id: 6
+  name: PowerPort1_for_Device6
+  power_outlet_id: 11
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twelve:
+  id: 12
+  device_id: 6
+  name: PowerPort2_for_Device6
+  power_outlet_id: 12
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

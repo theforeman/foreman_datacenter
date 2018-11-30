@@ -1,0 +1,54 @@
+---
+one:
+  id: 1
+  device_type_id: 1 # DeviceType1None
+  name: InterfaceTemplate1_for_DeviceType1_NONE
+  form_factor: "Virtual"
+  mgmt_only: false
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_type_id: 1 # DeviceType1None
+  name: ManagementInterfaceTemplate2_for_DeviceType1_NONE
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  device_type_id: 2 # DeviceType2Parent
+  name: InterfaceTemplate1_for_DeviceType2_PARENT
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  device_type_id: 2 # DeviceType2Parent
+  name: ManagementInterfaceTemplate2_for_DeviceType2_PARENT
+  form_factor: "10GE SFP+"
+  mgmt_only: true
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  device_type_id: 3 # DeviceType3Child
+  name: InterfaceTemplate1_for_DeviceType3_CHILD
+  form_factor: "1GE SFP"
+  mgmt_only: false
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  device_type_id: 3 # DeviceType3Child
+  name: ManagementInterfaceTemplate2_for_DeviceType3_CHILD
+  form_factor: "10GE 10GBASE-T"
+  mgmt_only: true
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

@@ -13,9 +13,14 @@ module ForemanDatacenter
     validates :height, presence: true
     validates_numericality_of :height, only_integer: true, greater_than: 0
 
-    scoped_search on: :name, complete_value: true, default_order: true
+    scoped_search on: :name, complete_value: true
     scoped_search on: :height, validator: ScopedSearch::Validators::INTEGER
-    # scoped_search relation: :site, on: :name
+    scoped_search on: :facility_id, validator: ScopedSearch::Validators::INTEGER
+    scoped_search on: :created_at, complete_value: true, default_order: true
+    scoped_search on: :updated_at, complete_value: true, default_order: true
+
+    scoped_search in: :site, on: :name, complete_value: true, rename: :site
+    scoped_search in: :rack_group, on: :name, complete_value: true, rename: :rack_group
 
     def device_at(position)
       devices.where(position: position).to_a
@@ -39,6 +44,12 @@ module ForemanDatacenter
 
     def unpositioned_devices
       devices.where(position: nil).to_a
+    end
+
+    def devices_count
+      @devices_count ||= self.class.where(id: id).
+          joins(:devices).
+          count
     end
 
     private

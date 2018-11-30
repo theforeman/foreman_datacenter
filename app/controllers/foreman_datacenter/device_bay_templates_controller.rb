@@ -5,13 +5,13 @@ module ForemanDatacenter
     before_action :find_resource, only: [:destroy]
 
     def new
-      @device_bay_template = DeviceBayTemplate.new(
-        device_type: DeviceType.find(params[:device_type_id])
+      @device_bay_template = ForemanDatacenter::DeviceBayTemplate.new(
+        device_type: ForemanDatacenter::DeviceType.find(params[:device_type_id])
       )
     end
 
     def create
-      @device_bay_template = DeviceBayTemplate.new(device_bay_template_params.merge(device_type_id: params[:device_type_id]))
+      @device_bay_template = ForemanDatacenter::DeviceBayTemplate.new(device_bay_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @device_bay_template.save
         process_success success_redirect: device_type_url(@device_bay_template.device_type_id)

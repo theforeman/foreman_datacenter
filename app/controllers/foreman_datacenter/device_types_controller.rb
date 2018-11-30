@@ -13,16 +13,16 @@ module ForemanDatacenter
     end
 
     def new
-      @device_type = DeviceType.new(u_height: 1, is_full_depth: true,
-                                    is_console_server: false, is_pdu: false,
-                                    is_network_device: true)
+      @device_type = ForemanDatacenter::DeviceType.new(u_height: 1, is_full_depth: true,
+                                                       is_console_server: false, is_pdu: false,
+                                                       is_network_device: true)
     end
 
     def edit
     end
 
     def create
-      @device_type = DeviceType.new(device_type_params)
+      @device_type = ForemanDatacenter::DeviceType.new(device_type_params)
 
       if @device_type.save
         process_success object: @device_type
@@ -41,8 +41,14 @@ module ForemanDatacenter
     end
 
     def destroy
+      unless params['object_only']
+        @device_type.devices.each { |d| d.destroy }
+      else
+        @device_type.devices.delete_all(:nullify)
+      end
+
       if @device_type.destroy
-        process_success object: @device_type
+        process_success success_redirect: device_types_path
       else
         process_error object: @device_type
       end

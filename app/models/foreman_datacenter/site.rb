@@ -3,8 +3,9 @@ module ForemanDatacenter
     include ScopedSearchExtensions
     include Authorizable
     
-    has_many :racks, :class_name => 'ForemanDatacenter::Rack'
-    has_many :rack_groups, :class_name => 'ForemanDatacenter::RackGroup'
+    has_many :racks, :class_name => 'ForemanDatacenter::Rack', dependent: :nullify
+    has_many :rack_groups, :class_name => 'ForemanDatacenter::RackGroup', dependent: :nullify
+    has_many :devices, :class_name => 'ForemanDatacenter::Device', through: :racks
 
     validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
     validates :facility, length: { maximum: 50 }, allow_blank: true
@@ -14,14 +15,18 @@ module ForemanDatacenter
 
     scoped_search on: :name, complete_value: true, default_order: true
     scoped_search on: :facility, complete_value: true, default_order: true
-
-    scoped_search relation: :racks, on: :name, ext_method: :find_by_house
-    # scoped_search relation: :racks, on: rack_count
-    # named_scope :aa, lambda { |s| abort s.inspect }
-    # SELECT count(*) FROM "sites" INNER JOIN "racks" ON "racks"."site_id" = "sites"."id" GROUP BY site_id;
+    scoped_search on: :asn, complete_value: true, default_order: true
+    scoped_search on: :physical_address, complete_value: true, default_order: true
+    scoped_search on: :shipping_address, complete_value: true, default_order: true
+    scoped_search on: :created_at, complete_value: true, default_order: true
+    scoped_search on: :updated_at, complete_value: true, default_order: true
 
     def racks_count
       @racks_count ||= racks.count
+    end
+
+    def rack_groups_count
+      @rack_groups_count ||= rack_groups.count
     end
 
     def devices_count

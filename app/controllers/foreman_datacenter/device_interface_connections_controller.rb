@@ -10,13 +10,13 @@ module ForemanDatacenter
     end
 
     def new
-      @device_interface_connection = DeviceInterfaceConnection.connected.new(
+      @device_interface_connection = ForemanDatacenter::DeviceInterfaceConnection.connected.new(
         first_interface: get_device_interface
       )
     end
 
     def create
-      @device_interface_connection = DeviceInterfaceConnection.new(device_interface_connection_params.merge(interface_a: params[:device_interface_id]))
+      @device_interface_connection = ForemanDatacenter::DeviceInterfaceConnection.new(device_interface_connection_params.merge(interface_a: params[:device_interface_id]))
       @device_interface_connection.first_interface = get_device_interface
 
       if @device_interface_connection.save
@@ -43,14 +43,14 @@ module ForemanDatacenter
     end
 
     def interfaces
-      @interfaces = Device.find(params[:device_id]).free_interfaces
+      @interfaces = ForemanDatacenter::Device.find(params[:device_id]).free_interfaces
       render partial: 'interfaces'
     end
 
     private
 
     def get_device_interface
-      DeviceInterface.find(params[:device_interface_id])
+      ForemanDatacenter::DeviceInterface.find(params[:device_interface_id])
     end
   end
 end

@@ -15,6 +15,15 @@ module ForemanDatacenter
               inclusion: { in: COLORS, message: "Color must be one of #{COLORS.join(', ')}"}
 
     scoped_search on: :name, complete_value: true, default_order: true
+    scoped_search on: :color, complete_value: true, default_order: true
+    scoped_search on: :created_at, complete_value: true, default_order: true
+    scoped_search on: :updated_at, complete_value: true, default_order: true
+
+    def devices_count
+      @devices_count ||= self.class.where(id: id).
+          joins(:devices).
+          count
+    end
 
     def self.for_host
       role = find_by_name('Server')

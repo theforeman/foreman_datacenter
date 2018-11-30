@@ -2,34 +2,27 @@ module ForemanDatacenter
   class Device < ActiveRecord::Base
     include ScopedSearchExtensions
 
-    belongs_to :device_type, :class_name => 'ForemanDatacenter::DeviceType'
-    belongs_to :device_role, :class_name => 'ForemanDatacenter::DeviceRole'
-    belongs_to :platform, :class_name => 'ForemanDatacenter::Platform'
-    belongs_to :rack, :class_name => 'ForemanDatacenter::Rack'
-    has_many :device_bays, :class_name => 'ForemanDatacenter::DeviceBay'
-    has_one :parent_device_bay, :class_name => 'ForemanDatacenter::DeviceBay',
-            :foreign_key => 'installed_device_id'
-    has_many :power_outlets, :class_name => 'ForemanDatacenter::PowerOutlet'
-    has_many :power_ports, :class_name => 'ForemanDatacenter::PowerPort'
-    has_many :console_server_ports, :class_name => 'ForemanDatacenter::ConsoleServerPort'
-    has_many :console_ports, :class_name => 'ForemanDatacenter::ConsolePort'
-    has_many :interfaces, :class_name => 'ForemanDatacenter::DeviceInterface',
-             dependent: :destroy
-    has_many :management_interfaces, -> { where(mgmt_only: true) },
-             :class_name => 'ForemanDatacenter::DeviceInterface'
-    has_many :non_management_interfaces, -> { where(mgmt_only: false) },
-             :class_name => 'ForemanDatacenter::DeviceInterface'
-    has_many :modules, :class_name => 'ForemanDatacenter::DeviceModule'
-    has_one :ipmi_interface, -> { where(name: 'ipmi', mgmt_only: true) },
-            :class_name => 'ForemanDatacenter::DeviceInterface'
-    has_one :mgmt_interface, -> { where(name: 'mgmt', mgmt_only: true) },
-            :class_name => 'ForemanDatacenter::DeviceInterface'
+    belongs_to :device_type, class_name: 'ForemanDatacenter::DeviceType'
+    belongs_to :device_role, class_name: 'ForemanDatacenter::DeviceRole'
+    belongs_to :platform, class_name: 'ForemanDatacenter::Platform'
+    belongs_to :rack, class_name: 'ForemanDatacenter::Rack'
+    has_many :device_bays, class_name: 'ForemanDatacenter::DeviceBay', dependent: :destroy
+    has_one :parent_device_bay, class_name: 'ForemanDatacenter::DeviceBay', foreign_key: 'installed_device_id'#, dependent: :destroy
+    has_many :power_outlets, class_name: 'ForemanDatacenter::PowerOutlet', dependent: :destroy
+    has_many :power_ports, class_name: 'ForemanDatacenter::PowerPort', dependent: :destroy
+    has_many :console_server_ports, class_name: 'ForemanDatacenter::ConsoleServerPort', dependent: :destroy
+    has_many :console_ports, class_name: 'ForemanDatacenter::ConsolePort', dependent: :destroy
+    has_many :interfaces, class_name: 'ForemanDatacenter::DeviceInterface', dependent: :destroy
+    has_many :management_interfaces, -> { where(mgmt_only: true) }, class_name: 'ForemanDatacenter::DeviceInterface', dependent: :destroy
+    has_many :non_management_interfaces, -> { where(mgmt_only: false) }, class_name: 'ForemanDatacenter::DeviceInterface', dependent: :destroy
+    has_many :modules, class_name: 'ForemanDatacenter::DeviceModule', dependent: :destroy
+    has_one :ipmi_interface, -> { where(name: 'ipmi', mgmt_only: true) }, class_name: 'ForemanDatacenter::DeviceInterface', dependent: :destroy
+    has_one :mgmt_interface, -> { where(name: 'mgmt', mgmt_only: true) }, class_name: 'ForemanDatacenter::DeviceInterface', dependent: :destroy
     belongs_to_host
-    has_one :management_device, :class_name => 'ForemanDatacenter::ManagementDevice'
-    has_one :site, :through => :rack
+    has_one :management_device, class_name: 'ForemanDatacenter::ManagementDevice', dependent: :destroy
+    has_one :site, through: :rack
 
-    has_many :comments, :class_name => 'ForemanDatacenter::Comment',
-             dependent: :destroy, as: :commentable
+    has_many :comments, class_name: 'ForemanDatacenter::Comment', dependent: :destroy, as: :commentable
 
     enum face: [:front, :rear]
     enum side: [:left, :right, :full]
@@ -57,6 +50,7 @@ module ForemanDatacenter
     scoped_search in: :rack, on: :name, complete_value: true, rename: :rack
     scoped_search in: :device_role, on: :name, complete_value: true, rename: :role
     scoped_search in: :device_type, on: :model, complete_value: true, rename: :type
+    scoped_search in: :platform, on: :name, complete_value: true, rename: :platform
 
     delegate :site_id, to: :rack, allow_nil: true
     delegate :manufacturer_id, :is_console_server, :is_pdu, :is_network_device,

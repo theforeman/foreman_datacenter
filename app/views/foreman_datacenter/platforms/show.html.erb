@@ -1,4 +1,6 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@platform.name) %>
 
@@ -9,13 +11,17 @@
                    hash_for_edit_platform_path(:id => @platform),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_platform_path(:id => @platform),
-                   :data => { :confirm => _("Delete %s?") % @platform.name },
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                    hash_for_site_path(id: @platform),
+                    class: 'btn btn-danger',
+                    id: 'init-modal',
+                    href: '#',
+                    data: { objecttype: 'platform',
+                            objectid: @platform.id,
+                            objectname: @platform.to_label,
+                            associatedobjects: associated_objects('platform') }
                  )
-   help_path %>
+                 help_path %>
 
 <div class="row">
   <div class="col-md-6">
@@ -54,8 +60,26 @@
       <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
           <td><%= _("Devices") %></td>
-          <td><%= @platform.devices.length %></td>
+          <td><%= link_to @platform.devices_count, devices_path(search: "platform=#{@platform.name}") %></td>
         </tr>
+      </table>
+    </div>
+
+    <!-- Devices -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong><%= _("Devices") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @platform.devices.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
+            <% @platform.devices.to_a.sort_by!{ |d| d.name }.each do |device| %>
+              <tr>
+                <td><%= link_to device.name, device_path(device) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
       </table>
     </div>
   </div>

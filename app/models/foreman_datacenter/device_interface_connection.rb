@@ -19,31 +19,8 @@ module ForemanDatacenter
       end
     end
 
-    # scoped_search relation: :device, on: :name, ext_method: :a
-    scoped_search on: :interface_a, complete_value: true, default_order: true
-    # scoped_search :relation => :device, :on => :name#, :rename => :role_id, :complete_enabled => false, :only_explicit => true, :validator => ScopedSearch::Validators::INTEGER
-    # scoped_search :relation => :interface, :on => :name, :rename => :interface_id#, :complete_enabled => false, :only_explicit => true, :validator => ScopedSearch::Validators::INTEGER
-    # scoped_search on: :device_a, complete_value: true, default_order: true
-    # scoped_search on: :device_b, complete_value: true, default_order: true
-    # scoped_search :relation => :role, :on => :id, :rename => :role_id, :complete_enabled => false, :only_explicit => true, :validator => ScopedSearch::Validators::INTEGER
-
-
-    # def self.a
-    # select device_interfaces.Device_id from device_interfaces;
-    #   # def self.a(key, operator, value)
-    #   interface_ids = DeviceInterfaceConnection.all.map{|d| [d.interface_a, d.interface_b]}.flatten.uniq
-    #   device_ids = DeviceInterface.where(id: interface_ids).map(&:device_id).uniq
-    #   
-    #   # conditions = sanitize_sql_for_conditions(["houses.name #{operator} ?", value_to_sql(operator, value)])
-    #   # owners = Person.joins(:houses).where(conditions).select('person.name').map(&:id)
-    #   #owners = Device.joins(:houses).where(conditions).select('person.name').map(&:id)
-    #   # owners = Device.all
-    #   # o = DeviceINterface.all
-    #   # abort owners.inspect
-
-    #   # # { :conditions => "person.name IN(#{owners.join(',')})" }
-    #   { :conditions => "device.name IN(#{device_ids.join(',')})" }
-    # end
+    scoped_search in: :first_interface, on: :name, complete_value: true, rename: :interface_a
+    scoped_search in: :second_interface, on: :name, complete_value: true, rename: :interface_b
 
     def first_device
       first_interface.device

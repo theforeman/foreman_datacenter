@@ -1,0 +1,84 @@
+---
+one:
+  id: 1
+  device_id: 1
+  name: ConsoleServerPort1_for_Device1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_id: 1
+  name: ConsoleServerPort2_for_Device1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  device_id: 2
+  name: ConsoleServerPort1_for_Device2
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  device_id: 2
+  name: ConsoleServerPort2_for_Device2
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  device_id: 3
+  name: ConsoleServerPort1_for_Device3
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  device_id: 3
+  name: ConsoleServerPort2_for_Device3
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+seven:
+  id: 7
+  device_id: 4
+  name: ConsoleServerPort1_for_Device4
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eight:
+  id: 8
+  device_id: 4
+  name: ConsoleServerPort2_for_Device4
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+nine:
+  id: 9
+  device_id: 5
+  name: ConsoleServerPort1_for_Device5
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+ten:
+  id: 10
+  device_id: 5
+  name: ConsoleServerPort2_for_Device5
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eleven:
+  id: 11
+  device_id: 6
+  name: ConsoleServerPort1_for_Device6
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twelve:
+  id: 12
+  device_id: 6
+  name: ConsoleServerPort2_for_Device6
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

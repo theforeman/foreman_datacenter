@@ -5,8 +5,8 @@ module ForemanDatacenter
     before_action :find_resource, only: [:edit, :update, :destroy]
 
     def new
-      @device_module = DeviceModule.new(
-        device: Device.find(params[:device_id])
+      @device_module = ForemanDatacenter::DeviceModule.new(
+        device: ForemanDatacenter::Device.find(params[:device_id])
       )
     end
 
@@ -14,7 +14,7 @@ module ForemanDatacenter
     end
 
     def create
-      @device_module = DeviceModule.new(device_module_params.merge(device_id: params[:device_id]))
+      @device_module = ForemanDatacenter::DeviceModule.new(device_module_params.merge(device_id: params[:device_id]))
 
       if @device_module.save
         redirect_to inventory_device_url(id: @device_module.device_id),

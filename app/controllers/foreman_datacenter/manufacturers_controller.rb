@@ -6,7 +6,7 @@ module ForemanDatacenter
     before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @manufacturers = resource_base_search_and_page
+      @manufacturers = resource_base_search_and_page.includes(:device_types)
     end
 
     def show
@@ -38,6 +38,12 @@ module ForemanDatacenter
     end
 
     def destroy
+      unless params['object_only']
+        @manufacturer.device_types.each { |dt| dt.devices.each { |d| d.destroy }; dt.destroy }
+      else
+        @manufacturer.device_types.delete_all(:nullify)
+      end
+
       if @manufacturer.destroy
         process_success success_redirect: manufacturers_path
       else

@@ -17,5 +17,15 @@ module ForemanDatacenter
               allow_blank: true
 
     scoped_search on: :name, complete_value: true, default_order: true
+    scoped_search on: :rpc_client, complete_value: true, default_order: true
+    scoped_search on: :created_at, complete_value: true, default_order: true
+    scoped_search on: :updated_at, complete_value: true, default_order: true
+
+    def devices_count
+      @devices_count ||= self.class.where(id: id).
+          joins(:devices).
+          count
+    end
+
   end
 end

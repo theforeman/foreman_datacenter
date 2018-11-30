@@ -1,0 +1,28 @@
+---
+one:
+  id: 1
+  name: platform_1
+  rpc_client: "Juniper Junos (NETCONF)"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  name: platform_2
+  rpc_client: "Cisco IOS (SSH)"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  name: platform_3
+  rpc_client: "Opengear (SSH)"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+del:
+  id: 4
+  name: platform_4_del
+  rpc_client: "Opengear (SSH)"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

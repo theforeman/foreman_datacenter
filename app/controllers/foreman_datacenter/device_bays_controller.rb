@@ -7,14 +7,14 @@ module ForemanDatacenter
                                          :update, :destroy]
 
     def new
-      @device_bay = DeviceBay.new(device: Device.find(params[:device_id]))
+      @device_bay = ForemanDatacenter::DeviceBay.new(device: ForemanDatacenter::Device.find(params[:device_id]))
     end
 
     def edit
     end
 
     def create
-      @device_bay = DeviceBay.new(device_bay_params.merge(device_id: params[:device_id]))
+      @device_bay = ForemanDatacenter::DeviceBay.new(device_bay_params.merge(device_id: params[:device_id]))
 
       if @device_bay.save
         redirect_to device_url(@device_bay.device),

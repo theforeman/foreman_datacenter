@@ -1,0 +1,24 @@
+<% title _("Move associated objects") %>
+
+<%= breadcrumbs(items: [{caption: _('Racks'), url: racks_path}, {caption: _("Move associated objects")}]) %>
+
+<%= form_tag ('/datacenter/rack_update_associated_objects'), class: 'form-horizontal well' do %>
+  <div class='clearfix'>
+    <%= label_tag 'Rack *', nil, class: 'col-md-2 control-label' %>
+    <div class='col-md-4'>
+      <%= select_tag 'rack_id', options_from_collection_for_select(@racks, 'id', 'name', @rack.id), class: 'form-control' %>
+      <span class="help-block">
+        You are going to update <b>rack_id</b> for all associated objects:
+        <% unless @devices.empty? %>
+          </br><b>Devices:</b> <%= @devices.map(&:name).join(', ') %>
+        <% end %>
+      </span>
+    </div>
+  </div>
+  <div class='clearfix'>
+    <div class='form-actions'>
+      <%= submit_tag 'Submit', class: 'btn btn-primary remove_form_templates' %>
+      <%= link_to(_("Cancel"), rack_path(params[:id]), :class => "btn btn-default")%>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,240 @@
+---
+one:
+  id: 1
+  device_id: 1
+  name: MgmtInterface1_for_Device1_NONE
+  form_factor: "Virtual"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_id: 1
+  name: MgmtInterface2_for_Device1_NONE
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  device_id: 1
+  name: Interface1_for_Device1_NONE
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  device_id: 1
+  name: Interface2_for_Device1_NONE
+  form_factor: "10GE SFP+"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  device_id: 2
+  name: MgmtInterface1_for_Device2_NONE
+  form_factor: "Virtual"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  device_id: 2
+  name: MgmtInterface2_for_Device2_NONE
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+seven:
+  id: 7
+  device_id: 2
+  name: Interface1_for_Device2_NONE
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eight:
+  id: 8
+  device_id: 2
+  name: Interface2_for_Device2_NONE
+  form_factor: "10GE SFP+"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+nine:
+  id: 9
+  device_id: 3
+  name: MgmtInterface1_for_Device3_PARENT
+  form_factor: "Virtual"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+ten:
+  id: 10
+  device_id: 3
+  name: MgmtInterface2_for_Device3_PARENT
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eleven:
+  id: 11
+  device_id: 3
+  name: Interface1_for_Device3_PARENT
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twelve:
+  id: 12
+  device_id: 3
+  name: Interface2_for_Device3_PARENT
+  form_factor: "10GE SFP+"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+thirteen:
+  id: 13
+  device_id: 4
+  name: MgmtInterface1_for_Device4_PARENT
+  form_factor: "Virtual"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+fourteen:
+  id: 14
+  device_id: 4
+  name: MgmtInterface2_for_Device4_PARENT
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+fiveteen:
+  id: 15
+  device_id: 4
+  name: Interface1_for_Device4_PARENT
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+sixteen:
+  id: 16
+  device_id: 4
+  name: Interface2_for_Device4_PARENT
+  form_factor: "10GE SFP+"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+seventeen:
+  id: 17
+  device_id: 5
+  name: MgmtInterface1_for_Device5_CHILD
+  form_factor: "Virtual"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eighteen:
+  id: 18
+  device_id: 5
+  name: MgmtInterface2_for_Device5_CHILD
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+nineteen:
+  id: 19
+  device_id: 5
+  name: Interface1_for_Device5_CHILD
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twentieth:
+  id: 20
+  device_id: 5
+  name: Interface2_for_Device5_CHILD
+  form_factor: "10GE SFP+"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twenty_one:
+  id: 21
+  device_id: 6
+  name: MgmtInterface1_for_Device6_CHILD
+  form_factor: "Virtual"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twenty_two:
+  id: 22
+  device_id: 6
+  name: MgmtInterface2_for_Device6_CHILD
+  form_factor: "10/100M 100BASE-TX"
+  mgmt_only: true
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twenty_three:
+  id: 23
+  device_id: 6
+  name: Interface1_for_Device6_CHILD
+  form_factor: "1GE 1000BASE-T"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twenty_four:
+  id: 24
+  device_id: 6
+  name: Interface2_for_Device6_CHILD
+  form_factor: "10GE SFP+"
+  mgmt_only: false
+  description: "Interface description"
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

@@ -2,6 +2,8 @@
 <% javascript 'foreman_datacenter/management_devices' %>
 <% stylesheet 'foreman_datacenter/datacenter' %>
 <% stylesheet 'foreman_datacenter/devices' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@device.to_label) %>
 
@@ -11,8 +13,16 @@
   <div class="col-md-offset-4 col-md-8 title_action">
     <div class="btn-toolbar pull-right">
       <%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-warning' %>
-      <%= link_to 'Delete', device_path(@device), class: 'btn btn-danger',
-                  method: :delete, data: { confirm: _("Delete %s?") % @device.name } %>
+      <%= display_fake_delete_if_authorized(
+                       hash_for_device_path(id: @device),
+                       class: 'btn btn-danger',
+                       id: 'init-modal',
+                       href: '#',
+                       data: { objecttype: 'device',
+                               objectid: @device.id,
+                               objectname: @device.to_label,
+                               associatedobjects: associated_objects('device') }
+      ) %>
       <%= link_to 'Import from hosts',
                   @device.host ?
                     edit_device_path(@device, host_id: @device.host.id) :
@@ -48,11 +58,15 @@
         <% end %>
         <tr>
           <td><%= _("Site") %></td>
-          <td><%= link_to @device.site.name, site_path(@device.site) %></td>
+          <td>
+            <%= @device.site ? (link_to @device.site.name, site_path(@device.site)) : "-" %>
+          </td>
         </tr>
         <tr>
           <td><%= _("Rack") %></td>
-          <td><%= link_to @device.rack.name, rack_path(@device.rack) %></td>
+          <td>
+            <%= @device.rack ? (link_to @device.rack.name, rack_path(@device.rack)) : "-" %>
+          </td>
         </tr>
         <tr>
           <td><%= _("Position") %></td>
@@ -60,11 +74,15 @@
         </tr>
         <tr>
           <td><%= _("Device Type") %></td>
-          <td><%= link_to @device.device_type.model, device_type_path(@device.device_type) %></td>
+          <td>
+            <%= @device.device_type ? (link_to @device.device_type.model, device_type_path(@device.device_type)) : "-" %>
+          </td>
         </tr>
         <tr>
           <td><%= _("Serial") %></td>
-          <td><%= @device.serial %></td>
+          <td>
+            <%= @device.try(:serial) %>
+          </td>
         </tr>
         <tr>
           <td><%= _("Created") %></td>
@@ -178,7 +196,11 @@
         <tr>
           <td><%= _("Role") %></td>
           <td>
-            <%= link_to @device.device_role.name, device_role_path(@device.device_role) %>
+            <% if @device.device_role %>
+                <%= link_to @device.device_role.name, device_role_path(@device.device_role) %>
+            <% else %>
+                <%= muted_text("Not defined", "span") %>
+            <% end %>
           </td>
         </tr>
         <tr>
@@ -295,16 +317,16 @@
           <div class="panel-heading">
             <strong><%= _("Device Bays") %></strong>
           </div>
-          <% if @device.device_bays.empty? %>
-            <div class="panel-body"><%= _("None") %></div>
-          <% else %>
-            <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while --> 
-            <table class="table table-hover panel-body nonmarginbottom">
-              <tbody>
-              <%= render partial: 'device_bay', collection: @device.device_bays %>
-              </tbody>
-            </table>
-          <% end %>
+          <!-- <table class="<%#= table_css_classes 'table-fixed nonmarginbottom' %>"> Hardcoded for a while --> 
+          <table class="table table-hover panel-body nonmarginbottom">
+            <tbody>
+              <% if @device.device_bays.empty? %>
+                <%= muted_text("None", "tr", "td") %>
+              <% else %>
+                <%= render partial: 'device_bay', collection: @device.device_bays %>
+              <% end %>
+            </tbody>
+          </table>
           <div class="panel-footer text-right">
             <%= link_to 'Add a device bay', new_device_device_bay_path(@device),
                         class: 'btn btn-primary btn-xs' %>
@@ -336,7 +358,7 @@
                           class: 'btn btn-primary btn-xs' %>
               <%= button_tag 'Destroy selected interfaces',
                              class: 'btn btn-danger btn-xs',
-                             data: {confirm: 'Are you sure?'} %>
+                             data: {confirm: 'Are you sure?'} unless @device.non_management_interfaces.empty? %>
             </div>
           <% end %>
         </div>

@@ -1,0 +1,14 @@
+---
+one:
+  id: 1
+  device_type_id: 2 # DeviceType2Parent
+  name: DeviceBayTemplate1_for_DeviceType2_PARENT
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_type_id: 2 # DeviceType2Parent
+  name: DeviceBayTemplate2_for_DeviceType2_PARENT
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

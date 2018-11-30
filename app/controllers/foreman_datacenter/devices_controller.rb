@@ -11,32 +11,22 @@ module ForemanDatacenter
                                          :destroy_interfaces, :qr_code,
                                          :sync_interfaces_with_host]
 
-    # before_action :load_resource
-
     def index
       @devices = resource_base_search_and_page.includes(:device_role, :device_type, :site, :rack)
-      # begin
-      #   search = resource_base.search_for(params[:search], :order => params[:order])
-      # rescue => e
-      #   error e.to_s
-      #   search = resource_base.search_for ''
-      # end
-      # @devices = search.includes(:device_role, :device_type, :site, :rack).
-      #   paginate(:page => params[:page], :per_page => params[:per_page])
     end
 
     def show
-      # @device = Device.includes(
-      #   device_bays: [:installed_device],
-      #   console_server_ports: [:console_port],
-      #   power_outlets: [:power_port],
-      #   console_ports: [:console_server_port],
-      #   power_ports: [:power_outlet]
-      # ).find(params[:id])
-      @device = ForemanDatacenter::Device.includes(console_server_ports:[:console_port]).find(params[:id])
+      @device = ForemanDatacenter::Device.includes(
+        power_ports: [:power_outlet, :device],
+        power_outlets: [:device, :power_port],
+        console_ports: [:console_server_port, :device],
+        console_server_ports: [:console_port, :device],
+        device_bays: [:installed_device],
+        comments: [:user]
+      ).find(params[:id])
       @comments = @device.comments
       @commentable = @device
-      @comment = Comment.new
+      @comment = ForemanDatacenter::Comment.new
       @resource = request.path.split('/')[2]
       @current_user = current_user
     end
@@ -45,20 +35,19 @@ module ForemanDatacenter
     end
 
     def new
-      @device = Device.new
+      @device = ForemanDatacenter::Device.new
       populate_from_host
     end
 
     def edit
-      @device = Device.find(params[:id])
+      @device = ForemanDatacenter::Device.find(params[:id])
       populate_from_host
     end
 
     def create
-      @device = Device.new(device_params.merge(host_id: params[:host_id]))
+      @device = ForemanDatacenter::Device.new(device_params.merge(host_id: params[:host_id]))
 
       if @device.save
-        # process_success object: @device
         process_success success_redirect: device_url(@device)
       else
         process_error object: @device
@@ -74,10 +63,21 @@ module ForemanDatacenter
     end
 
     def destroy
-      if @device.destroy
-        process_success success_redirect: "/datacenter/devices"
+      unless params['object_only']
+        if @device.destroy
+          process_success success_redirect: "/datacenter/devices"
+        else
+          process_error object: @device
+        end
       else
-        process_error object: @device
+        if @device.host
+          @device.host.destroy
+          new_device_name = "Unassigned device (former: #{@device.name})"
+          @device.update(name: new_device_name)
+          process_success success_redirect: '/datacenter/devices', success_msg: 'Associated host deleted'
+        else
+          process_error success_redirect: '/datacenter/devices', error_msg: 'Associated host not found'
+        end
       end
     end
 
@@ -97,7 +97,7 @@ module ForemanDatacenter
     end
 
     def site_racks
-      @site = Site.find(params[:site_id])
+      @site = ForemanDatacenter::Site.find(params[:site_id])
       render partial: 'site_racks'
     end
 
@@ -130,11 +130,6 @@ module ForemanDatacenter
     end
 
     private
-
-    # def load_resource
-    #   resource, id = request.path.split('/')[2, 3]
-    #   @commentable_data = {resource: resource, id: id }
-    # end
 
     def populate_from_host
       if params[:host_id]

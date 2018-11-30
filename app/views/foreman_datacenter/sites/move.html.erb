@@ -1,0 +1,27 @@
+<% title _("Move associated objects") %>
+
+<%= breadcrumbs(items: [{caption: _('Sites'), url: sites_path}, {caption: _("Move associated objects")}]) %>
+
+<%= form_tag ('/datacenter/site_update_associated_objects'), class: 'form-horizontal well' do %>
+  <div class='clearfix'>
+    <%= label_tag 'Site *', nil, class: 'col-md-2 control-label' %>
+    <div class='col-md-4'>
+      <%= select_tag 'site_id', options_from_collection_for_select(@sites, 'id', 'name', @site.id), class: 'form-control' %>
+      <span class="help-block">
+        You are going to update <b>site_id</b> for all associated objects:
+        <% unless @rack_groups.empty? %>
+          </br><b>Rack Groups:</b> <%= @rack_groups.map(&:name).join(', ') %>
+        <% end %>
+        <% unless @racks.empty? %>
+          </br><b>Racks:</b> <%= @racks.map(&:name).join(', ') %>
+        <% end %>
+      </span>
+    </div>
+  </div>
+  <div class='clearfix'>
+    <div class='form-actions'>
+      <%= submit_tag 'Submit', class: 'btn btn-primary remove_form_templates' %>
+      <%= link_to(_("Cancel"), site_path(params[:id]), :class => "btn btn-default")%>
+    </div>
+  </div>
+<% end %>

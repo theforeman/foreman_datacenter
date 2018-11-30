@@ -6,7 +6,7 @@ module ForemanDatacenter
     before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @platforms = resource_base_search_and_page.includes(:devices)
+      @platforms = resource_base_search_and_page
     end
 
     def show
@@ -38,6 +38,11 @@ module ForemanDatacenter
     end
 
     def destroy
+      unless params['object_only']
+        @platform.devices.each { |d| d.destroy }
+      else
+        @platform.devices.delete_all(:nullify)
+      end
       if @platform.destroy
         process_success success_redirect: platforms_path
       else

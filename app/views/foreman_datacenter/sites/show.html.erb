@@ -1,19 +1,30 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@site.name) %>
 
 <%= breadcrumbs(items: [{caption: _('Sites'), url: '/datacenter/sites'}, {caption: _(@site.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
-                     _('Edit'),
-                     hash_for_edit_site_path(:id => @site),
-                     :class => 'btn btn-warning'
+                     _('Move associated objects'),
+                     hash_for_move_site_path(id: @site),
+                     class: 'btn btn-primary'
                  ),
-                 display_delete_if_authorized(
-                     hash_for_site_path(:id => @site),
-                     :data => { :confirm => _("Delete %s?") % @site.name },
-                     :action => :destroy,
-                     :class => 'btn btn-danger'
+                 display_link_if_authorized(
+                     _('Edit'),
+                     hash_for_edit_site_path(id: @site),
+                     class: 'btn btn-warning'
+                 ),
+                 display_fake_delete_if_authorized(
+                     hash_for_site_path(id: @site),
+                     class: 'btn btn-danger',
+                     id: 'init-modal',
+                     href: '#',
+                     data: { objecttype: 'site',
+                             objectid: @site.id,
+                             objectname: @site.to_label,
+                             associatedobjects: associated_objects('site') }
                  )
                  help_path %>
 
@@ -53,6 +64,22 @@
         </tbody>
     </table>
     </div>
+
+    <!-- Comments -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong><%= _("Comments") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @site.comments == "" || @site.comments.nil? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
+              <tr>
+                <td><%= @site.comments %></td>
+              </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Stats -->
@@ -64,12 +91,16 @@
       <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
+          <td><%= _("Rack Groups") %></td>
+          <td><%= link_to @site.rack_groups_count, rack_groups_path(search: "site=#{@site.name}") %></td>
+        </tr>
+        <tr>
           <td><%= _("Racks") %></td>
-          <td><%= @site.racks_count %></td>
+          <td><%= link_to @site.racks_count, racks_path(search: "site=#{@site.name}") %></td>
         </tr>
         <tr>
           <td><%= _("Devices") %></td>
-          <td><%= @site.devices_count %></td>
+          <td><%= link_to @site.devices_count, devices_path(search: "site=#{@site.name}") %></td>
         </tr>
         </tbody>
       </table>
@@ -97,20 +128,4 @@
       </table>
     </div>
   </div>
-</div>
-
-<!-- Comments -->
-<div class="panel panel-default">
-  <div class="panel-heading"><strong><%= _("Comments") %></strong></div>
-  <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
-    <tbody>
-      <% if @site.comments == "" || @site.comments.nil? %>
-        <%= muted_text("None", "tr", "td") %>
-      <% else %>
-          <tr>
-            <td><%= @site.comments %></td>
-          </tr>
-      <% end %>
-    </tbody>
-  </table>
 </div>

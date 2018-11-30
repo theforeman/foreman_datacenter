@@ -1,20 +1,31 @@
 <% stylesheet 'foreman_datacenter/device_roles' %>
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@rack.name) %>
 
 <%= breadcrumbs(items: [{caption: _('Racks'), url: racks_path}, {caption: _(@rack.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
+                     _('Move associated objects'),
+                     hash_for_move_rack_path(id: @rack),
+                     class: 'btn btn-primary'
+                 ),
+                 display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_rack_path(:id => @rack),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_rack_path(:id => @rack),
-                   :data => { :confirm => _("Delete %s?") % @rack.name },
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                     hash_for_rack_path(id: @rack),
+                     class: 'btn btn-danger',
+                     id: 'init-modal',
+                     href: '#',
+                     data: { objecttype: 'rack',
+                             objectid: @rack.id,
+                             objectname: @rack.to_label,
+                             associatedobjects: associated_objects('rack') }
                  )
                  help_path %>
 
@@ -29,16 +40,14 @@
         <tbody>
         <tr>
           <td><%= _("Site") %></td>
-          <td><%= link_to @rack.site.name, site_path(@rack.site) %></td>
+            <td>
+              <%= @rack.site ? (link_to @rack.site.name, site_path(@rack.site)) : '-'%>
+            </td>
         </tr>
         <tr>
           <td><%= _("Group") %></td>
           <td>
-            <% if @rack.rack_group %>
-                <%= link_to @rack.rack_group.name, rack_group_path(@rack.rack_group) %>
-            <% else %>
-                —
-            <% end %>
+            <%= @rack.rack_group ? (link_to @rack.rack_group.name, rack_group_path(@rack.rack_group)) : '-'%>
           </td>
         </tr>
         <tr>

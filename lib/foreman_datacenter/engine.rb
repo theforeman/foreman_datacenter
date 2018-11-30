@@ -14,6 +14,15 @@ module ForemanDatacenter
       end
     end
 
+    initializer 'foreman_datacenter.apipie' do
+      # this condition is here for compatibility reason to work with Foreman 1.4.x
+      if Apipie.configuration.api_controllers_matcher.is_a?(Array) &&
+        Apipie.configuration.respond_to?(:checksum_path)
+        Apipie.configuration.api_controllers_matcher << "#{ForemanDatacenter::Engine.root}/app/controllers/api/v2/foreman_datacenter/**/*.rb"
+        Apipie.configuration.checksum_path += ['/foreman_datacenter/api/']
+      end
+    end
+
     initializer 'foreman_datacenter.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_datacenter do
         requires_foreman '>= 1.12'
@@ -269,8 +278,11 @@ module ForemanDatacenter
           permission :destroy_power_ports, {
                      :'foreman_datacenter/power_ports' => [:destroy]},
                      :resource_type => "ForemanDatacenter::PowerPort"
+          # permission :power_ports, {
+          #            :'foreman_datacenter/power_ports' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
+          #            :resource_type => "ForemanDatacenter::PowerPort"
           permission :power_ports_connections_management, {
-                     :'foreman_datacenter/device_interface_connections' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
+                     :'foreman_datacenter/power_ports' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
                      :resource_type => "ForemanDatacenter::PowerPort"
           # RackGroups
           permission :view_rack_groups, {
@@ -302,16 +314,16 @@ module ForemanDatacenter
                      :'foreman_datacenter/racks' => [:rack_groups]},
                      :resource_type => "ForemanDatacenter::Rack"
           # Sites
-          permission :'view_foreman_datacenter/sites', {
+          permission :view_sites, {
                      :'foreman_datacenter/sites' => [:show, :index]},
                      :resource_type => "ForemanDatacenter::Site"
-          permission :'create_foreman_datacenter/sites', {
+          permission :create_sites, {
                      :'foreman_datacenter/sites' => [:new, :create]},
                      :resource_type => "ForemanDatacenter::Site"
-          permission :'edit_foreman_datacenter/sites', {
+          permission :edit_sites, {
                      :'foreman_datacenter/sites' => [:edit, :update]},
                      :resource_type => "ForemanDatacenter::Site"
-          permission :'destroy_foreman_datacenter/sites', {
+          permission :destroy_sites, {
                      :'foreman_datacenter/sites' => [:destroy]},
                      :resource_type => "ForemanDatacenter::Site"
         end
@@ -403,10 +415,10 @@ module ForemanDatacenter
           :edit_racks,
           :destroy_racks,
           :racks_groups,
-          :'view_foreman_datacenter/sites',
-          :'create_foreman_datacenter/sites',
-          :'edit_foreman_datacenter/sites',
-          :'destroy_foreman_datacenter/sites',
+          :view_sites,
+          :create_sites,
+          :edit_sites,
+          :destroy_sites,
         ]
         role "Datacenter Manager", MANAGER
         add_all_permissions_to_default_roles

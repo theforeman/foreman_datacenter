@@ -1,19 +1,30 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@rack_group.name) %>
 
 <%= breadcrumbs(items: [{caption: _('Rack Groups'), url: rack_groups_path}, {caption: _(@rack_group.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
+                     _('Move associated objects'),
+                     hash_for_move_rack_group_path(id: @rack_group),
+                     class: 'btn btn-primary'
+                 ),
+                 display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_rack_group_path(id: @rack_group),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_rack_group_path(id: @rack_group),
-                   :data => { :confirm => _("Delete %s?") % @rack_group.name },
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                     hash_for_rack_group_path(id: @rack_group),
+                     class: 'btn btn-danger',
+                     id: 'init-modal',
+                     href: '#',
+                     data: { objecttype: 'rack_group',
+                             objectid: @rack_group.id,
+                             objectname: @rack_group.to_label,
+                             associatedobjects: associated_objects('rack_group') }
                  )
                  help_path %>
 
@@ -33,7 +44,9 @@
         </tr>
         <tr>
           <td><%= _("Site") %></td>
-          <td><%= link_to @rack_group.site.name, site_path(@rack_group.site) %></td>
+          <td>
+            <%= @rack_group.site ? (link_to @rack_group.site.name, site_path(@rack_group.site)) : '-'%>
+          </td>
         </tr>
         <tr>
           <td><%= _("Created") %></td>
@@ -55,7 +68,11 @@
       <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
           <td><%= _("Racks") %></td>
-          <td><%= @rack_group.racks.length %></td>
+          <td><%= link_to @rack_group.racks_count, racks_path(search: "rack_group=#{@rack_group.name}") %></td>
+        </tr>
+        <tr>
+          <td><%= _("Devices") %></td>
+          <td><%= link_to @rack_group.devices_count, devices_path(search: search_params(@rack_group.racks, 'name', 'rack')) %></td>
         </tr>
       </table>
     </div>
@@ -76,16 +93,6 @@
           <% end %>
         </tbody>
       </table>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-   <!-- Comments -->
-    <div class="panel panel-default">
-      <div class="panel-heading"><strong><%= _('Comments') %></strong></div>
-      <%= render 'foreman_datacenter/comments/list', comments: @comments, commentable_data: @commentable_data %>
     </div>
   </div>
 </div>

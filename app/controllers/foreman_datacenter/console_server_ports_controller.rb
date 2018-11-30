@@ -7,15 +7,15 @@ module ForemanDatacenter
                                          :disconnect]
 
     def new
-      device = Device.find(params[:device_id])
-      @console_server_port = ConsoleServerPort.new(device: device)
+      device = ForemanDatacenter::Device.find(params[:device_id])
+      @console_server_port = ForemanDatacenter::ConsoleServerPort.new(device: device)
     end
 
     def edit
     end
 
     def create
-      @console_server_port = ConsoleServerPort.new(console_server_port_params.merge(device_id: params[:device_id]))
+      @console_server_port = ForemanDatacenter::ConsoleServerPort.new(console_server_port_params.merge(device_id: params[:device_id]))
 
       if @console_server_port.save
         redirect_to device_url(id: @console_server_port.device_id),
@@ -47,7 +47,7 @@ module ForemanDatacenter
     end
 
     def connect
-      console_port = ConsolePort.find(params[:console_port][:id])
+      console_port = ForemanDatacenter::ConsolePort.find(params[:console_port][:id])
       console_port.connect(
         @console_server_port,
         params[:console_port][:connection_status]
@@ -63,7 +63,7 @@ module ForemanDatacenter
     end
 
     def for_device
-      @device = Device.find(params[:device_id])
+      @device = ForemanDatacenter::Device.find(params[:device_id])
       render partial: 'for_device'
     end
   end
