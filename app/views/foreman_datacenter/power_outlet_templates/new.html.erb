@@ -1,3 +1,5 @@
-<% title 'New power outlet template' %>
+<% title _("Create Power Outlet Template") %>
+
+<%= breadcrumbs(items: [{caption: _('Device Type %s') % @power_outlet_template.device_type.to_label, url: device_type_path(@power_outlet_template.device_type)}, {caption: _("Create Power Outlet Template")}]) %>
 
 <%= render 'form' %>

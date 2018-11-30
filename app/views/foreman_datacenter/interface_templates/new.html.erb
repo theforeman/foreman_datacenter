@@ -1,3 +1,5 @@
-<% title 'New interface template' %>
+<% title _("Create Interface Template") %>
+
+<%= breadcrumbs(items: [{caption: _('Device Type %s') % @interface_template.device_type.to_label, url: device_type_path(@interface_template.device_type)}, {caption: _("Create Interface Template")}]) %>
 
 <%= render 'form' %>

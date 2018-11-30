@@ -1,6 +1,8 @@
 module ForemanDatacenter
-  class ManagementDevicesController < ApplicationController
-    before_action :set_management_device, only: [:edit, :update, :destroy]
+  class ManagementDevicesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::ManagementDevice
+
+    before_action :find_resource, only: [:edit, :update, :destroy]
 
     def new
       device = Device.find(params[:device_id])
@@ -11,7 +13,7 @@ module ForemanDatacenter
     end
 
     def create
-      @management_device = ManagementDevice.new(management_device_params)
+      @management_device = ManagementDevice.new(management_device_params.merge(device_id: params[:device_id]))
 
       if @management_device.save
         redirect_to device_url(@management_device.device),
@@ -37,17 +39,6 @@ module ForemanDatacenter
       else
         process_error object: @management_device
       end
-    end
-
-    private
-
-    def set_management_device
-      @management_device = ManagementDevice.find(params[:id])
-    end
-
-    def management_device_params
-      params[:management_device].
-        permit(:device_id, :console_url, :login, :password)
     end
   end
 end

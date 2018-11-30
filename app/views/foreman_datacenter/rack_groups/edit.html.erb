@@ -1,3 +1,5 @@
-<% title 'Editing rack group' %>
+<% title _("Edit %s") % @rack_group.to_label %>
+
+<%= breadcrumbs(items: [{caption: _("Rack Group %s") % @rack_group.to_label, url: rack_group_path(@rack_group)}, {caption: _('Edit %s' % @rack_group.to_label)}]) %>
 
 <%= render 'form' %>

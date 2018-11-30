@@ -1,5 +1,7 @@
 <% javascript 'foreman_datacenter/devices' %>
 
-<% title 'Editing a device' %>
+<% title _("Edit %s") % @device.to_label %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device.to_label, url: device_path(@device)}, {caption: _('Edit %s') % @device.to_label}]) %>
 
 <%= render 'form' %>

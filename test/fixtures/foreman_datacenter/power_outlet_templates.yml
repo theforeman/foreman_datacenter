@@ -1,0 +1,42 @@
+---
+one:
+  id: 1
+  device_type_id: 1 # DeviceType1None
+  name: PowerOutletTemplate1_for_DeviceType1_NONE
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_type_id: 1 # DeviceType1None
+  name: PowerOutletTemplate2_for_DeviceType1_NONE
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  device_type_id: 2 # DeviceType2Parent
+  name: PowerOutletTemplate1_for_DeviceType2_PARENT
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  device_type_id: 2 # DeviceType2Parent
+  name: PowerOutletTemplate2_for_DeviceType2_PARENT
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  device_type_id: 3 # DeviceType3Child
+  name: PowerOutletTemplate1_for_DeviceType3_CHILD
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  device_type_id: 3 # DeviceType3Child
+  name: PowerOutletTemplate2_for_DeviceType3_CHILD
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

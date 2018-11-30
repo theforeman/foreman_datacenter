@@ -1,0 +1,22 @@
+---
+one:
+  id: 1
+  name: device_role_1
+  color: Teal
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+
+two:
+  id: 2
+  name: device_role_2
+  color: Green
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  name: device_role_3
+  color: Blue
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

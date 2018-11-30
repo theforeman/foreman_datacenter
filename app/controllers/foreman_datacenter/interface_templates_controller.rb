@@ -1,6 +1,8 @@
 module ForemanDatacenter
   class InterfaceTemplatesController < ApplicationController
-    before_action :set_interface_template, only: [:destroy]
+    include ForemanDatacenter::Controller::Parameters::InterfaceTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
       @interface_template = InterfaceTemplate.new(
@@ -19,11 +21,10 @@ module ForemanDatacenter
     end
 
     def create
-      @interface_template = InterfaceTemplate.new(interface_template_params)
+      @interface_template = InterfaceTemplate.new(interface_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @interface_template.save
-        redirect_to device_type_url(@interface_template.device_type),
-                    notice: 'New interface template was successfully created'
+        process_success success_redirect: device_type_url(@interface_template.device_type_id)
       else
         process_error object: @interface_template
       end
@@ -31,22 +32,10 @@ module ForemanDatacenter
 
     def destroy
       if @interface_template.destroy
-        redirect_to device_type_url(@interface_template.device_type),
-                    notice: 'Interface template was successfully destroyed'
+        process_success success_redirect: device_type_url(params[:device_type_id])
       else
         process_error object: @interface_template
       end
-    end
-
-    private
-
-    def set_interface_template
-      @interface_template = InterfaceTemplate.find(params[:id])
-    end
-
-    def interface_template_params
-      params[:interface_template].
-        permit(:device_type_id, :name, :form_factor, :mgmt_only)
     end
   end
 end

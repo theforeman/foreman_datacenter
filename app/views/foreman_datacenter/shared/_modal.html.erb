@@ -1,0 +1,28 @@
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <!-- <span class="close">&times;</span> -->
+      <span class="close">&times;</span>
+      <h4>Are you absolutely sure?</h4>
+    </div>
+    <div class="modal-header2">
+      <h4>Unexpected bad things will happen if you don’t read this!</h4>
+    </div>
+    <div class="modal-body">
+      <p>This action 
+        <strong>cannot</strong>
+        be undone. By unselecting checkbox you will permanently delete the
+        <strong><%= object.to_label %></strong>
+        with
+        <strong>all</strong>
+        associated objects(<%= associated_objects(object) %>)
+      </p>
+      <%= form_for object, as: object_name(object).to_sym, url: object_path(object), html: { method: :delete, class: 'modal-form' } do |f| %>
+        <%= check_box_tag 'object_only', true, true %>
+        <%= label_tag "Delete #{object_name(object)} only!" %>
+        <%= f.submit class: "btn btn-block btn-danger modal-btn", value: _("I understand the consequences, delete this #{object_name(object)}") %>
+      <% end %>
+    </div>
+  </div>
+</div>

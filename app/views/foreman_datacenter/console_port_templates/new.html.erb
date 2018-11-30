@@ -1,3 +1,5 @@
-<% title 'New console port template' %>
+<% title _("Create Console Port Template") %>
+
+<%= breadcrumbs(items: [{caption: _('Device Type %s') % @console_port_template.device_type.to_label, url: device_type_path(@console_port_template.device_type)}, {caption: _("Create Console Port Template")}]) %>
 
 <%= render 'form' %>

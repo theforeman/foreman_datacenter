@@ -1,19 +1,30 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
+---
 one:
   id: 1
-  name: DC1
-  facility: test facility
+  name: site_1
+  facility: facility_for_site_1
   asn: 1
-  physical_address: test physical address
-  shipping_address: test shipping address
-  comments: test comment
+  physical_address: phisycal_address_for_site_1
+  shipping_address: shipping_address_for_site_1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
 
 two:
   id: 2
-  name: DC2
-  facility: another test facility
+  name: site_2
+  facility: facility_for_site_2
   asn: 2
-  physical_address: another test physical address
-  shipping_address: another test shipping address
-  comments: another test comment
+  physical_address: phisycal_address_for_site_2
+  shipping_address: shipping_address_for_site_2
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  name: site_3
+  facility: facility_for_site_3
+  asn: 3
+  physical_address: phisycal_address_for_site_3
+  shipping_address: shipping_address_for_site_3
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

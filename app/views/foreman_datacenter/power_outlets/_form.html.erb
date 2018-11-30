@@ -3,12 +3,13 @@
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Device</label>
-        <div class="col-md-4"><%= @power_outlet.device.name %></div>
+        <label class="col-md-2 control-label required"><%= _("Device") %></label>
+        <div class="col-md-4">
+          <input disabled class="form-control" value="<%= @power_outlet.device.name %>">
+        </div>
       </div>
     </div>
 
-    <%= f.hidden_field :device_id %>
     <%= text_f f, :name, required: true %>
 
     <%= submit_or_cancel f, false, cancel_path: device_path(@power_outlet.device) %>

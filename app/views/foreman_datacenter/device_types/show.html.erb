@@ -1,43 +1,51 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@device_type.model) %>
+
+<%= breadcrumbs(items: [{caption: _('Device Types'), url: device_types_path}, {caption: _(@device_type.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_device_type_path(:id => @device_type),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_device_type_path(:id => @device_type),
-                   :data => { :confirm => 'Are you sure?'},
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                     hash_for_site_path(id: @device_type),
+                     class: 'btn btn-danger',
+                     id: 'init-modal',
+                     href: '#',
+                     data: { objecttype: 'device_type',
+                             objectid: @device_type.id,
+                             objectname: @device_type.to_label,
+                             associatedobjects: associated_objects('device_type') }
                  )
-   help_path %>
+                 help_path %>
 
 <div class="row">
   <div class="col-md-6">
     <!-- Chassis -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Chassis</strong>
+        <strong><%= _("Chassis") %></strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
-          <td>Manufacturer</td>
-          <td><%= h @device_type.manufacturer.name %></td>
+          <td><%= _("Manufacturer") %></td>
+          <td><%= @device_type.manufacturer ? (link_to @device_type.manufacturer.name, manufacturer_path(@device_type.manufacturer)) : '-'%></td>
         </tr>
         <tr>
-          <td>Model Name</td>
+          <td><%= _("Model ") %>Name</td>
           <td><%= h @device_type.model %></td>
         </tr>
         <tr>
-          <td>Height (U)</td>
+          <td><%= _("Height (U)") %></td>
           <td><%= @device_type.u_height %></td>
         </tr>
         <tr>
-          <td>Full Depth</td>
+          <td><%= _("Full Depth") %></td>
           <td><%= @device_type.is_full_depth ? 'Yes' : 'No' %></td>
         </tr>
         </tbody>
@@ -47,9 +55,9 @@
     <!-- Function -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Function</strong>
+        <strong><%= _("Function") %></strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
           <td class="col-sm-3 text-right">
@@ -60,7 +68,7 @@
             <% end %>
           </td>
           <td class="col-sm-10">
-            <strong>Console Server</strong>
+            <strong><%= _("Console Server") %></strong>
             <br>
             <% if @device_type.is_console_server %>
                 <small class="text-muted">This device has console server ports</small>
@@ -78,7 +86,7 @@
             <% end %>
           </td>
           <td class="col-sm-10">
-            <strong>PDU</strong>
+            <strong><%= _("PDU") %></strong>
             <br>
             <% if @device_type.is_pdu %>
                 <small class="text-muted">This device has power outlets</small>
@@ -96,7 +104,7 @@
             <% end %>
           </td>
           <td class="col-sm-10">
-            <strong>Network Device</strong>
+            <strong><%= _("Network Device") %></strong>
             <br>
             <% if @device_type.is_network_device %>
                 <small class="text-muted">This device has non-management network interfaces</small>
@@ -108,15 +116,15 @@
         <tr>
           <td class="col-sm-3 text-right">
             <% if @device_type.parent? %>
-                <label class="label label-info">Parent</label>
+                <label class="label label-info"><%= _("Parent") %></label>
             <% elsif @device_type.child? %>
-                <label class="label label-primary">Child</label>
+                <label class="label label-primary"><%= _("Child") %></label>
             <% else %>
-                <label class="label label-default">None</label>
+                <label class="label label-default"><%= _('None') %></label>
             <% end %>
           </td>
           <td class="col-sm-10">
-            <strong>Parent/Child</strong>
+            <strong><%= _("Parent/Child") %></strong>
             <br>
             <% if @device_type.parent? %>
                 <small class="text-muted">This device has device bays for mounting child devices</small>
@@ -136,30 +144,30 @@
       <div class="panel-heading">
         <%= link_to 'Add a console port', new_device_type_console_port_template_path(@device_type),
                     class: 'btn btn-primary btn-xs pull-right'%>
-        <strong>Console ports</strong>
+        <strong><%= _("Console ports") %></strong>
       </div>
-      <% if @device_type.console_port_templates.empty? %>
-          <div class="panel-body">None</div>
-      <% else %>
-          <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-            <tbody>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @device_type.console_port_templates.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
             <% @device_type.console_port_templates.each do |console_port| %>
-                <tr>
-                  <td class="col-sm-10"><%= console_port.name %></td>
-                  <td class="col-sm-2">
-                    <%= action_buttons(
-                          display_delete_if_authorized(
-                            hash_for_device_type_console_port_template_path(id: console_port, device_type_id: @device_type).merge(:auth_object => console_port, :authorizer => authorizer),
-                            :data => { :confirm => 'Are you sure?'},
-                            :action => :destroy
-                          )
-                        ) %>
-                  </td>
-                </tr>
+              <tr>
+                <td class="col-sm-10"><%= console_port.name %></td>
+                <td class="col-sm-2">
+                  <%= action_buttons(
+                        display_delete_if_authorized(
+                          hash_for_device_type_console_port_template_path(id: console_port, device_type_id: @device_type).merge(:auth_object => console_port, :authorizer => authorizer),
+                          :data => { confirm: _("Delete %s?") % console_port.name },
+                          :action => :destroy
+                        )
+                      ) %>
+                </td>
+              </tr>
             <% end %>
-            </tbody>
-          </table>
-      <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
     <!-- Power ports -->
@@ -167,61 +175,61 @@
       <div class="panel-heading">
         <%= link_to 'Add a power port', new_device_type_power_port_template_path(@device_type),
                     class: 'btn btn-primary btn-xs pull-right' %>
-        <strong>Power ports</strong>
+        <strong><%= _("Power ports") %></strong>
       </div>
-      <% if @device_type.power_port_templates.empty? %>
-          <div class="panel-body">None</div>
-      <% else %>
-          <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-            <tbody>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @device_type.power_port_templates.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
             <% @device_type.power_port_templates.each do |power_port| %>
-                <tr>
-                  <td class="col-sm-10"><%= power_port.name %></td>
-                  <td class="col-sm-2">
-                    <%= action_buttons(
-                          display_delete_if_authorized(
-                            hash_for_device_type_power_port_template_path(id: power_port, device_type_id: @device_type).merge(:auth_object => power_port, :authorizer => authorizer),
-                            :data => { :confirm => 'Are you sure?'},
-                            :action => :destroy
-                          )
-                        ) %>
-                  </td>
-                </tr>
+              <tr>
+                <td class="col-sm-10"><%= power_port.name %></td>
+                <td class="col-sm-2">
+                  <%= action_buttons(
+                        display_delete_if_authorized(
+                          hash_for_device_type_power_port_template_path(id: power_port, device_type_id: @device_type).merge(:auth_object => power_port, :authorizer => authorizer),
+                          :data => { confirm: _("Delete %s?") % power_port.name },
+                          :action => :destroy
+                        )
+                      ) %>
+                </td>
+              </tr>
             <% end %>
-            </tbody>
-          </table>
-      <% end %>
-    </div>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
 
     <!-- Management Interfaces -->
     <div class="panel panel-default">
       <div class="panel-heading">
         <%= link_to 'Add a management interface', new_management_device_type_interface_templates_path(@device_type),
                     class: 'btn btn-primary btn-xs pull-right' %>
-        <strong>Management Interfaces</strong>
+        <strong><%= _("Management Interfaces") %></strong>
       </div>
-      <% if @device_type.management_interfaces.empty? %>
-          <div class="panel-body">None</div>
-      <% else %>
-          <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-            <tbody>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @device_type.management_interfaces.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
             <% @device_type.management_interfaces.each do |management_interface| %>
-                <tr>
-                  <td class="col-sm-10"><%= management_interface.name %></td>
-                  <td class="col-sm-2">
-                    <%= action_buttons(
-                          display_delete_if_authorized(
-                            hash_for_device_type_interface_template_path(id: management_interface, device_type_id: @device_type).merge(:auth_object => management_interface, :authorizer => authorizer),
-                            :data => { :confirm => 'Are you sure?'},
-                            :action => :destroy
-                          )
-                        ) %>
-                  </td>
-                </tr>
+              <tr>
+                <td class="col-sm-10"><%= management_interface.name %></td>
+                <td class="col-sm-2">
+                  <%= action_buttons(
+                        display_delete_if_authorized(
+                          hash_for_device_type_interface_template_path(id: management_interface, device_type_id: @device_type).merge(:auth_object => management_interface, :authorizer => authorizer),
+                          :data => { confirm: _("Delete %s?") % management_interface.name },
+                          :action => :destroy
+                        )
+                      ) %>
+                </td>
+              </tr>
             <% end %>
-            </tbody>
-          </table>
-      <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -232,30 +240,30 @@
           <div class="panel-heading">
             <%= link_to 'Add a device bay', new_device_type_device_bay_template_path(@device_type),
                         class: 'btn btn-primary btn-xs pull-right'%>
-            <strong>Device Bays</strong>
+            <strong><%= _("Device Bays") %></strong>
           </div>
-          <% if @device_type.device_bay_templates.empty? %>
-              <div class="panel-body">None</div>
-          <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-                <tbody>
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+            <tbody>
+              <% if @device_type.device_bay_templates.empty? %>
+                <%= muted_text("None", "tr", "td") %>
+              <% else %>
                 <% @device_type.device_bay_templates.each do |device_bay| %>
-                    <tr>
-                      <td class="col-sm-10"><%= device_bay.name %></td>
-                      <td class="col-sm-10">
-                        <%= action_buttons(
-                              display_delete_if_authorized(
-                                hash_for_device_type_device_bay_template_path(id: device_bay, device_type_id: @device_type).merge(:auth_object => device_bay, :authorizer => authorizer),
-                                :data => { :confirm => 'Are you sure?'},
-                                :action => :destroy
-                              )
-                            ) %>
-                      </td>
-                    </tr>
+                  <tr>
+                    <td class="col-sm-10"><%= device_bay.name %></td>
+                    <td class="col-sm-2">
+                      <%= action_buttons(
+                            display_delete_if_authorized(
+                              hash_for_device_type_device_bay_template_path(id: device_bay, device_type_id: @device_type).merge(:auth_object => device_bay, :authorizer => authorizer),
+                              :data => { confirm: _("Delete %s?") % device_bay.name },
+                              :action => :destroy
+                            )
+                          ) %>
+                    </td>
+                  </tr>
                 <% end %>
-                </tbody>
-              </table>
-          <% end %>
+              <% end %>
+            </tbody>
+          </table>
         </div>
     <% end %>
 
@@ -265,30 +273,30 @@
           <div class="panel-heading">
             <%= link_to 'Add an interface', new_device_type_interface_template_path(@device_type),
                         class: 'btn btn-primary btn-xs pull-right'%>
-            <strong>Interfaces</strong>
+            <strong><%= _("Interfaces") %></strong>
           </div>
-          <% if @device_type.network_interfaces.empty? %>
-              <div class="panel-body">None</div>
-          <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-                <tbody>
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+            <tbody>
+              <% if @device_type.network_interfaces.empty? %>
+                <%= muted_text("None", "tr", "td") %>
+              <% else %>
                 <% @device_type.network_interfaces.each do |interface| %>
-                    <tr>
-                      <td class="col-sm-10"><%= interface.name %></td>
-                      <td class="col-sm-2">
-                        <%= action_buttons(
-                              display_delete_if_authorized(
-                                hash_for_device_type_interface_template_path(id: interface, device_type_id: @device_type).merge(:auth_object => interface, :authorizer => authorizer),
-                                :data => { :confirm => 'Are you sure?'},
-                                :action => :destroy
-                              )
-                            ) %>
-                      </td>
-                    </tr>
+                  <tr>
+                    <td class="col-sm-10"><%= interface.name %></td>
+                    <td class="col-sm-2">
+                      <%= action_buttons(
+                            display_delete_if_authorized(
+                              hash_for_device_type_interface_template_path(id: interface, device_type_id: @device_type).merge(:auth_object => interface, :authorizer => authorizer),
+                              :data => { confirm: _("Delete %s?") % interface.name },
+                              :action => :destroy
+                            )
+                          ) %>
+                    </td>
+                  </tr>
                 <% end %>
-                </tbody>
-              </table>
-          <% end %>
+              <% end %>
+            </tbody>
+          </table>
         </div>
     <% end %>
 
@@ -298,30 +306,30 @@
           <div class="panel-heading">
             <%= link_to 'Add a console server port', new_device_type_console_server_port_template_path(@device_type),
                         class: 'btn btn-primary btn-xs pull-right'%>
-            <strong>Console Server Ports</strong>
+            <strong><%= _("Console Server Ports") %></strong>
           </div>
-          <% if @device_type.console_server_port_templates.empty? %>
-              <div class="panel-body">None</div>
-          <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-                <tbody>
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+            <tbody>
+              <% if @device_type.console_server_port_templates.empty? %>
+                  <%= muted_text("None", "tr", "td") %>
+              <% else %>
                 <% @device_type.console_server_port_templates.each do |console_server_port| %>
-                    <tr>
-                      <td class="col-sm-10"><%= console_server_port.name %></td>
-                      <td class="col-sm-2">
-                        <%= action_buttons(
-                              display_delete_if_authorized(
-                                hash_for_device_type_console_server_port_template_path(id: console_server_port, device_type_id: @device_type).merge(:auth_object => console_server_port, :authorizer => authorizer),
-                                :data => { :confirm => 'Are you sure?'},
-                                :action => :destroy
-                              )
-                            ) %>
-                      </td>
-                    </tr>
+                  <tr>
+                    <td class="col-sm-10"><%= console_server_port.name %></td>
+                    <td class="col-sm-2">
+                      <%= action_buttons(
+                            display_delete_if_authorized(
+                              hash_for_device_type_console_server_port_template_path(id: console_server_port, device_type_id: @device_type).merge(:auth_object => console_server_port, :authorizer => authorizer),
+                              :data => { confirm: _("Delete %s?") % console_server_port.name },
+                              :action => :destroy
+                            )
+                          ) %>
+                    </td>
+                  </tr>
                 <% end %>
-                </tbody>
-              </table>
-          <% end %>
+              <% end %>
+            </tbody>
+          </table>
         </div>
     <% end %>
 
@@ -331,30 +339,30 @@
           <div class="panel-heading">
             <%= link_to 'Add a power outlet', new_device_type_power_outlet_template_path(@device_type),
                         class: 'btn btn-primary btn-xs pull-right'%>
-            <strong>Power Outlets</strong>
+            <strong><%= _("Power Outlets") %></strong>
           </div>
-          <% if @device_type.power_outlet_templates.empty? %>
-              <div class="panel-body">None</div>
-          <% else %>
-              <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-                <tbody>
+          <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+            <tbody>
+              <% if @device_type.power_outlet_templates.empty? %>
+                  <%= muted_text("None", "tr", "td") %>
+              <% else %>
                 <% @device_type.power_outlet_templates.each do |power_outlet| %>
-                    <tr>
-                      <td class="col-sm-10"><%= power_outlet.name %> </td>
-                      <td class="col-sm-2">
-                        <%= action_buttons(
-                              display_delete_if_authorized(
-                                hash_for_device_type_power_outlet_template_path(id: power_outlet, device_type_id: @device_type).merge(:auth_object => power_outlet, :authorizer => authorizer),
-                                :data => { :confirm => 'Are you sure?'},
-                                :action => :destroy
-                              )
-                            ) %>
-                      </td>
-                    </tr>
+                  <tr>
+                    <td class="col-sm-10"><%= power_outlet.name %> </td>
+                    <td class="col-sm-2">
+                      <%= action_buttons(
+                            display_delete_if_authorized(
+                              hash_for_device_type_power_outlet_template_path(id: power_outlet, device_type_id: @device_type).merge(:auth_object => power_outlet, :authorizer => authorizer),
+                              :data => { confirm: _("Delete %s?") % power_outlet.name },
+                              :action => :destroy
+                            )
+                          ) %>
+                    </td>
+                  </tr>
                 <% end %>
-                </tbody>
-              </table>
-          <% end %>
+              <% end %>
+            </tbody>
+          </table>
         </div>
     <% end %>
   </div>

@@ -3,12 +3,13 @@
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Device Type</label>
-        <div class="col-md-4"><%= @device_bay_template.device_type.model %></div>
+        <label class="col-md-2 control-label required"><%= _("Device Type") %></label>
+        <div class="col-md-4">
+          <input disabled class="form-control" value="<%= @device_bay_template.device_type.model %>">
+        </div>
       </div>
     </div>
 
-    <%= f.hidden_field :device_type_id %>
     <%= text_f f, :name, required: true %>
 
     <%= submit_or_cancel f, false, cancel_path: device_type_path(@device_bay_template.device_type) %>

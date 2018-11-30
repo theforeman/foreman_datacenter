@@ -1,10 +1,15 @@
 module ForemanDatacenter
   class DeviceBay < ActiveRecord::Base
+    include ScopedSearchExtensions
+    include Authorizable
+
     belongs_to :device, :class_name => 'ForemanDatacenter::Device'
     belongs_to :installed_device, :class_name => 'ForemanDatacenter::Device'
 
     validates :name, presence: true, length: {maximum: 50}
     validates :device_id, presence: true
+
+    scoped_search on: :name, complete_value: true, default_order: true
 
     def available_child_devices
       Device.joins(:device_type).

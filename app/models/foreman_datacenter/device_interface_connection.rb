@@ -1,5 +1,8 @@
 module ForemanDatacenter
   class DeviceInterfaceConnection < ActiveRecord::Base
+    include ScopedSearchExtensions
+    include Authorizable
+
     belongs_to :first_interface, class_name: 'ForemanDatacenter::DeviceInterface',
                foreign_key: 'interface_a'
     belongs_to :second_interface, class_name: 'ForemanDatacenter::DeviceInterface',
@@ -15,6 +18,9 @@ module ForemanDatacenter
         errors.add(:interface_b, 'Cannot connect an interface to itself')
       end
     end
+
+    scoped_search in: :first_interface, on: :name, complete_value: true, rename: :interface_a
+    scoped_search in: :second_interface, on: :name, complete_value: true, rename: :interface_b
 
     def first_device
       first_interface.device

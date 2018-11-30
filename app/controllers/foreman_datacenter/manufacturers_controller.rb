@@ -1,9 +1,12 @@
 module ForemanDatacenter
-  class ManufacturersController < ApplicationController
-    before_action :set_manufacturer, only: [:show, :edit, :update, :destroy]
+  class ManufacturersController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::Manufacturer
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy]
 
     def index
-      @manufacturers = Manufacturer.all
+      @manufacturers = resource_base_search_and_page.includes(:device_types)
     end
 
     def show
@@ -35,21 +38,17 @@ module ForemanDatacenter
     end
 
     def destroy
-      if @manufacturer.destroy
-        process_success object: @manufacturer
+      unless params['object_only']
+        @manufacturer.device_types.each { |dt| dt.devices.each { |d| d.destroy }; dt.destroy }
       else
-        process_error object: @manufacturer
+        @manufacturer.device_types.delete_all(:nullify)
       end
-    end
 
-    private
-
-    def set_manufacturer
-      @manufacturer = Manufacturer.find(params[:id])
-    end
-
-    def manufacturer_params
-      params[:manufacturer].permit(:name)
+      if @manufacturer.destroy
+        process_success success_redirect: manufacturers_path
+      else
+        process_error
+      end
     end
   end
 end

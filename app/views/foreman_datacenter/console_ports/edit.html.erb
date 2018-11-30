@@ -1,3 +1,5 @@
-<% title 'Editing console port' %>
+<% title _("Edit %s") % @console_port.to_label %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @console_port.device.to_label, url: device_path(@console_port.device)}, {caption: _("Edit %s") % @console_port.to_label}]) %>
 
 <%= render 'form' %>

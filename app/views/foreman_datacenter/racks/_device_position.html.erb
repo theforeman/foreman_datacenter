@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><strong>Devices</strong></div>
+  <div class="panel-heading"><strong><%= _("Devices") %></strong></div>
   <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
     <tbody>
       <% @rack.positioned_devices.each do |positions, devices| %>
@@ -20,7 +20,7 @@
                   </div>
                 <% end %>
             <% end %>
-        </td>
+          </td>
         </tr>
       <% end %>
     </tbody>

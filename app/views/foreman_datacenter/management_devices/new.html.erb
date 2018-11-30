@@ -1,3 +1,5 @@
-<% title 'New management device' %>
+<% title _("Create Management Device") %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @management_device.device.to_label, url: device_path(@management_device.device)}, {caption: _("Create Management Device")}]) %>
 
 <%= render 'form' %>

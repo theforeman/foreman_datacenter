@@ -1,17 +1,20 @@
 module ForemanDatacenter
-  class DeviceBaysController < ApplicationController
-    before_action :set_device_bay, only: [:depopulate, :populate,
-                                          :populate_new, :edit, :update, :destroy]
+  class DeviceBaysController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::DeviceBay
+
+    before_action :find_resource, only: [:depopulate, :populate,
+                                         :populate_new, :edit,
+                                         :update, :destroy]
 
     def new
-      @device_bay = DeviceBay.new(device: Device.find(params[:device_id]))
+      @device_bay = ForemanDatacenter::DeviceBay.new(device: ForemanDatacenter::Device.find(params[:device_id]))
     end
 
     def edit
     end
 
     def create
-      @device_bay = DeviceBay.new(device_bay_params)
+      @device_bay = ForemanDatacenter::DeviceBay.new(device_bay_params.merge(device_id: params[:device_id]))
 
       if @device_bay.save
         redirect_to device_url(@device_bay.device),
@@ -59,16 +62,6 @@ module ForemanDatacenter
       else
         process_error object: @device_bay
       end
-    end
-
-    private
-
-    def set_device_bay
-      @device_bay = DeviceBay.find(params[:id])
-    end
-
-    def device_bay_params
-      params[:device_bay].permit(:name, :device_id)
     end
   end
 end

@@ -8,19 +8,19 @@
     <%= text_f f, :model, required: true %>
     <%= text_f f, :u_height, label: 'Height (U)', type: 'number', min: 0 %>
 
-    <%= checkbox_f f, :is_full_depth, label: 'Is full depth',
-                   help_inline: 'Device consumes both front and rear rack faces' %>
-    <%= checkbox_f f, :is_console_server, label: 'Is a console server',
-                   help_inline: 'This type of device has console server ports' %>
-    <%= checkbox_f f, :is_pdu, label: 'Is a PDU',
-                   help_inline: 'This type of device has power outlets' %>
-    <%= checkbox_f f, :is_network_device, label: 'Is a network device',
-                   help_inline: 'This type of device has network interfaces' %>
+    <%= checkbox_f f, :is_full_depth, label: _('Is full depth'),
+                   help_inline: _('Device consumes both front and rear rack faces') %>
+    <%= checkbox_f f, :is_console_server, label: _('Is a console server'),
+                   help_inline: _('This type of device has console server ports') %>
+    <%= checkbox_f f, :is_pdu, label: _('Is a PDU'),
+                   help_inline: _('This type of device has power outlets') %>
+    <%= checkbox_f f, :is_network_device, label: _('Is a network device'),
+                   help_inline: _('This type of device has network interfaces') %>
 
     <%= selectable_f f, :subdevice_role,
                      options_for_select(device_type_subdevice_roles, @device_type.subdevice_role), {},
-                     {label: 'Parent/child status',
-                      help_inline: 'Parent devices house child devices in device bays. Select "None" if this device type is neither a parent nor a child.'} %>
+                     {label: _('Parent/child status'),
+                      help_inline: _('Parent devices house child devices in device bays. Select "None" if this device type is neither a parent nor a child.')} %>
 
     <%= submit_or_cancel f %>
 <% end %>

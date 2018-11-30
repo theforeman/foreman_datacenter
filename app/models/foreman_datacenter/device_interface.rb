@@ -1,5 +1,8 @@
 module ForemanDatacenter
   class DeviceInterface < ActiveRecord::Base
+    include ScopedSearchExtensions
+    include Authorizable
+
     FORM_FACTORS = ['Virtual', '10/100M (100BASE-TX)',
                     '1GE (1000BASE-T)', '1GE (SFP)', '10GE (10GBASE-T)',
                     '10GE (SFP+)', '10GE (XFP)', '40GE (QSFP+)']
@@ -13,6 +16,8 @@ module ForemanDatacenter
     validates :mac_address, length: {maximum: 128}
     validates :ip_address, length: {maximum: 128}
     validates :description, length: {maximum: 100}
+
+    scoped_search on: :name, complete_value: true, default_order: true
 
     def connection
       @connection ||= DeviceInterfaceConnection.

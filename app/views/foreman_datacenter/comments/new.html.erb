@@ -1,4 +1,5 @@
-<% title 'Reply to comment' %>
+<% title _('Reply') %>
+
+<%= breadcrumbs(items: [{caption: "#{_(@resource_class)} #{@parent.commentable.to_label}", url: commentable_path(@parent)}, {caption: _('Edit Comment')}]) %>
 
 <%= render 'form' %>
-

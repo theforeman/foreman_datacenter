@@ -1,12 +1,11 @@
 <% stylesheet 'foreman_datacenter/comments' %>
 
-<table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
-  <% if comments == [] %>
-    <div class="col-md-2">
-      <small>No comments yet...</small>
-    </div>
-  <% else %>
-    <tbody>
+<!-- <table class="<%#= table_css_classes 'aaa table-hover panel-body nonmarginbottom' %>"> -->
+<table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+  <tbody>
+    <% if comments == [] %>
+      <%= td_none %>
+    <% else %>
       <% comments.roots.each do |c| %>
         <tr>
           <td>
@@ -21,9 +20,8 @@
           </td>
         </tr>
       <% end %>
-    </tbody>
-  <% end %>
+    <% end %>
+  </tbody>
 </table>
 
 <%= render 'foreman_datacenter/comments/form'%>
-

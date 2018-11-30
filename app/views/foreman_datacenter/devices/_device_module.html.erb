@@ -3,11 +3,11 @@
   <td><%= h device_module.part_id %></td>
   <td><%= h device_module.serial %></td>
   <td class="text-right">
-    <%= link_to edit_device_module_path,
+    <%= link_to edit_device_module_path(device_module),
                 class: 'btn btn-warning btn-xs', title: 'Edit a module' do %>
         <span class="glyphicon glyphicon-pencil"></span>
     <% end %>
-    <%= link_to device_module_path,
+    <%= link_to device_module_path(device_module),
                 class: 'btn btn-danger btn-xs', title: 'Destroy a module',
                 method: :delete do %>
         <span class="glyphicon glyphicon-trash"></span>

@@ -1,3 +1,5 @@
-<% title 'New device type' %>
+<% title _("Create Device Type") %>
+
+<%= breadcrumbs(items: [{caption: _('Device Types'), url: device_types_path}, {caption: _("Create Device Type")}]) %>
 
 <%= render 'form' %>

@@ -3,6 +3,8 @@
 
 <% title "Connect '#{@power_outlet.device.name}' - '#{@power_outlet.name}'" %>
 
+<%= breadcrumbs(items: [{caption: _('Device %s') % @power_outlet.device.to_label, url: device_path(@power_outlet.device)}, {caption: "Connect '#{@power_outlet.device.name}' - '#{@power_outlet.name}'"}]) %>
+
 <%= form_for :power_port, url: connect_power_outlet_path(@power_outlet),
              method: :patch do |f| %>
     <%= rack_device_select @power_outlet.device.site,
@@ -16,7 +18,7 @@
 
     <%= selectable_f f, :connection_status,
                      ForemanDatacenter::PowerPort.connection_statuses.keys, {},
-                     { :label => 'Status' } %>
+                     { :label => _("Status") } %>
 
     <%= submit_or_cancel f, false, cancel_path: device_path(@power_outlet.device) %>
 <% end %>

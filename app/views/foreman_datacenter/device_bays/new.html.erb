@@ -1,3 +1,5 @@
-<% title 'New device bay' %>
+<% title _("Create Device Bay") %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device_bay.device.to_label, url: device_path(@device_bay.device)}, {caption: _("Create Device Bay")}]) %>
 
 <%= render 'form' %>

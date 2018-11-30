@@ -1,17 +1,25 @@
+<% title _("Populate New") %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device_bay.device.to_label, url: device_path(@device_bay.device)}, {caption: _("Populate New")}]) %>
+
 <%= form_for @device_bay, as: :device_bay, url: populate_device_bay_path(@device_bay) do |f| %>
     <%= base_errors_for @device_bay %>
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Parent Device</label>
-        <div class="col-md-4"><%= @device_bay.device.name %></div>
+        <label class="col-md-2 control-label required"><%= _("Parent Device") %></label>
+        <div class="col-md-4">
+          <input disabled class="form-control" value="<%= @device_bay.device.name %>">
+        </div>
       </div>
     </div>
 
     <div class="clearfix">
       <div class="form-group">
-        <label class="col-md-2 control-label required">Bay</label>
-        <div class="col-md-4"><%= @device_bay.name %></div>
+        <label class="col-md-2 control-label required"><%= _("Bay") %></label>
+        <div class="col-md-4">
+          <input disabled class="form-control" value="<%= @device_bay.name %>">
+        </div>
       </div>
     </div>
 

@@ -1,48 +1,36 @@
+<% stylesheet 'foreman_datacenter/comments' %>
+
 <% if action_name == "edit" %>
+
   <%= form_for @comment, url: "/datacenter/comments/#{@comment.id}" do |f| %>
-    <div class="clearfix">
-      <div class="form-group">
-        <% if @parent %>
-          <%= f.label "Parent comment" %>
-          <p>
-            <%= @parent.content %>
-          </p>
-        <% end %>
-        <div class="col-md-5">
-          <%= f.text_area :content, rows: 6, class: "form-control" %>
-        </div>
-      </div>
-    </div>
-    <div class="btn-toolbar">
-      <%= link_to 'Back', url_for(:back), class: 'btn btn-success' %>
-      <%= f.submit "Edit", class: "btn btn-primary remove_form_templates" %>
-    </div>
+    <%= base_errors_for @comment %>
+    <%= textarea_f f, :content, rows: 10, required: true %>
+    <%= submit_or_cancel(f, false, :cancel_path => commentable_path(@comment)) %>
   <% end %>
+
 <% elsif action_name == "new" %>
-  <%= form_for @comment, url: "/datacenter/comments", method: :post do |f| %>
-    <div class="clearfix">
-      <div class="form-group">
-        <% if @parent %>
-          <%= f.label "Parent comment" %>
-          <p>
-            <%= @parent.content %>
-          </p>
-        <% end %>
-        <div class="col-md-5">
-          <%= f.text_area :content, rows: 6, class: "form-control" %>
-          <%= f.hidden_field :parent_id, value: @parent.id %>
-          <%= hidden_field_tag "resource", params[:resource] %>
-          <%= hidden_field_tag "resource_id", params[:resource_id] %>
+
+  <%= form_for [@commentable, @comment], url: "/datacenter/#{@resource}/#{@commentable.id}/comments", html: {class: "form-horizontal well nonborder"}, method: :post do |f| %>
+    <%= base_errors_for @comment %>
+    <% if @parent %>
+      <div class="clearfix">
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="content"><%= _("Parent Comment") %></label>
+          <div class="col-md-4">
+            <textarea disabled rows="10" class="form-control"><%= @parent.content %></textarea>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="btn-toolbar">
-      <%= link_to 'Back', url_for(:back), class: 'btn btn-success' %>
-      <%= f.submit "Reply", class: "btn btn-primary remove_form_templates" %>
-    </div>
+    <% end %>
+    <%= f.hidden_field :parent_id, value: @parent.id %>
+    <%= textarea_f f, :content, rows: 10, required: true %>
+    <%= submit_or_cancel(f, false, :cancel_path => commentable_path(@parent)) %>
   <% end %>
+
 <% else %>
-  <%= form_for [@commentable, @comment], url: "/datacenter/devices/#{@commentable.id}/comments", html: {class: "form-horizontal well nonborder"} do |f| %>
+
+  <%#= form_for [@commentable, @comment], url: "/datacenter/#{@resource}/#{@commentable.id}/comments", html: {class: "form-horizontal well nonborder", style: "border-top:1px !important; border-left:1px !important; border-right:1px !important"} do |f| %>
+  <%= form_for [@commentable, @comment], url: "/datacenter/#{@resource}/#{@commentable.id}/comments", html: {class: "form-horizontal well nonborder"} do |f| %>
     <div class="clearfix">
       <div class="form-group">
         <div class="col-md-5">
@@ -50,7 +38,7 @@
         </div>
       </div>
     </div>
-    <%= f.submit "Post", class: "btn btn-primary remove_form_templates" %>
+    <%= f.submit "Submit", class: "btn btn-primary remove_form_templates" %>
   <% end %>
-<% end %>
 
+<% end %>

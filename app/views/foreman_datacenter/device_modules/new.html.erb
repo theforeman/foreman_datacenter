@@ -1,3 +1,5 @@
-<% title 'New module' %>
+<% title _("Create Device Module") %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device_module.device.to_label, url: inventory_device_path(@device_module.device)}, {caption: _("Create Device Module")}]) %>
 
 <%= render 'form' %>

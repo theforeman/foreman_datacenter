@@ -1,32 +1,32 @@
-<% title 'Interface connections'  %>
+<% title _('Interface connections')  %>
 
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <table class="<%= table_css_classes 'table-hover' %>">
-      <thead>
+<% title_actions help_button %>
+
+<table class="<%= table_css_classes 'table-fixed' %>">
+  <thead>
+    <tr>
+      <th><%= _("Device A") %></th>
+      <th><%= _("Interface A") %></th>
+      <th><%= _("Device B") %></th>
+      <th><%= _("Interface B") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for connection in @device_interface_connections %>
       <tr>
-        <th>Device A</th>
-        <th>Interface A</th>
-        <th>Device B</th>
-        <th>Interface B</th>
+        <td>
+          <%= link_to connection.first_device.name,
+                        device_path(connection.first_device) %>
+        </td>
+        <td><%= h connection.first_interface.name %></td>
+        <td>
+          <%= link_to connection.second_device.name,
+                      device_path(connection.second_device) %>
+        </td>
+        <td><%= h connection.second_interface.name %></td>
       </tr>
-      </thead>
-      <tbody>
-      <% @device_interface_connections.each do |connection| %>
-          <tr>
-            <td>
-              <%= link_to connection.first_device.name,
-                            device_path(connection.first_device) %>
-            </td>
-            <td><%= h connection.first_interface.name %></td>
-            <td>
-              <%= link_to connection.second_device.name,
-                          device_path(connection.second_device) %>
-            </td>
-            <td><%= h connection.second_interface.name %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+  <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate_with_info @device_interface_connections %>

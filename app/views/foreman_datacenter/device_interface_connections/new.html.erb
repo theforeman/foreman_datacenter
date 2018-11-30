@@ -2,6 +2,8 @@
 <% javascript 'foreman_datacenter/shared' %>
 <% stylesheet 'foreman_datacenter/device_interface_connections' %>
 
-<% title 'Connect interfaces' %>
+<% title _("Connect Interfaces") %>
+
+<%= breadcrumbs(items: [{caption: _('Device %s') % @device_interface_connection.first_device.to_label, url: device_path(@device_interface_connection.first_device)}, {caption: _("Connect Interfaces")}]) %>
 
 <%= render 'form' %>

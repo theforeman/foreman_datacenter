@@ -1,22 +1,22 @@
 module ForemanDatacenter
-  class DeviceInterfaceConnectionsController < ApplicationController
-    before_action :set_device_interface_connection,
-                  only: [:destroy, :planned, :connected]
+  class DeviceInterfaceConnectionsController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
+
+    before_action :find_resource, only: [:destroy, :planned, :connected]
 
     def index
-      @device_interface_connections = DeviceInterfaceConnection.includes(
-        :second_interface, first_interface: [:device]
-      )
+      @device_interface_connections = resource_base_search_and_page.includes(:second_interface, first_interface: [:device])
     end
 
     def new
-      @device_interface_connection = DeviceInterfaceConnection.connected.new(
+      @device_interface_connection = ForemanDatacenter::DeviceInterfaceConnection.connected.new(
         first_interface: get_device_interface
       )
     end
 
     def create
-      @device_interface_connection = DeviceInterfaceConnection.new(device_interface_connection_params)
+      @device_interface_connection = ForemanDatacenter::DeviceInterfaceConnection.new(device_interface_connection_params.merge(interface_a: params[:device_interface_id]))
       @device_interface_connection.first_interface = get_device_interface
 
       if @device_interface_connection.save
@@ -43,23 +43,14 @@ module ForemanDatacenter
     end
 
     def interfaces
-      @interfaces = Device.find(params[:device_id]).free_interfaces
+      @interfaces = ForemanDatacenter::Device.find(params[:device_id]).free_interfaces
       render partial: 'interfaces'
     end
 
     private
 
-    def set_device_interface_connection
-      @device_interface_connection = DeviceInterfaceConnection.find(params[:id])
-    end
-
-    def device_interface_connection_params
-      params[:device_interface_connection].
-        permit(:interface_a, :interface_b, :connection_status)
-    end
-
     def get_device_interface
-      DeviceInterface.find(params[:device_interface_id])
+      ForemanDatacenter::DeviceInterface.find(params[:device_interface_id])
     end
   end
 end

@@ -1,3 +1,5 @@
-<% title 'Editing site' %>
+<% title _("Edit %s") % @site.to_label %>
+
+<%= breadcrumbs(items: [{caption: _("Site %s") % @site.to_label, url: site_path(@site)}, {caption: _('Edit %s' % @site.to_label)}]) %>
 
 <%= render 'form' %>

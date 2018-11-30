@@ -1,41 +1,49 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@manufacturer.name) %>
+
+<%= breadcrumbs(items: [{caption: _('Manufacturers'), url: manufacturers_path}, {caption: _(@manufacturer.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_manufacturer_path(:id => @manufacturer),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_manufacturer_path(:id => @manufacturer),
-                   :data => { :confirm => 'Are you sure?'},
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                   hash_for_site_path(id: @manufacturer),
+                   class: 'btn btn-danger',
+                   id: 'init-modal',
+                   href: '#',
+                   data: { objecttype: 'manufacturer',
+                           objectid: @manufacturer.id,
+                           objectname: @manufacturer.to_label,
+                           associatedobjects: associated_objects('manufacturer') }
                  )
-   help_path %>
+                 help_path %>
 
 <div class="row">
   <div class="col-md-6">
     <!-- Rack group details -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Manufacturer</strong>
+        <strong><%= _("Manufacturer") %></strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
-        <tr>
-          <td>Name</td>
-          <td><%= h @manufacturer.name %></td>
-        </tr>
-        <tr>
-          <td>Created</td>
-          <td><%= @manufacturer.created_at.to_s(:long) %></td>
-        </tr>
-        <tr>
-          <td>Last Updated</td>
-          <td><%= @manufacturer.updated_at.to_s(:long) %></td>
-        </tr>
+          <tr>
+            <td><%= _("Name") %></td>
+            <td><%= h @manufacturer.name %></td>
+          </tr>
+          <tr>
+            <td><%= _("Created") %></td>
+            <td><%= @manufacturer.created_at.to_s(:long) %></td>
+          </tr>
+          <tr>
+            <td><%= _("Last Updated") %></td>
+            <td><%= @manufacturer.updated_at.to_s(:long) %></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -44,12 +52,34 @@
   <div class="col-md-6">
     <!-- Stats -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Stats</strong></div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <div class="panel-heading"><strong><%= _("Stats") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
-          <td>Devices types</td>
-          <td><%= @manufacturer.device_types.length %></td>
+          <td><%= _("Devices types") %></td>
+          <td><%= link_to @manufacturer.device_types_count, device_types_path(search: "manufacturer=#{@manufacturer.name}") %></td>
         </tr>
+        <tr>
+          <td><%= _("Devices") %></td>
+          <td><%= link_to @manufacturer.devices_count, devices_path(search: search_params(@manufacturer.device_types, 'model', 'type')) %></td>
+
+        </tr>
+      </table>
+    </div>
+    <!-- Racks -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong><%= _("Device Types") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @manufacturer.device_types.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
+            <% @manufacturer.device_types.to_a.sort_by!{ |r| r.model }.each do |dt| %>
+              <tr>
+                <td><%= link_to dt.model, device_type_path(dt) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
       </table>
     </div>
   </div>

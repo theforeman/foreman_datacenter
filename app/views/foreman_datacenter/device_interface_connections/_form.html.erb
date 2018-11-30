@@ -5,38 +5,44 @@
     <div class="row">
       <!-- A Side -->
 
-      <%= f.hidden_field :interface_a %>
-
       <div class="col-md-5">
         <div class="panel panel-default">
-          <div class="panel-heading text-center"><strong>A Side</strong></div>
+          <div class="panel-heading text-center"><strong><%= _("A Side") %></strong></div>
 
           <div class="panel-body">
             <div class="clearfix">
               <div class="form-group">
-                <label class="col-md-2 control-label required">Site</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_rack.site.name %></div>
+                <label class="col-md-2 control-label required"><%= _("Site") %></label>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_rack.site.name %>">
+                </div>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="form-group">
-                <label class="col-md-2 control-label required">Rack</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_rack.name %></div>
+                <label class="col-md-2 control-label required"><%= _("Rack") %></label>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_rack.name %>">
+                </div>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="form-group">
-                <label class="col-md-2 control-label required">Device</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_device.name %></div>
+                <label class="col-md-2 control-label required"><%= _("Device") %></label>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_device.name %>">
+                </div>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="form-group">
-                <label class="col-md-2 control-label required">Interface</label>
-                <div class="col-md-4"><%= @device_interface_connection.first_interface.name %></div>
+                <label class="col-md-2 control-label required"><%= _("Interface") %></label>
+                <div class="col-md-4">
+                  <input disabled class="form-control" value="<%= @device_interface_connection.first_interface.name %>">
+                </div>
               </div>
             </div>
           </div>
@@ -51,16 +57,16 @@
       <!-- B Side -->
       <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading text-center"><strong>B Side</strong></div>
+          <div class="panel-heading text-center"><strong><%= _("B Side") %></strong></div>
 
           <div class="panel-body">
              <div class="clearfix">
                <div class="form-group">
-                 <label class="col-md-2 control-label required">Site</label>
+                 <label class="col-md-2 control-label required"><%= _("Site") %></label>
                  <div class="col-md-4">
                    <%= sites_for_connection_form @device_interface_connection.first_site.id %>
                  </div>
-                 <span class="help-block help-inline">First, you need to select a site</span>
+                 <span class="help-block help-inline"><%= _("First, you need to select a site") %></span>
                </div>
              </div>
 

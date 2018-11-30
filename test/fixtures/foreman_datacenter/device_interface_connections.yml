@@ -1,0 +1,96 @@
+---
+one:
+  id: 1
+  interface_a: 1
+  interface_b: 3
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  interface_a: 2
+  interface_b: 4
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  interface_a: 5
+  interface_b: 7
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  interface_a: 6
+  interface_b: 8
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  interface_a: 9
+  interface_b: 11
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  interface_a: 10
+  interface_b: 12
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+seven:
+  id: 7
+  interface_a: 13
+  interface_b: 15
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eight:
+  id: 8
+  interface_a: 14
+  interface_b: 16
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+nine:
+  id: 9
+  interface_a: 17
+  interface_b: 19
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+ten:
+  id: 10
+  interface_a: 18
+  interface_b: 20
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+eleven:
+  id: 11
+  interface_a: 21
+  interface_b: 23
+  connection_status: 0
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+twelve:
+  id: 12
+  interface_a: 22
+  interface_b: 24
+  connection_status: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

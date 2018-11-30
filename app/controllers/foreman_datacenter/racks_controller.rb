@@ -1,20 +1,22 @@
 module ForemanDatacenter
-  class RacksController < ApplicationController
-    before_action :set_rack, only: [:show, :edit, :update, :destroy, :devices]
+  class RacksController < ForemanDatacenter::ApplicationController
+    include Foreman::Controller::AutoCompleteSearch
+    include ForemanDatacenter::Controller::Parameters::Rack
+
+    before_action :find_resource, only: [:show, :edit, :update, :destroy, :devices, :move]
 
     def index
-      @racks = ForemanDatacenter::Rack.
-        includes(:site, :rack_group, :devices).
-        order(:name).
-        all
+      @racks = resource_base_search_and_page.includes(:site, :rack_group)
     end
 
+    # action for async selecting rack_group in rack _form
     def rack_groups
-      @rack_groups = RackGroup.where(site_id: params[:site_id]).all
+      @rack_groups = ForemanDatacenter::RackGroup.where(site_id: params[:site_id]).all
       render partial: 'rack_groups'
     end
 
     def show
+      @rack = resource_base.includes(devices: [:device_role]).find(params[:id])
     end
 
     def new
@@ -43,22 +45,34 @@ module ForemanDatacenter
     end
 
     def destroy
+      unless params['object_only']
+        @rack.devices.each { |d| d.destroy }
+      else
+        @rack.devices.delete_all(:nullify)
+      end
+
       if @rack.destroy
-        process_success object: @rack
+        process_success success_redirect: racks_path
       else
         process_error object: @rack
       end
     end
 
-    private
-
-    def set_rack
-      @rack = ForemanDatacenter::Rack.find(params[:id])
+    def move
+      @racks = resource_base_search_and_page
+      @devices = @rack.devices
+      process_error object: @rack, error_msg: 'Current Rack haven\'t any Devices.' if @devices.empty?
     end
 
-    def rack_params
-      params[:rack].
-        permit(:site_id, :rack_group_id, :name, :facility_id, :height, :comments)
+    def update_associated_objects
+      begin
+        @rack = ForemanDatacenter::Rack.find(request.env['HTTP_REFERER'].split('/')[-2])
+        @devices = @rack.devices
+        @devices.update_all(rack_id: params[:rack_id])
+        process_success success_redirect: racks_path, success_msg: 'Associated objects successfully moved.'
+      rescue => e
+        process_error object: @rack, error_msg: "#{e}"
+      end
     end
   end
 end

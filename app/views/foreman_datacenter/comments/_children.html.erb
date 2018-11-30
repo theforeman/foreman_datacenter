@@ -1,8 +1,8 @@
 <ul class="none-list-child">
   <li>
     <% c.each do |comment, children |%>
-      <%= render 'foreman_datacenter/comments/item', comment: comment, commentable_data: commentable_data %>
-      <%= render 'foreman_datacenter/comments/children', commentable_data: commentable_data, c: children if children.present? %>
+      <%= render 'foreman_datacenter/comments/item', comment: comment %>
+      <%= render 'foreman_datacenter/comments/children', c: children if children.present? %>
     <% end %>
   </li>
 </ul>

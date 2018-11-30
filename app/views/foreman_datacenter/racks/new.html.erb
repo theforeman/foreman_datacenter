@@ -1,5 +1,7 @@
 <% javascript 'foreman_datacenter/racks' %>
 
-<% title 'New rack' %>
+<% title _("Create Rack") %>
+
+<%= breadcrumbs(items: [{caption: _('Racks'), url: racks_path}, {caption: _("Create Rack")}]) %>
 
 <%= render 'form' %>

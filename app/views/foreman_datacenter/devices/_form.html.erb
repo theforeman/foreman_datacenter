@@ -15,7 +15,7 @@
 
     <!-- Hardware -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Hardware</strong></div>
+      <div class="panel-heading"><strong><%= _("Hardware") %></strong></div>
       <div class="panel-body">
         <div class="clearfix">
           <div class="form-group">
@@ -67,14 +67,12 @@
 
     <!-- Management -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Management</strong></div>
+      <div class="panel-heading"><strong><%= _("Management") %></strong></div>
       <div class="panel-body">
         <%= platforms_for_device_form f, @device.platform_id %>
         <%= selectable_f f, :status, ForemanDatacenter::Device.statuses.keys %>
       </div>
     </div>
-
-    <%= f.hidden_field :host_id %>
 
     <%= submit_or_cancel f %>
 <% end %>

@@ -1,5 +1,7 @@
 <% javascript 'foreman_datacenter/devices' %>
 
-<% title 'New device' %>
+<% title _("Create Device") %>
+
+<%= breadcrumbs(items: [{caption: _("Devices"), url: devices_path}, {caption: _("Create Device")}]) %>
 
 <%= render 'form' %>

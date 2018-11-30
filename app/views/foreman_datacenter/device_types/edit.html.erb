@@ -1,3 +1,5 @@
-<% title 'Editing device type' %>
+<% title _("Edit %s") % @device_type.to_label %>
+
+<%= breadcrumbs(items: [{caption: _('Device Type %s') % @device_type.to_label, url: device_type_path(@device_type)}, {caption: _('Edit %s' % @device_type.to_label)}]) %>
 
 <%= render 'form' %>

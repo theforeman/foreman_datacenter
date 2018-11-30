@@ -1,43 +1,51 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@platform.name) %>
+
+<%= breadcrumbs(items: [{caption: _('Platforms'), url: platforms_path}, {caption: _(@platform.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_platform_path(:id => @platform),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_platform_path(:id => @platform),
-                   :data => { :confirm => 'Are you sure?'},
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                    hash_for_site_path(id: @platform),
+                    class: 'btn btn-danger',
+                    id: 'init-modal',
+                    href: '#',
+                    data: { objecttype: 'platform',
+                            objectid: @platform.id,
+                            objectname: @platform.to_label,
+                            associatedobjects: associated_objects('platform') }
                  )
-   help_path %>
+                 help_path %>
 
-<div class="row-md-6">
+<div class="row">
   <div class="col-md-6">
     <!-- Rack group details -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Platform</strong>
+        <strong><%= _("Platform") %></strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
-          <td>Name</td>
+          <td><%= _('Name') %></td>
           <td><%= h @platform.name %></td>
         </tr>
         <tr>
-          <td>RPC Client</td>
+          <td><%= _("RPC Client") %></td>
           <td><%= @platform.rpc_client %></td>
         </tr>
         <tr>
-          <td>Created</td>
+          <td><%= _('Created') %></td>
           <td><%= @platform.created_at.to_s(:long) %></td>
         </tr>
         <tr>
-          <td>Last Updated</td>
+          <td><%= _('Last Updated') %></td>
           <td><%= @platform.updated_at.to_s(:long) %></td>
         </tr>
         </tbody>
@@ -48,12 +56,30 @@
   <div class="col-md-6">
     <!-- Stats -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Stats</strong></div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <div class="panel-heading"><strong><%= _("Stats") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
-          <td>Devices</td>
-          <td><%= @platform.devices.length %></td>
+          <td><%= _("Devices") %></td>
+          <td><%= link_to @platform.devices_count, devices_path(search: "platform=#{@platform.name}") %></td>
         </tr>
+      </table>
+    </div>
+
+    <!-- Devices -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong><%= _("Devices") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @platform.devices.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
+            <% @platform.devices.to_a.sort_by!{ |d| d.name }.each do |device| %>
+              <tr>
+                <td><%= link_to device.name, device_path(device) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
       </table>
     </div>
   </div>

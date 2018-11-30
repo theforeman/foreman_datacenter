@@ -1,0 +1,126 @@
+---
+one:
+  id: 1
+  device_type_id: 1 # DeviceType1None
+  device_role_id: 1
+  platform_id: 1
+  name: "Device1DT1_DR1_NONE"
+  serial: 123
+  rack_id: 1
+  position: 1
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+two:
+  id: 2
+  device_type_id: 2 # DeviceType1Parent
+  device_role_id: 1
+  platform_id: 1
+  name: "Device2DT2_DR1_NONE"
+  serial: 312
+  rack_id: 1
+  position: 2
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+three:
+  id: 3
+  device_type_id: 2 # DeviceType2Parent
+  device_role_id: 1
+  platform_id: 2
+  name: "Device3DT2_DR1_PARENT"
+  serial: 123
+  rack_id: 1
+  position: 3
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+four:
+  id: 4
+  device_type_id: 2 # DeviceType1PARENT
+  device_role_id: 2
+  platform_id: 1
+  name: "Device4DT2_DR2_PARENT"
+  serial: 123
+  rack_id: 1
+  position: 4
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+five:
+  id: 5
+  device_type_id: 3 # DeviceType1Child
+  device_role_id: 1
+  platform_id: 1
+  name: "Device5DT3_DR1_CHILD"
+  serial: 123
+  rack_id: 1
+  position: 5
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+six:
+  id: 6
+  device_type_id: 3 # DeviceType1Child
+  device_role_id: 2
+  platform_id: 1
+  name: "Device6DT3_DR2_CHILD"
+  serial: 123
+  rack_id: 1
+  position: 6
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"
+
+del:
+  id: 7
+  device_type_id: 4 # DeviceType1Child
+  device_role_id: 3
+  platform_id: 4
+  name: "Device7PARENT_DEL"
+  serial: 123
+  rack_id: 3
+  position: 6
+  face: 0
+  status: 0
+  # primary_ip4: 
+  # primary_ip6: 
+  side: 1
+  size: 1
+  created_at: "2013-12-04 08:41:06.182425"
+  updated_at: "2013-12-04 08:41:06.182425"

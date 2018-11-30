@@ -1,19 +1,20 @@
 module ForemanDatacenter
-  class DeviceBayTemplatesController < ApplicationController
-    before_action :set_device_bay_template, only: [:destroy]
+  class DeviceBayTemplatesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::DeviceBayTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
-      @device_bay_template = DeviceBayTemplate.new(
-        device_type: DeviceType.find(params[:device_type_id])
+      @device_bay_template = ForemanDatacenter::DeviceBayTemplate.new(
+        device_type: ForemanDatacenter::DeviceType.find(params[:device_type_id])
       )
     end
 
     def create
-      @device_bay_template = DeviceBayTemplate.new(device_bay_template_params)
+      @device_bay_template = ForemanDatacenter::DeviceBayTemplate.new(device_bay_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @device_bay_template.save
-        redirect_to device_type_url(@device_bay_template.device_type),
-                    notice: 'Device bay template was successfully created'
+        process_success success_redirect: device_type_url(@device_bay_template.device_type_id)
       else
         process_error object: @device_bay_template
       end
@@ -21,21 +22,10 @@ module ForemanDatacenter
 
     def destroy
       if @device_bay_template.destroy
-        redirect_to device_type_url(@device_bay_template.device_type),
-                    notice: 'Device bay template was successfully destroyed'
+        process_success success_redirect: device_type_url(params[:device_type_id])
       else
         process_error object: @device_bay_template
       end
-    end
-
-    private
-
-    def set_device_bay_template
-      @device_bay_template = DeviceBayTemplate.find(params[:id])
-    end
-
-    def device_bay_template_params
-      params[:device_bay_template].permit(:device_type_id, :name)
     end
   end
 end

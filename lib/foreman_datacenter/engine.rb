@@ -14,6 +14,15 @@ module ForemanDatacenter
       end
     end
 
+    initializer 'foreman_datacenter.apipie' do
+      # this condition is here for compatibility reason to work with Foreman 1.4.x
+      if Apipie.configuration.api_controllers_matcher.is_a?(Array) &&
+        Apipie.configuration.respond_to?(:checksum_path)
+        Apipie.configuration.api_controllers_matcher << "#{ForemanDatacenter::Engine.root}/app/controllers/api/v2/foreman_datacenter/**/*.rb"
+        Apipie.configuration.checksum_path += ['/foreman_datacenter/api/']
+      end
+    end
+
     initializer 'foreman_datacenter.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_datacenter do
         requires_foreman '>= 1.12'
@@ -269,8 +278,11 @@ module ForemanDatacenter
           permission :destroy_power_ports, {
                      :'foreman_datacenter/power_ports' => [:destroy]},
                      :resource_type => "ForemanDatacenter::PowerPort"
+          # permission :power_ports, {
+          #            :'foreman_datacenter/power_ports' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
+          #            :resource_type => "ForemanDatacenter::PowerPort"
           permission :power_ports_connections_management, {
-                     :'foreman_datacenter/device_interface_connections' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
+                     :'foreman_datacenter/power_ports' => [:planned, :connected, :for_device, :new_connection, :connect, :disconnect]},
                      :resource_type => "ForemanDatacenter::PowerPort"
           # RackGroups
           permission :view_rack_groups, {

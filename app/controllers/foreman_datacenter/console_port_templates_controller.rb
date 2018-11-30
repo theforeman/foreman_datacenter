@@ -1,19 +1,20 @@
 module ForemanDatacenter
-  class ConsolePortTemplatesController < ApplicationController
-    before_action :set_console_port_template, only: [:destroy]
+  class ConsolePortTemplatesController < ForemanDatacenter::ApplicationController
+    include ForemanDatacenter::Controller::Parameters::ConsolePortTemplate
+
+    before_action :find_resource, only: [:destroy]
 
     def new
-      @console_port_template = ConsolePortTemplate.new(
-        device_type: DeviceType.find(params[:device_type_id])
+      @console_port_template = ForemanDatacenter::ConsolePortTemplate.new(
+        device_type: ForemanDatacenter::DeviceType.find(params[:device_type_id])
       )
     end
 
     def create
-      @console_port_template = ConsolePortTemplate.new(console_port_template_params)
+      @console_port_template = ForemanDatacenter::ConsolePortTemplate.new(console_port_template_params.merge(device_type_id: params[:device_type_id]))
 
       if @console_port_template.save
-        redirect_to device_type_url(@console_port_template.device_type),
-                    notice: 'New console port template was successfully created'
+        process_success success_redirect: device_type_url(@console_port_template.device_type_id)
       else
         process_error object: @console_port_template
       end
@@ -21,21 +22,10 @@ module ForemanDatacenter
 
     def destroy
       if @console_port_template.destroy
-        redirect_to device_type_url(@console_port_template.device_type),
-                    notice: 'Console port template was successfully destroyed'
+        process_success success_redirect: device_type_url(params[:device_type_id])
       else
         process_error object: @console_port_template
       end
-    end
-
-    private
-
-    def set_console_port_template
-      @console_port_template = ConsolePortTemplate.find(params[:id])
-    end
-
-    def console_port_template_params
-      params[:console_port_template].permit(:device_type_id, :name)
     end
   end
 end

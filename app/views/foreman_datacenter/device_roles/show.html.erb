@@ -1,43 +1,51 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
 <% title h(@device_role.name) %>
+
+<%= breadcrumbs(items: [{caption: _('Device Roles'), url: device_roles_path}, {caption: _(@device_role.to_label)}]) %>
 
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_device_role_path(:id => @device_role),
                    :class => 'btn btn-warning'
                  ),
-                 display_delete_if_authorized(
-                   hash_for_device_role_path(:id => @device_role),
-                   :data => { :confirm => 'Are you sure?'},
-                   :action => :destroy,
-                   :class => 'btn btn-danger'
+                 display_fake_delete_if_authorized(
+                     hash_for_site_path(id: @device_role),
+                     class: 'btn btn-danger',
+                     id: 'init-modal',
+                     href: '#',
+                     data: { objecttype: 'device_role',
+                             objectid: @device_role.id,
+                             objectname: @device_role.to_label,
+                             associatedobjects: associated_objects('device_role') }
                  )
-   help_path %>
+                 help_path %>
 
 <div class="row">
   <div class="col-md-6">
     <!-- Rack group details -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>Device role</strong>
+        <strong><%= _("Device role") %></strong>
       </div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tbody>
         <tr>
-          <td>Name</td>
+          <td><%= _("Name") %></td>
           <td><%= h @device_role.name %></td>
         </tr>
         <tr>
-          <td>Color</td>
+          <td><%= _("Color") %></td>
           <td><%= @device_role.color %></td>
         </tr>
         <tr>
-          <td>Created</td>
+          <td><%= _("Created") %></td>
           <td><%= @device_role.created_at.to_s(:long) %></td>
         </tr>
         <tr>
-          <td>Last Updated</td>
+          <td><%= _("Last Updated") %></td>
           <td><%= @device_role.updated_at.to_s(:long) %></td>
         </tr>
         </tbody>
@@ -48,12 +56,30 @@
   <div class="col-md-6">
     <!-- Stats -->
     <div class="panel panel-default">
-      <div class="panel-heading"><strong>Stats</strong></div>
-      <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
+      <div class="panel-heading"><strong><%= _("Stats") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
-          <td>Devices</td>
-          <td><%= @device_role.devices.length %></td>
+          <td><%= _("Devices") %></td>
+          <td><%= link_to @device_role.devices_count, devices_path(search: "role=#{@device_role.name}") %></td>
         </tr>
+      </table>
+    </div>
+
+    <!-- Devices -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong><%= _("Devices") %></strong></div>
+      <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
+        <tbody>
+          <% if @device_role.devices.empty? %>
+            <%= muted_text("None", "tr", "td") %>
+          <% else %>
+            <% @device_role.devices.to_a.sort_by!{ |d| d.name }.each do |device| %>
+              <tr>
+                <td><%= link_to device.name, device_path(device) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
       </table>
     </div>
   </div>

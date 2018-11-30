@@ -1,40 +1,52 @@
-<% title _("Sites") %>
-<%  title_actions display_link_if_authorized(_("Create Site"), hash_for_new_site_path, class: 'btn btn-primary'), help_button %>
+<% stylesheet 'foreman_datacenter/title_filter' %>
+<% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/modal' %>
+<% javascript 'foreman_datacenter/modal' %>
 
-<table class="<%= table_css_classes 'table-two-pane' %>">
+<% title _("Sites") %>
+<% title_actions new_link(_("Create Site")), help_button %>
+
+<table class="<%= table_css_classes 'table-fixed' %>">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Facility</th>
-      <th>ASN</th>
-      <th>Racks</th>
-      <th>Devices</th>
-      <th>Action</th>
+      <th><%= sort :name, :as => s_("Site|Name")  %></th>
+      <th><%= sort :facility, :as => s_("Site|Facility") %></th>
+      <th><%= _("ASN") %></th>
+      <th><%= _("Rack Groups") %></th>
+      <th><%= _("Racks") %></th>
+      <th><%= _("Devices") %></th>
+      <th class="col-md-1"><%= _("Actions") %></th>
     </tr>
   </thead>
-
   <tbody>
-    <% @sites.each do |site| %>
+    <% for site in @sites %>
       <tr>
-        <td><%= link_to(site.name, site_path(site)) %></td>
+        <td class='ellipsis'><%= link_to_if_authorized site.name, {:action => :show, :id => site}, :title => site.name %></td>
         <td><%= h site.facility %></td>
         <td><%= h site.asn %></td>
-        <td><%= site.racks_count %></td>
-        <td><%= site.devices_count %></td>
+        <td><%= link_to site.rack_groups_count, rack_groups_path(search: "site=#{site.name}") %></td>
+        <td><%= link_to site.racks_count, racks_path(search: "site=#{site.name}") %></td>
+        <td><%= link_to site.devices_count, devices_path(search: "site=#{site.name}") %></td>
         <td>
           <%= action_buttons(
                   display_link_if_authorized(
                       _("Edit"),
                       hash_for_edit_site_path(:id => site).merge(:auth_object => site, :authorizer => authorizer)
                   ),
-                  display_delete_if_authorized(
-                      hash_for_site_path(:id => site).merge(:auth_object => site, :authorizer => authorizer),
-                      :data => { :confirm => 'Are you sure?'},
-                      :action => :destroy
-                  )
+                  display_fake_delete_if_authorized(
+                     hash_for_site_path(:id => site).merge(:auth_object => site, :authorizer => authorizer),
+                     id: 'init-modal',
+                     href: '#',
+                     data: { objecttype: 'site',
+                             objectid: site.id,
+                             objectname: site.to_label,
+                             associatedobjects: associated_objects('site') }
+                 )
               ) %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate_with_info @sites %>
