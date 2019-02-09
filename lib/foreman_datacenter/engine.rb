@@ -28,7 +28,7 @@ module ForemanDatacenter
         requires_foreman '>= 1.12'
 
         security_block :datacenter do
-	  # Hosts
+    # Hosts
           permission :import_to_device, {
                       :'hosts' => [:import_to_device]},
                       :resource_type => "ForemanDatacenter::HostExtensions"
@@ -423,21 +423,21 @@ module ForemanDatacenter
         role "Datacenter Manager", MANAGER
         add_all_permissions_to_default_roles
 
-        sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu, :icon => 'pficon pficon-enterprise' do
-          menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }
-          divider :top_menu, :parent => :datacenter, :after => :sites, :caption => 'Racks'
-          menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/racks', action: :index }
-          menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/rack_groups', action: :index }
-          divider :top_menu, :parent => :datacenter, :after => :rack_groups, :caption => 'Devices'
-          menu :top_menu, :devices, :url_hash => { controller: :'foreman_datacenter/devices', action: :index }
-          menu :top_menu, :device_types, :url_hash => { controller: :'foreman_datacenter/device_types', action: :index }
-          menu :top_menu, :device_roles, :url_hash => { controller: :'foreman_datacenter/device_roles', action: :index }
-          menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/manufacturers', action: :index }
-          menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/platforms', action: :index }
-          divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => 'Connections'
-          menu :top_menu, :console_connections, :url_hash => { controller: :'foreman_datacenter/console_ports', action: :index }
-          menu :top_menu, :power_connections, :url_hash => { controller: :'foreman_datacenter/power_ports', action: :index }
-          menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/device_interface_connections', action: :index }
+        sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu, :icon => 'pficon pficon-enterprise', :caption => N_('Datacenter') do
+          menu :top_menu, :sites, :url_hash => { controller: :'foreman_datacenter/sites', action: :index }, :caption => N_('Sites')
+          divider :top_menu, :parent => :datacenter, :after => :sites, :caption => N_('Racks')
+          menu :top_menu, :racks, :url_hash => { controller: :'foreman_datacenter/racks', action: :index }, :caption => N_('Racks')
+          menu :top_menu, :rack_groups, :url_hash => { controller: :'foreman_datacenter/rack_groups', action: :index }, :caption => N_('Rack Groups')
+          divider :top_menu, :parent => :datacenter, :after => :rack_groups, :caption => N_('Devices')
+          menu :top_menu, :devices, :url_hash => { controller: :'foreman_datacenter/devices', action: :index }, :caption => N_('Devices')
+          menu :top_menu, :device_types, :url_hash => { controller: :'foreman_datacenter/device_types', action: :index }, :caption => N_('Device Types')
+          menu :top_menu, :device_roles, :url_hash => { controller: :'foreman_datacenter/device_roles', action: :index }, :caption => N_('Device Roles')
+          menu :top_menu, :manufacturers, :url_hash => { controller: :'foreman_datacenter/manufacturers', action: :index }, :caption => N_('Manufacturers')
+          menu :top_menu, :platforms, :url_hash => { controller: :'foreman_datacenter/platforms', action: :index }, :caption => N_('Platforms')
+          divider :top_menu, :parent => :datacenter, :after => :interfaces, :caption => N_('Connections')
+          menu :top_menu, :console_connections, :url_hash => { controller: :'foreman_datacenter/console_ports', action: :index }, :caption => N_('Console Connections')
+          menu :top_menu, :power_connections, :url_hash => { controller: :'foreman_datacenter/power_ports', action: :index }, :caption => N_('Power Connections')
+          menu :top_menu, :interface_connections, :url_hash => { controller: :'foreman_datacenter/device_interface_connections', action: :index }, :caption => N_('Interface Connections')
         end
       end
     end
