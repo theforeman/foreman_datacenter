@@ -47,7 +47,7 @@ module Api
 	param_group :device, :as => :create
 
 	def create
-	  @device = ::ForemanDatacenter::Device.new(device_params.merge(hosy_id: params[:host_id]))
+	  @device = ::ForemanDatacenter::Device.new(device_params.merge(host_id: params[:host_id]))
 	  process_response @device.save
 	end
 
