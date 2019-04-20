@@ -12,7 +12,7 @@ module ForemanDatacenter
                                          :sync_interfaces_with_host]
 
     def index
-      @devices = resource_base_search_and_page.includes(:device_role, :device_type, :site, :rack)
+      @devices = resource_base_search_and_page.includes(:device_role, :device_type, :site, :rack, :comments)
     end
 
     def show
