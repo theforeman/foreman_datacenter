@@ -90,6 +90,8 @@ module ForemanDatacenter
           'populate'
         when 'move'
           'move'
+        when 'racks'
+          'racks'
         else
           super
       end

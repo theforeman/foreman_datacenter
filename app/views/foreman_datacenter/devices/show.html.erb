@@ -256,7 +256,10 @@
         <% if @device.management_device %>
             <tr>
               <td><%= _("Console URL") %></td>
-              <td><%= h @device.console_url %></td>
+              <td>
+                <%= link_to @device.console_url, "http://#{@device.console_url}", target: "_blank" %>
+              </td>
+
             </tr>
             <tr>
               <td><%= _("Login") %></td>

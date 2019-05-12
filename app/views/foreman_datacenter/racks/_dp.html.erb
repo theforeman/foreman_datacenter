@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading text-center"><h4 class="nonmargintop nonmarginbottom"><strong><%= link_to _("#{rack.name}"), rack_path(rack) %></strong></h4></div>
+  <div class="panel-heading text-center"><h4 class="nonmargintop nonmarginbottom"><strong><%= _("#{rack.name}") %></strong></h4></div>
   <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
     <tbody>
       <% rack.positioned_devices.each do |positions, devices| %>
@@ -9,7 +9,7 @@
             <% unless devices.empty? %>
                 <% devices.each do |d| %>
                   <div class="<%= "text-" + ((d.side == "full" or d.side.nil?) ? "center" : "right") + " pull-" + ((d.side == "full" or d.side.nil?) ? "center" : d.side) %>">
-                    <div class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>" style="border-radius:40px;border:0px;">&nbsp;&nbsp;</div>
+		    <span class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>">&nbsp;</span>
                     <%= link_to d.name, device_path(d) %>
                     <% if d.side.nil? %>
                       *
@@ -26,7 +26,7 @@
       <% unless rack.unpositioned_devices.empty? %>
         <tr>
           <td class="col-md-1">Unpositioned Devices</td>
-          <td class="col-md-4" style="text-align:center">
+          <td class="col-md-4">
             <% rack.unpositioned_devices.each do |d| %>
               <div class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>" style="border-radius:40px;border:0px;">&nbsp;&nbsp;</div>
               <%= link_to d.name, device_path(d) %>

@@ -51,6 +51,7 @@ module ForemanDatacenter
     scoped_search in: :device_role, on: :name, complete_value: true, rename: :role
     scoped_search in: :device_type, on: :model, complete_value: true, rename: :type
     scoped_search in: :platform, on: :name, complete_value: true, rename: :platform
+    scoped_search in: :comments, on: :content, complete_value: true, rename: :comments
 
     delegate :site_id, to: :rack, allow_nil: true
     delegate :manufacturer_id, :is_console_server, :is_pdu, :is_network_device,

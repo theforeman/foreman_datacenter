@@ -2,7 +2,7 @@ module Api
   module V2
     module ForemanDatacenter
       class DeviceInterfaceConnectionsController < ForemanDatacenter::BaseController
-        include ::ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
+	include ::ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
 
         before_action :find_resource, :only => %w{show update destroy connected planned}
         param_group :search_and_pagination, ::Api::V2::BaseController
@@ -19,46 +19,46 @@ module Api
         def show
         end
 
-        def_param_group :device_interface_connection do
-          param :device_interface_connection, Hash, :required => true, :action_aware => true do
-            param :name, String, :required => true
-            param :interface_a, :number, :desc => N_("Interface A")
-            param :interface_b, :number, :desc => N_("Interface B")
-            param :connection_status, :number, :desc => N_("Connectin status")
-          end
-        end
+	def_param_group :device_interface_connection do
+	  param :device_interface_connection, Hash, :required => true, :action_aware => true do
+	    param :name, String, :required => true
+	    param :interface_a, :number, :desc => N_("Interface A")
+	    param :interface_b, :number, :desc => N_("Interface B")
+	    param :connection_status, :number, :desc => N_("Connectin status")
+	  end
+	end
 
-        api :POST, "/foreman_datacenter/device_interfaces/:device_interface_id/device_interface_connections", N_("Create a DeviceInterfaceConnection")
-        param_group :device_interface_connection, :as => :create
+	api :POST, "/foreman_datacenter/device_interfaces/:device_interface_id/device_interface_connections", N_("Create a DeviceInterfaceConnection")
+	param_group :device_interface_connection, :as => :create
 
-        def create
+	def create
           @device_interface_connection = ::ForemanDatacenter::DeviceInterfaceConnection.new(device_interface_connection_params.merge(interface_a: params[:device_interface_id]))
           @device_interface_connection.first_interface = get_device_interface
           @device_interface_connection.save
-        end
+	end
 
-        api :DELETE, "/foreman_datacenter/device_interface_connections/:id/", N_("Delete a DeviceInterfaceConnection")
-        param :id, :identifier, :required => true
+	api :DELETE, "/foreman_datacenter/device_interface_connections/:id/", N_("Delete a DeviceInterfaceConnection")
+	param :id, :identifier, :required => true
 
-        def destroy
-          process_response @device_interface_connection.destroy
-        end
+	def destroy
+	  process_response @device_interface_connection.destroy
+	end
 
         api :PATCH, "/foreman_datacenter/device_interface_connections/:id/planned", N_("Planned")
-        param :id, :identifier, :required => true
-        param_group :device_interface_connection
+	param :id, :identifier, :required => true
+	param_group :device_interface_connection
 
-        def planned
+	def planned
           process_response @device_interface_connection.planned!
-        end
+	end
 
         api :PATCH, "/foreman_datacenter/device_interface_connections/:id/connected", N_("Connected")
-        param :id, :identifier, :required => true
-        param_group :device_interface_connection
+	param :id, :identifier, :required => true
+	param_group :device_interface_connection
 
-        def connected
+	def connected
           process_response @device_interface_connection.connected!
-        end
+	end
 
         private
 
