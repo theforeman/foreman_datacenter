@@ -38,7 +38,6 @@ module Api
 
 	def create
 	  @device_interface = ::ForemanDatacenter::DeviceInterface.new(device_interface_params)
-	  @device_interface.save
           process_response @device_interface.save
 	end
 
