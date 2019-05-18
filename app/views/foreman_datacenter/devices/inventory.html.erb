@@ -3,8 +3,6 @@
 
 <% title h(@device.to_label) %>
 
-<%= breadcrumbs(items: [{caption: _('Devices'), url: devices_path}, {caption: _(@device.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_device_path(:id => @device).merge(:auth_object => @device, :authorizer => authorizer),

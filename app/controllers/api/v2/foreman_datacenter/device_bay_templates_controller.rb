@@ -7,7 +7,6 @@ module Api
         before_action :find_optional_nested_object
         before_action :find_resource, :only => %w{destroy show}
         param_group :search_and_pagination, ::Api::V2::BaseController
-        add_scoped_search_description_for(::ForemanDatacenter::ConsolePortTemplate)
         
         api :GET, "/foreman_datacenter/device_bay_templates/", N_("List all DeviceBayTemplate")
         

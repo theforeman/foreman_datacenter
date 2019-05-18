@@ -4,8 +4,6 @@
 
 <% title h(@rack_group.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Rack Groups'), url: rack_groups_path}, {caption: _(@rack_group.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                      _('Move associated objects'),
                      hash_for_move_rack_group_path(id: @rack_group),

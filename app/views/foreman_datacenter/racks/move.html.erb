@@ -1,7 +1,5 @@
 <% title _("Move associated objects") %>
 
-<%= breadcrumbs(items: [{caption: _('Racks'), url: racks_path}, {caption: _("Move associated objects")}]) %>
-
 <%= form_tag ('/datacenter/rack_update_associated_objects'), class: 'form-horizontal well' do %>
   <div class='clearfix'>
     <%= label_tag 'Rack *', nil, class: 'col-md-2 control-label' %>

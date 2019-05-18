@@ -4,8 +4,6 @@
 
 <% title h(@device_role.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Device Roles'), url: device_roles_path}, {caption: _(@device_role.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_device_role_path(:id => @device_role),

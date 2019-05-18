@@ -4,8 +4,6 @@
 
 <% title h(@manufacturer.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Manufacturers'), url: manufacturers_path}, {caption: _(@manufacturer.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_manufacturer_path(:id => @manufacturer),

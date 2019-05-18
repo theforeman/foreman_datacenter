@@ -3,8 +3,6 @@
 
 <% title h(@site.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Site %s')   % @site.name, url: site_path(@site)}, {caption: _('Racks Overview')}]) %>
-
 <% @racks.in_groups_of(3).each do |g| %>
   <div class="row">
     <% g.compact.each do |rack| %>

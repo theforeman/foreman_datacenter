@@ -4,8 +4,6 @@
 
 <% title h(@device_type.model) %>
 
-<%= breadcrumbs(items: [{caption: _('Device Types'), url: device_types_path}, {caption: _(@device_type.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_device_type_path(:id => @device_type),

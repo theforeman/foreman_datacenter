@@ -1,5 +1,3 @@
 <% title _("Create Power Outlet") %>
 
-<%= breadcrumbs(items: [{caption: _('Device %s') % @power_outlet.device.to_label, url: device_path(@power_outlet.device)}, {caption: _("Create Power Outlet")}]) %>
-
 <%= render 'form' %>

@@ -8,7 +8,6 @@ module Api
         before_action :find_resource, :only => %w{show update destroy}
 
         param_group :search_and_pagination, ::Api::V2::BaseController
-        add_scoped_search_description_for(::ForemanDatacenter::Rack)
 
         api :GET, "/foreman_datacenter/racks/", N_("List all racks")
 

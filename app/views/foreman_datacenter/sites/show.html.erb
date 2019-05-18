@@ -4,8 +4,6 @@
 
 <% title h(@site.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Sites'), url: '/datacenter/sites'}, {caption: _(@site.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                      _('Move associated objects'),
                      hash_for_move_site_path(id: @site),

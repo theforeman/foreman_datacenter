@@ -4,8 +4,6 @@
 
 <% title h(@platform.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Platforms'), url: platforms_path}, {caption: _(@platform.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                    _('Edit'),
                    hash_for_edit_platform_path(:id => @platform),

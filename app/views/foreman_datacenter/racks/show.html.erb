@@ -5,8 +5,6 @@
 
 <% title h(@rack.name) %>
 
-<%= breadcrumbs(items: [{caption: _('Racks'), url: racks_path}, {caption: _(@rack.to_label)}]) %>
-
 <% title_actions display_link_if_authorized(
                      _('Move associated objects'),
                      hash_for_move_rack_path(id: @rack),

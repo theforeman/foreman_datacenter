@@ -1,5 +1,3 @@
-<%= breadcrumbs(items: [{caption: _('%s') % controller_name.camelize, url: "/datacenter/#{controller_name}"}, {caption: ""}]) %>
-
 <div class='col-md-offset-4 col-md-4'>
   <%= alert :header => (_(controller_name.camelize.singularize) rescue nil) + ' ' + _('not found'),
     :text => _('Please try to update your request'),

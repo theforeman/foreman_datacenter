@@ -5,7 +5,6 @@ module Api
 	include ::ForemanDatacenter::Controller::Parameters::ConsoleServerPort
 
         before_action :find_resource, :only => %w{show update destroy connect connected planned disconnect}
-        add_scoped_search_description_for(::ForemanDatacenter::ConsoleServerPortTemplate)
         param_group :search_and_pagination, ::Api::V2::BaseController
 
         api :GET, "/foreman_datacenter/console_server_ports/", N_("List all ConsoleServerPorts")

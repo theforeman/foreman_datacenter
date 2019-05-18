@@ -6,7 +6,6 @@ module Api
 
         before_action :find_optional_nested_object
         before_action :find_resource, :only => %w{destroy show}
-        add_scoped_search_description_for(::ForemanDatacenter::PowerOutletTemplate)
         param_group :search_and_pagination, ::Api::V2::BaseController
 
         api :GET, "/foreman_datacenter/power_outlet_templates/", N_("List all PowerOutletTemplates")

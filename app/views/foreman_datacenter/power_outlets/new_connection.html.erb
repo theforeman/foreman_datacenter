@@ -3,8 +3,6 @@
 
 <% title "Connect '#{@power_outlet.device.name}' - '#{@power_outlet.name}'" %>
 
-<%= breadcrumbs(items: [{caption: _('Device %s') % @power_outlet.device.to_label, url: device_path(@power_outlet.device)}, {caption: "Connect '#{@power_outlet.device.name}' - '#{@power_outlet.name}'"}]) %>
-
 <%= form_for :power_port, url: connect_power_outlet_path(@power_outlet),
              method: :patch do |f| %>
     <%= rack_device_select @power_outlet.device.site,

@@ -7,7 +7,6 @@ module Api
         before_action :find_resource, :only => %w{show update destroy connect connected planned disconnect}
 
         param_group :search_and_pagination, ::Api::V2::BaseController
-        add_scoped_search_description_for(::ForemanDatacenter::ConsolePort)
 
         api :GET, "/foreman_datacenter/console_ports/", N_("List all ConsolePorts")
 

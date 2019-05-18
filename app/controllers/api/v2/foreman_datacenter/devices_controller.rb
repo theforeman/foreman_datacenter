@@ -8,7 +8,6 @@ module Api
         before_action :find_resource, :only => %w{show update destroy destroy_interfaces sync_interfaces_with_host}
 
         param_group :search_and_pagination, ::Api::V2::BaseController
-        add_scoped_search_description_for(::ForemanDatacenter::Device)
 
         api :GET, "/foreman_datacenter/devices/", N_("List all Devices")
 

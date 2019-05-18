@@ -5,7 +5,6 @@ module Api
 	include ::ForemanDatacenter::Controller::Parameters::PowerOutlet
 
         before_action :find_resource, :only => %w{show update destroy connect disconnect}
-        add_scoped_search_description_for(::ForemanDatacenter::PowerOutletTemplate)
         param_group :search_and_pagination, ::Api::V2::BaseController
 
         api :GET, "/foreman_datacenter/power_outlets/", N_("List all PowerOutlets")

@@ -9,7 +9,6 @@ module Api
 
         api :GET, "/foreman_datacenter/sites/", N_("List all sites")
         param_group :search_and_pagination, ::Api::V2::BaseController
-        add_scoped_search_description_for(::ForemanDatacenter::Site)
 
         # api!
         def index
