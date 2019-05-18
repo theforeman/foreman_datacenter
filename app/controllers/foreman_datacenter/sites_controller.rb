@@ -3,7 +3,7 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::Site
 
-    before_action :find_resource, only: [:show, :edit, :update, :destroy, :move]
+    before_action :find_resource, only: [:show, :edit, :update, :destroy, :move, :racks]
 
     def index
       @sites = resource_base_search_and_page
@@ -48,6 +48,11 @@ module ForemanDatacenter
       else
         process_error object: @site
       end
+    end
+
+    def racks
+      @racks = @site.racks.includes(:devices)
+      process_error redirect: site_path(@site), error_msg: 'Current site haven\'t any Racks.' if @racks.empty?
     end
 
     def move

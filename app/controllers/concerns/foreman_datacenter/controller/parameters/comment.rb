@@ -1,4 +1,4 @@
-  module ForemanDatacenter::Controller::Parameters::Comment
+module ForemanDatacenter::Controller::Parameters::Comment
   extend ActiveSupport::Concern
 
   class_methods do

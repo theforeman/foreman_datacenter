@@ -1,4 +1,4 @@
-  module ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
+module ForemanDatacenter::Controller::Parameters::DeviceInterfaceConnection
   extend ActiveSupport::Concern
 
   class_methods do

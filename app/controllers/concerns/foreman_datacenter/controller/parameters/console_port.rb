@@ -1,4 +1,4 @@
-  module ForemanDatacenter::Controller::Parameters::ConsolePort
+module ForemanDatacenter::Controller::Parameters::ConsolePort
   extend ActiveSupport::Concern
 
   class_methods do
