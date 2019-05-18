@@ -1,4 +1,4 @@
-  module ForemanDatacenter::Controller::Parameters::DeviceBayTemplate
+module ForemanDatacenter::Controller::Parameters::DeviceBayTemplate
   extend ActiveSupport::Concern
 
   class_methods do

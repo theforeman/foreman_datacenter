@@ -28,3 +28,35 @@ span.mediumgray {
 span.darkgray {
   background-color: #171515;
 }
+
+
+.teal {
+  background-color: #06a79f;
+}
+.green {
+  background-color: #89A54E;
+}
+.blue {
+  background-color: #3D96AE;
+}
+.purple {
+  background-color: #D882d8;
+}
+.yellow {
+  background-color: #ecec61;
+}
+.orange {
+  background-color: #f37676;
+}
+.red {
+  background-color: #AA4643;
+}
+.lightgray {
+  background-color: gray;
+}
+.mediumgray {
+  background-color: #403e3e;
+}
+.darkgray {
+  background-color: #171515;
+}

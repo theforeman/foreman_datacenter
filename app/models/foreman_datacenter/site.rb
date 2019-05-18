@@ -20,6 +20,7 @@ module ForemanDatacenter
     scoped_search on: :shipping_address, complete_value: true, default_order: true
     scoped_search on: :created_at, complete_value: true, default_order: true
     scoped_search on: :updated_at, complete_value: true, default_order: true
+    scoped_search on: :comments, complete_value: true, default_order: true
 
     def racks_count
       @racks_count ||= racks.count

@@ -28,7 +28,7 @@ module ForemanDatacenter
         requires_foreman '>= 1.12'
 
         security_block :datacenter do
-    # Hosts
+	  # Hosts
           permission :import_to_device, {
                       :'hosts' => [:import_to_device]},
                       :resource_type => "ForemanDatacenter::HostExtensions"
@@ -315,7 +315,7 @@ module ForemanDatacenter
                      :resource_type => "ForemanDatacenter::Rack"
           # Sites
           permission :view_sites, {
-                     :'foreman_datacenter/sites' => [:show, :index]},
+                     :'foreman_datacenter/sites' => [:show, :index, :racks]},
                      :resource_type => "ForemanDatacenter::Site"
           permission :create_sites, {
                      :'foreman_datacenter/sites' => [:new, :create]},

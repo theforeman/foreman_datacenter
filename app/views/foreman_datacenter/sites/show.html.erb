@@ -96,7 +96,10 @@
         </tr>
         <tr>
           <td><%= _("Racks") %></td>
-          <td><%= link_to @site.racks_count, racks_path(search: "site=#{@site.name}") %></td>
+          <td>
+            <%= link_to @site.racks_count, racks_path(search: "site=#{@site.name}") %>
+            <%= link_to 'Overview', racks_site_path(@site), class: "btn btn-primary btn-xs pull-right" unless @site.racks.empty? %>
+          </td>
         </tr>
         <tr>
           <td><%= _("Devices") %></td>
