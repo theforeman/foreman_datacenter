@@ -3,7 +3,7 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::RackGroup
 
-    before_action :find_resource, only: [:show, :edit, :update, :destroy, :move]
+    before_action :find_resource, only: [:show, :edit, :update, :destroy, :move, :racks]
 
     def index
       @rack_groups = resource_base_search_and_page.includes(:site, :racks)
@@ -56,6 +56,11 @@ module ForemanDatacenter
       @rack_groups = resource_base_search_and_page
       @racks = @rack_group.racks
       process_error object: @rack_group, error_msg: 'Current Rack Group haven\'t any Racks.' if @racks.empty?
+    end
+
+    def racks
+      @racks = @rack_group.racks.includes(:devices)
+      process_error redirect: rack_groups_path(@rack_group), error_msg: 'Current Rack Group haven\'t any Racks.' if @racks.empty?
     end
 
     def update_associated_objects
