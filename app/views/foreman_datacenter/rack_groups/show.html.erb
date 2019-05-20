@@ -66,7 +66,10 @@
       <table class="<%= table_css_classes 'table-fixed nonmarginbottom' %>">
         <tr>
           <td><%= _("Racks") %></td>
-          <td><%= link_to @rack_group.racks_count, racks_path(search: "rack_group=#{@rack_group.name}") %></td>
+          <td>
+            <%= link_to @rack_group.racks_count, racks_path(search: "rack_group=#{@rack_group.name}") %>
+            <%= link_to 'Overview', racks_rack_group_path(@rack_group), class: "btn btn-primary btn-xs pull-right" unless @rack_group.racks.empty? %>
+          </td>
         </tr>
         <tr>
           <td><%= _("Devices") %></td>
