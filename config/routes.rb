@@ -104,6 +104,7 @@ Foreman::Application.routes.draw do
     resources :rack_groups do
       member do
         get :move
+        get :racks
       end
       collection do
         get 'auto_complete_search'
