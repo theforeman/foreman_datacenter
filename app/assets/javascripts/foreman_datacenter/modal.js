@@ -8,7 +8,7 @@ $(window).click(function(event) {
     var pathname = window.location.pathname; // Returns path only
     var str = "/" + object_id;
     var patt = new RegExp(str);
-    console.log(object_type);
+    var token = $('meta[name="csrf-token"]').attr('content');
     if (object_type == 'device') {
       var checkbox_label = 'Delete associated host ONLY and keep current device as UNASSIGNED!'
     } else {
@@ -39,6 +39,7 @@ $(window).click(function(event) {
           </p> \
           <form class="modal-form nonpaddingbottom" action=' + pathname + ' accept-charset="UTF-8" method="post"> \
             <input type="hidden" name="_method" value="delete"> \
+            <input type="hidden" name="authenticity_token" value=' + token + '> \
             <input type="checkbox" name="object_only" id="object_only" value="true" checked="checked"> \
             <label>' + checkbox_label + '</label> \
             <input type="submit" name="commit" value="I understand the consequences, delete this ' + object_type + '" class="btn btn-block btn-danger modal-btn modal-btn-danger"> \
