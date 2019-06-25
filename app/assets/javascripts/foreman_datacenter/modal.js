@@ -19,6 +19,12 @@ $(window).click(function(event) {
       pathname = pathname + str
     }
 
+    var move = "<p></p>"
+    if (object_type == "device" || object_type == "site" || object_type == "rack" || object_type == "rack_group") {
+      move = '<p>You also can move associated object to another <strong>' + object_type + '</strong> before you destroy it.</p> \
+          <a class="btn btn-block btn-primary modal-btn modal-btn-primary marginbottomsixteen" href="/datacenter/' + object_type + 's/' + object_id + '/move">Move associated objects</a>'
+    }
+
     var form = '<div id="myModal" class="modal"> \
       <div class="modal-content"> \
         <div class="modal-header"> \
@@ -44,8 +50,7 @@ $(window).click(function(event) {
             <label>' + checkbox_label + '</label> \
             <input type="submit" name="commit" value="I understand the consequences, delete this ' + object_type + '" class="btn btn-block btn-danger modal-btn modal-btn-danger"> \
 	  </form> \
-          <p>You also can move associated object to another <strong>' + object_type + '</strong> before you destroy it.</p> \
-          <a class="btn btn-block btn-primary modal-btn modal-btn-primary marginbottomsixteen" href="/datacenter/' + object_type + 's/' + object_id + '/move">Move associated objects</a> \
+          '+ move +' \
         </div> \
       </div> \
     </div>'
