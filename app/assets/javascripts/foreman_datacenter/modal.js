@@ -8,7 +8,7 @@ $(window).click(function(event) {
     var pathname = window.location.pathname; // Returns path only
     var str = "/" + object_id;
     var patt = new RegExp(str);
-    console.log(object_type);
+    var token = $('meta[name="csrf-token"]').attr('content');
     if (object_type == 'device') {
       var checkbox_label = 'Delete associated host ONLY and keep current device as UNASSIGNED!'
     } else {
@@ -17,6 +17,12 @@ $(window).click(function(event) {
 
     if (!(patt.test(pathname))) {
       pathname = pathname + str
+    }
+
+    var move = "<p></p>"
+    if (object_type == "device" || object_type == "site" || object_type == "rack" || object_type == "rack_group") {
+      move = '<p>You also can move associated object to another <strong>' + object_type + '</strong> before you destroy it.</p> \
+          <a class="btn btn-block btn-primary modal-btn modal-btn-primary marginbottomsixteen" href="/datacenter/' + object_type + 's/' + object_id + '/move">Move associated objects</a>'
     }
 
     var form = '<div id="myModal" class="modal"> \
@@ -34,17 +40,17 @@ $(window).click(function(event) {
             be undone. By unselecting checkbox you will permanently delete the \
             <strong>' + object_name + '</strong> \
             with \
-            <strong>all</strong> \
+            <strong>ALL</strong> \
             associated objects' + ao + ' \
           </p> \
           <form class="modal-form nonpaddingbottom" action=' + pathname + ' accept-charset="UTF-8" method="post"> \
             <input type="hidden" name="_method" value="delete"> \
+            <input type="hidden" name="authenticity_token" value=' + token + '> \
             <input type="checkbox" name="object_only" id="object_only" value="true" checked="checked"> \
             <label>' + checkbox_label + '</label> \
             <input type="submit" name="commit" value="I understand the consequences, delete this ' + object_type + '" class="btn btn-block btn-danger modal-btn modal-btn-danger"> \
 	  </form> \
-          <p>You also can move associated object to another <strong>' + object_type + '</strong> before you destroy it.</p> \
-          <a class="btn btn-block btn-primary modal-btn modal-btn-primary marginbottomsixteen" href="/datacenter/' + object_type + 's/' + object_id + '/move">Move associated objects</a> \
+          '+ move +' \
         </div> \
       </div> \
     </div>'
