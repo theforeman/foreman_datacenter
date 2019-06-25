@@ -40,7 +40,7 @@ $(window).click(function(event) {
             be undone. By unselecting checkbox you will permanently delete the \
             <strong>' + object_name + '</strong> \
             with \
-            <strong>all</strong> \
+            <strong>ALL</strong> \
             associated objects' + ao + ' \
           </p> \
           <form class="modal-form nonpaddingbottom" action=' + pathname + ' accept-charset="UTF-8" method="post"> \
