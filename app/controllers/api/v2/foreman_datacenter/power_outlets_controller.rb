@@ -32,7 +32,7 @@ module Api
 
 	def create
 	  @power_outlet = ::ForemanDatacenter::PowerOutlet.new(power_outlet_params)
-	  @power_outlet.save
+	  process_response @power_outlet.save
 	end
 
 	api :PUT, "/foreman_datacenter/power_outlets/:id/", N_("Update a PowerOutlet")

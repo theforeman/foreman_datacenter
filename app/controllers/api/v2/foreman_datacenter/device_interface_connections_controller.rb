@@ -34,7 +34,7 @@ module Api
         def create
           @device_interface_connection = ::ForemanDatacenter::DeviceInterfaceConnection.new(device_interface_connection_params.merge(interface_a: params[:device_interface_id]))
           @device_interface_connection.first_interface = get_device_interface
-          @device_interface_connection.save
+          process_response @device_interface_connection.save
         end
 
         api :DELETE, "/foreman_datacenter/device_interface_connections/:id/", N_("Delete a DeviceInterfaceConnection")

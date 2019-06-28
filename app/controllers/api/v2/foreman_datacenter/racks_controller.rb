@@ -56,6 +56,12 @@ module Api
 	  process_response @rack.destroy
 	end
 
+	private
+
+	def allowed_nested_id
+	  %w(site_id)
+	end
+
       end
     end
   end
