@@ -35,7 +35,7 @@ module ForemanDatacenter
     end
 
     def second_device
-      first_interface.device
+      second_interface.device
     end
 
     def second_rack
