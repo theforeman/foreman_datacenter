@@ -2,7 +2,7 @@ module Api
   module V2
     module ForemanDatacenter
       class RacksController < ForemanDatacenter::BaseController
-	include ::ForemanDatacenter::Controller::Parameters::Rack
+        include ::ForemanDatacenter::Controller::Parameters::Rack
 
         before_action :find_optional_nested_object
         before_action :find_resource, :only => %w{show update destroy}
@@ -22,39 +22,45 @@ module Api
         def show
         end
 
-	def_param_group :rack do
-	  param :rack, Hash, :required => true, :action_aware => true do
-	    param :name, String, :required => true
-	    param :site_id, :number, :desc => N_("Site ID")
-	    param :rack_group_id, :number, :desc => N_("RackGroup ID")
-	    param :facility_id, :number, :desc => N_("Facility ID")
-	    param :height, :number, :desc => N_("Facility ID")
-	    param :comments, String, :desc => N_("Comments")
-	  end
-	end
+        def_param_group :rack do
+          param :rack, Hash, :required => true, :action_aware => true do
+            param :name, String, :required => true
+            param :site_id, :number, :desc => N_("Site ID")
+            param :rack_group_id, :number, :desc => N_("RackGroup ID")
+            param :facility_id, :number, :desc => N_("Facility ID")
+            param :height, :number, :desc => N_("Facility ID")
+            param :comments, String, :desc => N_("Comments")
+          end
+        end
 
-	api :POST, "/foreman_datacenter/racks", N_("Create a rack")
-	param_group :rack, :as => :create
+        api :POST, "/foreman_datacenter/racks", N_("Create a rack")
+        param_group :rack, :as => :create
 
-	def create
-	  @rack = ::ForemanDatacenter::Rack.new(rack_params)
-	  process_response @rack.save
-	end
+        def create
+          @rack = ::ForemanDatacenter::Rack.new(rack_params)
+          process_response @rack.save
+        end
 
-	api :PUT, "/foreman_datacenter/racks/:id/", N_("Update a rack")
-	param :id, :identifier, :required => true
-	param_group :rack
+        api :PUT, "/foreman_datacenter/racks/:id/", N_("Update a rack")
+        param :id, :identifier, :required => true
+        param_group :rack
 
-	def update
-	  process_response @rack.update(rack_params)
-	end
+        def update
+          process_response @rack.update(rack_params)
+        end
 
-	api :DELETE, "/foreman_datacenter/racks/:id/", N_("Delete a rack")
-	param :id, :identifier, :required => true
+        api :DELETE, "/foreman_datacenter/racks/:id/", N_("Delete a rack")
+        param :id, :identifier, :required => true
 
-	def destroy
-	  process_response @rack.destroy
-	end
+        def destroy
+          process_response @rack.destroy
+        end
+
+        private
+
+        def allowed_nested_id
+          %w(site_id)
+        end
 
       end
     end

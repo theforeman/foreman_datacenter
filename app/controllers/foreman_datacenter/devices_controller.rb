@@ -17,11 +17,8 @@ module ForemanDatacenter
 
     def show
       @device = ForemanDatacenter::Device.includes(
-        power_ports: [:power_outlet, :device],
-        power_outlets: [:device, :power_port],
-        console_ports: [:console_server_port, :device],
-        console_server_ports: [:console_port, :device],
-        device_bays: [:installed_device],
+        power_ports: [:power_outlet],
+        console_ports: [:console_server_port],
         comments: [:user]
       ).find(params[:id])
       @comments = @device.comments

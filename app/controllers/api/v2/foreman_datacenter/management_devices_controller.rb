@@ -34,7 +34,7 @@ module Api
 
 	def create
 	  @management_device = ::ForemanDatacenter::ManagementDevice.new(management_device_params)#.merge(device_id: params[]))
-	  @management_device.save
+	  process_response @management_device.save
 	end
 
 	api :PUT, "/foreman_datacenter/management_devices/:id/", N_("Update a management_device")
