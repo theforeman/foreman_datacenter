@@ -1,17 +1,34 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
 <% stylesheet 'foreman_datacenter/device_roles' %>
+<% stylesheet 'foreman_datacenter/horizontal-scroll' %>
 
 <% title h(@site.name) %>
 
-<% @racks.in_groups_of(3).each do |g| %>
-  <div class="row">
-    <% g.compact.each do |rack| %>
+<% unless @rack_groups.empty? %>
+  <% @rack_groups.each do |rg| %>
+    <h2>
+      <%= rg.name %>
+    </h2>
+    <div class="row horizontal-scroll">
+      <% rg.racks.each do |rack| %>
+        <div class="col-md-4">
+          <%= render "foreman_datacenter/racks/device_position", rack: rack %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<% unless @ungrouped_racks.empty? %>
+  <h2>Ungrouped Racks</h2>
+  <div class="row horizontal-scroll">
+    <% @ungrouped_racks.each do |rack| %>
       <div class="col-md-4">
-        <!-- Devices -->
         <%= render "foreman_datacenter/racks/device_position", rack: rack %>
       </div>
     <% end %>
   </div>
 <% end %>
+
 <div><h6 class="text-right"><%= _("* side is not defined") %></h6></div>
 <div><h6 class="text-right"><%= _("** size is not defined") %></h6></div>
