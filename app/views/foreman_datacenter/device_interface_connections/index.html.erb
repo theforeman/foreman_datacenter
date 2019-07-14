@@ -15,15 +15,35 @@
     <% for connection in @device_interface_connections %>
       <tr>
         <td>
-          <%= link_to connection.first_device.name,
+          <% if connection.first_device %>
+            <%= link_to connection.first_device.name,
                         device_path(connection.first_device) %>
+          <% else %>
+            <%= muted_text("Device not found", "span") %>
+          <% end %>
         </td>
-        <td><%= h connection.first_interface.name %></td>
         <td>
+          <% if connection.first_device %>
+            <%= h connection.first_interface.name %>
+          <% else %>
+            <%= muted_text("Interface not found", "span") %>
+          <% end %>
+        </td>
+        <td>
+          <% if connection.second_device %>
           <%= link_to connection.second_device.name,
                       device_path(connection.second_device) %>
+          <% else %>
+            <%= muted_text("Device not found", "span") %>
+          <% end %>
         </td>
-        <td><%= h connection.second_interface.name %></td>
+        <td>
+          <% if connection.second_device %>
+            <%= h connection.second_interface.name %>
+          <% else %>
+            <%= muted_text("Interface not found", "span") %>
+          <% end %>
+        </td>
       </tr>
   <% end %>
   </tbody>

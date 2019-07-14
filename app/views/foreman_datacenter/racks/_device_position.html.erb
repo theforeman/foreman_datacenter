@@ -25,7 +25,7 @@
       <% end %>
       <% unless rack.unpositioned_devices.empty? %>
         <tr>
-          <td class="col-md-1">Unpositioned Devices</td>
+          <td class="col-md-1">Unpositioned</br>Devices</td>
           <td class="col-md-4" style="text-align:center">
             <% rack.unpositioned_devices.each do |d| %>
               <div class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>" style="border-radius:40px;border:0px;">&nbsp;&nbsp;</div>

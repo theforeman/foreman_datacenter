@@ -18,7 +18,6 @@ $(window).click(function(event) {
     if (!(patt.test(pathname))) {
       pathname = pathname + str
     }
-
     var move = "<p></p>"
     if (object_type == "device" || object_type == "site" || object_type == "rack" || object_type == "rack_group") {
       move = '<p>You also can move associated object to another <strong>' + object_type + '</strong> before you destroy it.</p> \
