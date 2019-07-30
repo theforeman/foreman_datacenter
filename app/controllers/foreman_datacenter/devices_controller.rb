@@ -60,21 +60,10 @@ module ForemanDatacenter
     end
 
     def destroy
-      unless params['object_only']
-        if @device.destroy
-          process_success success_redirect: "/datacenter/devices"
-        else
-          process_error object: @device
-        end
+      if @device.destroy
+        process_success success_redirect: "/datacenter/devices"
       else
-        if @device.host
-          @device.host.destroy
-          new_device_name = "Unassigned device (former: #{@device.name})"
-          @device.update(name: new_device_name)
-          process_success success_redirect: '/datacenter/devices', success_msg: 'Associated host deleted'
-        else
-          process_error success_redirect: '/datacenter/devices', error_msg: 'Associated host not found'
-        end
+        process_error object: @device
       end
     end
 
@@ -151,4 +140,3 @@ module ForemanDatacenter
     end
   end
 end
-

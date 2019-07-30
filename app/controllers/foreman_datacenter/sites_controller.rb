@@ -51,8 +51,9 @@ module ForemanDatacenter
     end
 
     def racks
-      @racks = @site.racks.includes(:devices)
-      process_error redirect: site_path(@site), error_msg: 'Current site haven\'t any Racks.' if @racks.empty?
+      @rack_groups = @site.rack_groups.includes(racks: [devices: [:device_role]])
+      @ungrouped_racks = @site.racks.where(rack_group_id: nil)#.includes(:device_role)
+      process_error redirect: site_path(@site), error_msg: 'Current site haven\'t any Racks.' if (@rack_groups.empty? && @ungrouped_racks.empty?)
     end
 
     def move

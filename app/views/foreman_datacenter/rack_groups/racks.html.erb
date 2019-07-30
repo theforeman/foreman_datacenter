@@ -1,20 +1,18 @@
 <% stylesheet 'foreman_datacenter/datacenter' %>
 <% stylesheet 'foreman_datacenter/device_roles' %>
+<% stylesheet 'foreman_datacenter/horizontal-scroll' %>
 
 <% title h(@rack_group.name) %>
 
 <%= breadcrumbs(items: [{caption: _('Rack Group %s')   % @rack_group.name, url: rack_group_path(@rack_group)}, {caption: _('Racks Overview')}]) %>
 
-<% @racks.in_groups_of(3).each do |g| %>
-  <div class="row">
-    <% g.compact.each do |rack| %>
-      <div class="col-md-4">
-        <!-- Devices -->
-        <%= render "foreman_datacenter/racks/device_position", rack: rack %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+<div class="row horizontal-scroll">
+  <% @racks.each do |rack| %>
+    <div class="col-md-4">
+      <%= render "foreman_datacenter/racks/device_position", rack: rack %>
+    </div>
+  <% end %>
+</div>
+
 <div><h6 class="text-right"><%= _("* side is not defined") %></h6></div>
 <div><h6 class="text-right"><%= _("** size is not defined") %></h6></div>
-

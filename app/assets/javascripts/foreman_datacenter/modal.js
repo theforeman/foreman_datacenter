@@ -10,7 +10,8 @@ $(window).click(function(event) {
     var patt = new RegExp(str);
     var token = $('meta[name="csrf-token"]').attr('content');
     if (object_type == 'device') {
-      var checkbox_label = 'Delete associated host ONLY and keep current device as UNASSIGNED!'
+      // var checkbox_label = 'Delete associated host ONLY and keep current device as UNASSIGNED!'
+      var checkbox_label = ''
     } else {
       var checkbox_label = 'Delete ' +  object_type + ' ONLY'
     }
@@ -18,11 +19,18 @@ $(window).click(function(event) {
     if (!(patt.test(pathname))) {
       pathname = pathname + str
     }
-
     var move = "<p></p>"
-    if (object_type == "device" || object_type == "site" || object_type == "rack" || object_type == "rack_group") {
+    var checkbox = ""
+    var text = "You will permanently delete the"
+    text_ao = ""
+    if (object_type == "site" || object_type == "rack" || object_type == "rack_group") {
       move = '<p>You also can move associated object to another <strong>' + object_type + '</strong> before you destroy it.</p> \
           <a class="btn btn-block btn-primary modal-btn modal-btn-primary marginbottomsixteen" href="/datacenter/' + object_type + 's/' + object_id + '/move">Move associated objects</a>'
+      checkbox = '<input type="checkbox" name="object_only" id="object_only" value="true" checked="checked">'
+      text = "By unselecting checkbox you will permanently delete the"
+      text_ao = 'with \
+            <strong>ALL</strong> \
+            associated objects' + ao
     }
 
     var form = '<div id="myModal" class="modal"> \
@@ -37,16 +45,15 @@ $(window).click(function(event) {
         <div class="modal-body"> \
           <p>This action \
             <strong>cannot</strong> \
-            be undone. By unselecting checkbox you will permanently delete the \
+            be undone. \
+            ' + text + ' \
             <strong>' + object_name + '</strong> \
-            with \
-            <strong>ALL</strong> \
-            associated objects' + ao + ' \
+            ' + text_ao + ' \
           </p> \
           <form class="modal-form nonpaddingbottom" action=' + pathname + ' accept-charset="UTF-8" method="post"> \
             <input type="hidden" name="_method" value="delete"> \
             <input type="hidden" name="authenticity_token" value=' + token + '> \
-            <input type="checkbox" name="object_only" id="object_only" value="true" checked="checked"> \
+            ' + checkbox + ' \
             <label>' + checkbox_label + '</label> \
             <input type="submit" name="commit" value="I understand the consequences, delete this ' + object_type + '" class="btn btn-block btn-danger modal-btn modal-btn-danger"> \
 	  </form> \
