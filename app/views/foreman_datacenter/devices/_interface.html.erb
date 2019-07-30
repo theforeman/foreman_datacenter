@@ -8,11 +8,24 @@
       <td><%= h interface.mac_address %></td>
       <td><%= h interface.ip_address %></td>
       <td>
-        <%= link_to interface.connected_interface.device.name,
-                    device_path(interface.connected_interface.device) %>
+        <% if interface.connected_interface %>
+          <%= link_to interface.connected_interface.device.name,
+                      device_path(interface.connected_interface.device) %>
+        <% else %>
+            <%= muted_text("Device not found", "span") %>
+        <% end %>
       </td>
       <td>
-        <%= h interface.connected_interface.name %>
+        <% if interface.connected_interface %>
+          <%= h interface.connected_interface.name %>
+        <% else %>
+            <%= muted_text("Interface not found", "span") %>
+        <% end %>
+      </td>
+      <td>
+        <%= h interface.connection.id %>
+        -
+        <%= h interface.form_factor %>
       </td>
       <td></td>
       <td class="text-right">
@@ -55,6 +68,7 @@
       <td><%= h interface.ip_address %></td>
       <td></td>
       <td class="text-muted">Not connected</td>
+      <td></td>
       <td></td>
       <td class="text-right">
         <%= link_to new_device_interface_device_interface_connection_path(interface),

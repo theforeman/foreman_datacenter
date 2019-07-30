@@ -12,14 +12,14 @@
                    :class => 'btn btn-warning'
                  ),
                  display_fake_delete_if_authorized(
-                    hash_for_platform_path(id: @platform),
-                    class: 'btn btn-danger',
-                    id: 'init-modal',
-                    href: '#',
-                    data: { objecttype: 'platform',
-                            objectid: @platform.id,
-                            objectname: @platform.to_label,
-                            associatedobjects: associated_objects('platform') }
+                   hash_for_platform_path(:id => @platform).merge(:auth_object => @platform, :authorizer => authorizer),
+                   class: 'btn btn-danger',
+                   id: 'init-modal',
+                   href: '#',
+                   data: { objecttype: 'platform',
+                           objectid: @platform.id,
+                           objectname: @platform.to_label,
+                           associatedobjects: associated_objects('platform') }
                  )
                  help_path %>
 

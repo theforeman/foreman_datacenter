@@ -14,12 +14,34 @@
     <% for port in @console_ports %>
       <tr>
         <td>
-          <%= link_to port.console_server_port.device.name,
-                      device_path(port.console_server_port.device) %>
+          <% if port.console_server_port %>
+            <%= link_to port.console_server_port.device.name,
+                        device_path(port.console_server_port.device) %>
+          <% else %>
+            <%= muted_text("Device not found", "span") %>
+          <% end %>
         </td>
-        <td><%= h port.console_server_port.name %></td>
-        <td><%= link_to port.device.name, device_path(port.device) %></td>
-        <td><%= h port.name %></td>
+        <td>
+          <% if port.console_server_port %>
+            <%= h port.console_server_port.name %>
+          <% else %>
+            <%= muted_text("Port not found", "span") %>
+          <% end %>
+        </td>
+        <td>
+          <% if port.device %>
+            <%= link_to port.device.name, device_path(port.device) %>
+          <% else %>
+            <%= muted_text("Device not found", "span") %>
+          <% end %>
+        </td>
+        <td>
+          <% if port %>
+            <%= h port.name %>
+          <% else %>
+            <%= muted_text("Port not found", "span") %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

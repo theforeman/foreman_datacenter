@@ -1,0 +1,9 @@
+.horizontal-scroll {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.horizontal-scroll > div.col-md-4 {
+  display: inline-block;
+  float: none;
+}

@@ -23,7 +23,7 @@ module ForemanDatacenter
     scoped_search in: :second_interface, on: :name, complete_value: true, rename: :interface_b
 
     def first_device
-      first_interface.device
+      self.try(:first_interface).try(:device)
     end
 
     def first_rack
@@ -35,7 +35,7 @@ module ForemanDatacenter
     end
 
     def second_device
-      second_interface.device
+      self.try(:second_interface).try(:device)
     end
 
     def second_rack
