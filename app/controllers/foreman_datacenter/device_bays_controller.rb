@@ -17,8 +17,7 @@ module ForemanDatacenter
       @device_bay = ForemanDatacenter::DeviceBay.new(device_bay_params.merge(device_id: params[:device_id]))
 
       if @device_bay.save
-        redirect_to device_url(@device_bay.device),
-                    notice: 'New device bay was successfully created'
+        process_success(success_msg: "New device bay was successfully created.", success_redirect: device_url(id: @device_bay.device))
       else
         process_error object: @device_bay
       end
@@ -26,8 +25,7 @@ module ForemanDatacenter
 
     def update
       if @device_bay.update(device_bay_params)
-        redirect_to device_url(@device_bay.device),
-                    notice: 'Device bay was successfully updated'
+        process_success(success_msg: "Device bay was successfully updated.", success_redirect: device_url(id: @device_bay.device))
       else
         process_error object: @device_bay
       end
@@ -35,8 +33,7 @@ module ForemanDatacenter
 
     def destroy
       if @device_bay.destroy
-        redirect_to device_url(@device_bay.device),
-                    notice: 'Device bay was successfully destroyed'
+        process_success(success_msg: "Device bay was successfully destroyed.", success_redirect: device_url(id: @device_bay.device))
       else
         process_error object: @device_bay
       end
@@ -48,8 +45,7 @@ module ForemanDatacenter
     def populate
       device_id = params[:device_bay][:installed_device_id]
       if @device_bay.update(installed_device_id: device_id)
-        redirect_to device_url(@device_bay.device),
-                    notice: 'Device bay was successfully populated'
+        process_success(success_msg: "Device bay was successfully populated.", success_redirect: device_url(id: @device_bay.device))
       else
         process_error object: @device_bay
       end
@@ -57,8 +53,7 @@ module ForemanDatacenter
 
     def depopulate
       if @device_bay.update(installed_device_id: nil)
-        redirect_to device_url(@device_bay.device),
-                    notice: 'Device bay was successfully depopulated'
+        process_success(success_msg: "Device bay was successfully depopulated.", success_redirect: device_url(id: @device_bay.device))
       else
         process_error object: @device_bay
       end

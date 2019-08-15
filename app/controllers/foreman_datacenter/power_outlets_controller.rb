@@ -18,8 +18,7 @@ module ForemanDatacenter
       @power_outlet = PowerOutlet.new(power_outlet_params.merge(device_id: params[:device_id]))
 
       if @power_outlet.save
-        redirect_to device_url(id: @power_outlet.device_id),
-                    notice: 'Power outlet was successfully created.'
+        process_success(success_redirect: device_url(id: @power_outlet.device_id))
       else
         process_error object: @power_outlet
       end
@@ -27,8 +26,7 @@ module ForemanDatacenter
 
     def update
       if @power_outlet.update(power_outlet_params)
-        redirect_to device_url(id: @power_outlet.device_id),
-                    notice: 'Power outlet was successfully updated.'
+        process_success(success_redirect: device_url(id: @power_outlet.device_id))
       else
         process_error object: @power_outlet
       end
@@ -36,8 +34,7 @@ module ForemanDatacenter
 
     def destroy
       if @power_outlet.destroy
-        redirect_to device_url(id: @power_outlet.device_id),
-                    notice: 'Power outlet was successfully destroyed.'
+        process_success(success_redirect: device_url(id: @power_outlet.device_id))
       else
         process_error object: @power_outlet
       end
@@ -52,14 +49,12 @@ module ForemanDatacenter
         @power_outlet,
         params[:power_port][:connection_status]
       )
-      redirect_to device_url(id: @power_outlet.device_id),
-                  notice: 'Power outlet was successfully connected.'
+      process_success(success_msg: "Power outlet was successfully connected.", success_redirect: device_url(id: @power_outlet.device_id))
     end
 
     def disconnect
       @power_outlet.power_port.disconnect
-      redirect_to device_url(id: @power_outlet.device_id),
-                  notice: 'Power outlet was successfully disconnected.'
+      process_success(success_msg: "Power outlet was successfully disconnected.", success_redirect: device_url(id: @power_outlet.device_id))
     end
 
     def for_device

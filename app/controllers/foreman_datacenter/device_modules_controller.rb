@@ -15,10 +15,8 @@ module ForemanDatacenter
 
     def create
       @device_module = ForemanDatacenter::DeviceModule.new(device_module_params.merge(device_id: params[:device_id]))
-
       if @device_module.save
-        redirect_to inventory_device_url(id: @device_module.device_id),
-                    notice: 'Device module was successfully created.'
+        process_success(success_msg: "Device module was successfully created.", success_redirect: inventory_device_url(id: @device_module.device_id))
       else
         process_error object: @device_module
       end
@@ -26,8 +24,7 @@ module ForemanDatacenter
 
     def update
       if @device_module.update(device_module_params)
-        redirect_to inventory_device_url(id: @device_module.device_id),
-                    notice: 'Device module was successfully updated.'
+        process_success(success_msg: "Device module was successfully updated.", success_redirect: inventory_device_url(id: @device_module.device_id))
       else
         process_error object: @device_module
       end
@@ -35,8 +32,7 @@ module ForemanDatacenter
 
     def destroy
       if @device_module.destroy
-        redirect_to inventory_device_url(id: @device_module.device_id),
-                    notice: 'Device module was successfully destroyed.'
+        process_success(success_msg: "Device module was successfully destroyed.", success_redirect: inventory_device_url(id: @device_module.device_id))
       else
         process_error object: @device_module
       end

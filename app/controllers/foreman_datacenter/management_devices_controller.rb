@@ -16,8 +16,7 @@ module ForemanDatacenter
       @management_device = ManagementDevice.new(management_device_params.merge(device_id: params[:device_id]))
 
       if @management_device.save
-        redirect_to device_url(@management_device.device),
-                    notice: 'New management device was successfully created'
+        process_success(success_redirect: device_url(id: @management_device.device))
       else
         process_error object: @management_device
       end
@@ -25,8 +24,7 @@ module ForemanDatacenter
 
     def update
       if @management_device.update(management_device_params)
-        redirect_to device_url(@management_device.device),
-                    notice: 'Management device was successfully updated'
+        process_success(success_redirect: device_url(id: @management_device.device))
       else
         process_error object: @management_device
       end
@@ -34,8 +32,7 @@ module ForemanDatacenter
 
     def destroy
       if @management_device.destroy
-        redirect_to device_url(@management_device.device),
-                    notice: 'Management device was successfully destroyed'
+        process_success(success_redirect: device_url(id: @management_device.device))
       else
         process_error object: @management_device
       end

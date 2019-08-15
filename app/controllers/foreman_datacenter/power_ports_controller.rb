@@ -24,8 +24,7 @@ module ForemanDatacenter
       @power_port = ForemanDatacenter::PowerPort.new(power_port_params.merge(device_id: params[:device_id]))
 
       if @power_port.save
-        redirect_to device_url(id: @power_port.device_id),
-                    notice: 'Power port was successfully created.'
+        process_success(success_redirect: device_url(id: @power_port.device_id))
       else
         process_error object: @power_port
       end
@@ -33,8 +32,7 @@ module ForemanDatacenter
 
     def update
       if @power_port.update(power_port_params)
-        redirect_to device_url(id: @power_port.device_id),
-                    notice: 'Power port was successfully updated.'
+        process_success(success_redirect: device_url(id: @power_port.device_id))
       else
         process_error object: @power_port
       end
@@ -42,8 +40,7 @@ module ForemanDatacenter
 
     def destroy
       if @power_port.destroy
-        redirect_to device_url(id: @power_port.device_id),
-                    notice: 'Power port was successfully destroyed.'
+        process_success(success_redirect: device_url(id: @power_port.device_id))
       else
         process_error object: @power_port
       end
@@ -73,14 +70,12 @@ module ForemanDatacenter
         power_outlet,
         params[:power_port][:connection_status]
       )
-      redirect_to device_url(id: @power_port.device_id),
-                  notice: 'Power port was successfully connected.'
+      process_success(success_msg: "Power port was successfully connected.", success_redirect: device_url(id: @power_port.device_id))
     end
 
     def disconnect
       @power_port.disconnect
-      redirect_to device_url(id: @power_port.device_id),
-                  notice: 'Power port was successfully disconnected.'
+      process_success(success_msg: "Power port was successfully disconnected.", success_redirect: device_url(id: @power_port.device_id))
     end
   end
 end

@@ -96,7 +96,7 @@ module ForemanDatacenter
       @device.non_management_interfaces.
         where(id: params[:interfaces]).
         destroy_all
-      redirect_to device_url(@device)
+      process_success(success_msg: "Selected interfaces were successfully destroyed.", success_redirect: device_url(id: @device))
     end
 
     def qr_code
@@ -107,11 +107,9 @@ module ForemanDatacenter
 
     def sync_interfaces_with_host
       if @device.sync_interfaces_with_host
-        notice("Device successfully synchronized.")
-        redirect_to device_url(@device)
+        process_success(success_msg: "Device successfully synchronized.", success_redirect: device_url(id: @device))
       else
-        error("Unsuccessful synchronization.")
-        redirect_to device_url(@device)
+        process_error(error_msg: "Unsuccessfully synchronization.", redirect: device_url(@device))
       end
     end
 
