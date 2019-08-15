@@ -18,8 +18,7 @@ module ForemanDatacenter
       @console_server_port = ForemanDatacenter::ConsoleServerPort.new(console_server_port_params.merge(device_id: params[:device_id]))
 
       if @console_server_port.save
-        redirect_to device_url(id: @console_server_port.device_id),
-                    notice: 'Console server port was successfully created.'
+        process_success(success_msg: "Console server port was successfully created.", success_redirect: device_url(id: @console_server_port.device_id))
       else
         process_error object: @console_server_port
       end
@@ -27,8 +26,7 @@ module ForemanDatacenter
 
     def update
       if @console_server_port.update(console_server_port_params)
-        redirect_to device_url(id: @console_server_port.device_id),
-                    notice: 'Console server port was successfully updated.'
+        process_success(success_msg: "Console server port was successfully updated.", success_redirect: device_url(id: @console_server_port.device_id))
       else
         process_error object: @console_server_port
       end
@@ -36,8 +34,7 @@ module ForemanDatacenter
 
     def destroy
       if @console_server_port.destroy
-        redirect_to device_url(id: @console_server_port.device_id),
-                    notice: 'Console server port was successfully destroyed.'
+        process_success(success_msg: "Console server port was successfully destroyed.", success_redirect: device_url(id: @console_server_port.device_id))
       else
         process_error object: @console_server_port
       end
@@ -52,14 +49,12 @@ module ForemanDatacenter
         @console_server_port,
         params[:console_port][:connection_status]
       )
-      redirect_to device_url(id: @console_server_port.device_id),
-                  notice: 'Console server port was successfully connected.'
+      process_success(success_msg: "Console server port was successfully connected.", success_redirect: device_url(id: @console_server_port.device_id))
     end
 
     def disconnect
       @console_server_port.console_port.disconnect
-      redirect_to device_url(id: @console_server_port.device_id),
-                  notice: 'Console server port was successfully disconnected.'
+      process_success(success_msg: "Console server port was successfully disconnected.", success_redirect: device_url(id: @console_server_port.device_id))
     end
 
     def for_device

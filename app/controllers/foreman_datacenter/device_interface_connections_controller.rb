@@ -24,8 +24,7 @@ module ForemanDatacenter
       @device_interface_connection.first_interface = get_device_interface
 
       if @device_interface_connection.save
-        redirect_to device_url(@device_interface_connection.first_interface.device),
-                    notice: 'Connection was successfully created.'
+        process_success(success_msg: "Connection was successfully created.", success_redirect: device_url(id: @device_interface_connection.first_interface.device))
       else
         process_error object: @device_interface_connection
       end
@@ -55,10 +54,6 @@ module ForemanDatacenter
 
     def get_device_interface
       ForemanDatacenter::DeviceInterface.find(params[:device_interface_id])
-    end
-
-    def device_interface_connection_params
-      params[:foreman_datacenter_device_interface_connetction].permit(:speed)
     end
   end
 end
