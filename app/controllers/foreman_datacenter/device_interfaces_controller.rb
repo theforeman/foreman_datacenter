@@ -28,8 +28,7 @@ module ForemanDatacenter
       @device_interface = ForemanDatacenter::DeviceInterface.new(device_interface_params.merge(device_id: params[:device_id]))
 
       if @device_interface.save
-        redirect_to device_url(id: @device_interface.device_id),
-                    notice: 'Device interface was successfully created.'
+        process_success(success_msg: "Device interface was successfully created.", success_redirect: device_url(id: @device_interface.device.id))
       else
         process_error object: @device_interface
       end
@@ -37,8 +36,7 @@ module ForemanDatacenter
 
     def update
       if @device_interface.update(device_interface_params)
-        redirect_to device_url(id: @device_interface.device_id),
-                    notice: 'Device interface was successfully updated.'
+        process_success(success_msg: "Device interface was successfully updated.", success_redirect: device_url(id: @device_interface.device.id))
       else
         process_error object: @device_interface
       end
@@ -46,8 +44,7 @@ module ForemanDatacenter
 
     def destroy
       if @device_interface.destroy
-        redirect_to device_url(id: @device_interface.device_id),
-                    notice: 'Device interface was successfully destroyed.'
+        process_success(success_msg: "Device interface was successfully destroyed.", success_redirect: device_url(id: @device_interface.device.id))
       else
         process_error object: @device_interface
       end

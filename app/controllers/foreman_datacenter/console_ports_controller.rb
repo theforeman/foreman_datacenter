@@ -72,14 +72,12 @@ module ForemanDatacenter
         console_server_port,
         params[:console_port][:connection_status]
       )
-      redirect_to device_url(id: @console_port.device_id),
-                  notice: 'Console port was successfully connected.'
+      process_success(success_msg: "Console port was successfully connected.", success_redirect: device_url(id: @console_port.device_id))
     end
 
     def disconnect
       @console_port.disconnect
-      redirect_to device_url(id: @console_port.device_id),
-                  notice: 'Console port was successfully disconnected.'
+      process_success(success_msg: "Console port was successfully disconnected.", success_redirect: device_url(id: @console_port.device_id))
     end
   end
 end
