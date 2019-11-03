@@ -74,10 +74,29 @@ Foreman::Application.routes.draw do
   get 'datacenter/import_to_device', to: 'hosts#import_to_device',
       as: 'import_to_device'
 
-  get '/api/:controller/(:action(/*welcome))'
+  # get '/api/:controller/(:action(/*welcome))'
   # get '/datacenter/(:controller)/help', :action => 'welcome', :as => "help"
 
   scope 'datacenter', module: :foreman_datacenter do
+
+    welcoming_controllers = [
+      'console_ports',
+      'device_interface_connections',
+      'device_interface_connections',
+      'device_roles',
+      'device_types',
+      'devices',
+      'manufacturers',
+      'platforms',
+      'power_ports',
+      'rack_groups',
+      'racks',
+      'sites',
+    ]
+
+    welcoming_controllers.each do |welcoming_controller|
+      get "#{welcoming_controller}/help", :action => :welcome, :controller => welcoming_controller
+    end
 
     post :site_update_associated_objects, to: "sites#update_associated_objects"
     post :rack_group_update_associated_objects, to: "rack_groups#update_associated_objects"
