@@ -1,4 +1,4 @@
-require_relative '../test_plugin_helper'
+require 'test_plugin_helper'
 
 class ForemanDatacenterTest < ActiveSupport::TestCase
   setup do

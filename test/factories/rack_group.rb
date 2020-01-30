@@ -36,23 +36,22 @@ FactoryBot.define do
     #   with_os_defaults
     # end
 
-    trait :with_site do
-      site { [FactoryBot.create(:site)] }
-    end
-
-    # trait :with_media do
-    #   media { [FactoryBot.create(:medium)] }
+    # trait :with_site do
+    #   site { [FactoryBot.create(:site)] }
     # end
 
-    # trait :with_ptables do
-    #   ptables { [FactoryBot.create(:ptable)] }
-    # end
+    # # trait :with_media do
+    # #   media { [FactoryBot.create(:medium)] }
+    # # end
 
-    trait :with_associations do
-      with_site
-    #   with_media
-    #   with_ptables
-    end
+    # # trait :with_ptables do
+    # #   ptables { [FactoryBot.create(:ptable)] }
+    # # end
+
+    # trait :with_associations do
+    #   with_site
+    #   with rack
+    # end
 
     # trait :with_parameter do
     #   after(:create) do |os, evaluator|

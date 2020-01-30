@@ -13,115 +13,142 @@ module ForemanDatacenter
       basic_pagination_per_page_test
       basic_pagination_rendered_test
 
-      def test_new_submit_button_id
-        get :new, session: set_session_user
-        assert_select "[data-id='aid_datacenter_sites']"
-      end
-
-      def test_new_cancel_button_id
-        get :new, session: set_session_user
-        assert_select "[data-id='aid_datacenter_sites']"
-      end
-      
-      def test_show_edit_button_id
-        get :show, params: { :id => ForemanDatacenter::Site.first.to_param }, session: set_session_user
-        assert_select "[data-id='aid_sites_#{ForemanDatacenter::Site.first.id}_edit']"
-      end
-
-      def test_show_delete_button_id
-        get :show, params: { :id => ForemanDatacenter::Site.first.to_param }, session: set_session_user
-        assert_select "[data-id='aid_datacenter_sites_#{ForemanDatacenter::Site.first.id}']"
-      end
-
-      test "should_show_site" do
-        setup_user
-        get :show, params: { :id => ForemanDatacenter::Site.first.to_param }, session: set_session_user
-        assert_response :success
-      end
-
       def test_create_invalid
         ForemanDatacenter::Site.any_instance.stubs(:valid?).returns(false)
         post :create, params: { :site => {:name => nil} }, session: set_session_user
         assert_template 'new'
       end
 
-      def test_create_valid
+      def test_create_valid(name = "test site")
         ForemanDatacenter::Site.any_instance.stubs(:valid?).returns(true)
-        post :create, params: { :site => {:name => 'test site'} }, session: set_session_user
+        post :create, params: { :site => {:name => name} }, session: set_session_user
         assert_redirected_to sites_url
-      end
-
-      def test_edit_submit_button_id
-        get :edit, params: { :id => ForemanDatacenter::Site.first }, session: set_session_user
-        assert_select "[data-id='aid_update_foreman_datacenter_site']"
       end
 
       def test_update_invalid
         ForemanDatacenter::Site.any_instance.stubs(:valid?).returns(false)
-        put :update, params: { :id => ForemanDatacenter::Site.first.to_param, :site => {:name => "3243", :asn => "string"} }, session: set_session_user
+        put :update, params: { :id => @model.to_param, :site => {:name => "", :asn => "string"} }, session: set_session_user
         assert_template 'edit'
       end
 
       def test_update_valid
         ForemanDatacenter::Site.any_instance.stubs(:valid?).returns(true)
-        put :update, params: { :id => ForemanDatacenter::Site.first.to_param, :site => {:name => ForemanDatacenter::Site.first.name} }, session: set_session_user
+        put :update, params: { :id => @model.to_param, :site => {:name => @model.name} }, session: set_session_user
         assert_redirected_to sites_url
       end
 
-      # def test_destroy
-      #   site = ForemanDatacenter::Site.first
-      #   # architecture.hosts.delete_all
-      #   # architecture.hostgroups.delete_all
-      #   delete :destroy, params: { :id => site }, session: set_session_user
-      #   assert_redirected_to sites_url
-      #   assert !ForemanDatacenter::Site.exists?(site.id)
-      # end
+      def test_destroy
+        test_create_valid "tobedeleted_test"
+        @new_site = ForemanDatacenter::Site.find_by_name("tobedeleted_test")
+        delete :destroy, params: { :id => @new_site.id }, session: set_session_user
+        assert_redirected_to sites_url
+        assert !ForemanDatacenter::Site.exists?(@new_site.id)
+      end
 
-      test '403 response contains missing permissions' do
+      test "should not get index when not permitted" do
         setup_user
-        get :edit, params: { :id => ForemanDatacenter::Site.first.id }, session: {:user => users(:one).id, :expires_at => 5.minutes.from_now}
+        get :index, session: { :user => users(:one).id, :expires_at => 5.minutes.from_now }
+        assert_response :forbidden
+        assert_includes @response.body, 'view_sites'
+      end
+
+      test 'should not get show when not permitted' do
+        setup_user
+        get :show, params: { :id => @model.id }, session: {:user => users(:one).id, :expires_at => 5.minutes.from_now}
+        assert_response :forbidden
+        assert_includes @response.body, 'view_sites'
+      end
+
+      test 'should not get edit when not permitted' do
+        setup_user
+        get :edit, params: { :id => @model.id }, session: {:user => users(:one).id, :expires_at => 5.minutes.from_now}
         assert_response :forbidden
         assert_includes @response.body, 'edit_sites'
       end
 
-      def setup_user
+      test "should get index" do
+        setup_user("Viewer")
+        get :index, session: set_session_user
+        assert_response :success
+        assert_template 'index'
+      end
+
+      test 'should get show' do
+        setup_user("Viewer")
+        get :show, params: { :id => @model.id }, session: set_session_user
+        assert_response :success
+        assert_template 'show'
+      end
+
+      test 'should not get edit with viewer permissions' do
+        setup_user("Viewer")
+        get :edit, params: { :id => @model.id }, session: {:user => users(:one).id, :expires_at => 5.minutes.from_now}
+        assert_response :forbidden
+        assert_includes @response.body, 'edit_sites'
+      end
+
+     test 'should get edit' do
+        get :edit, params: { :id => @model.id }, session: set_session_user
+        assert_response :success
+        assert_template 'edit'
+      end
+
+      def setup_user(role = "")
         @request.session[:user] = users(:one).id
-        users(:one).roles       = [Role.default, Role.find_by_name('Viewer')]
+        users(:one).roles       = [Role.default]
+        users(:one).roles << Role.find_by_name(role) if role != ""
+        # users(:one).roles       = [Role.default, Role.find_by_name("Viewer")]
       end
 
-      # TODO Not executed
-      # Expected response to be a <403: forbidden>, but was a <302: Found> redirect to <http://test.host/users/login>
-      # test "user with viewer rights should fail to edit a site" do
-      #   setup_user
-      #   get :edit, params: {:id => ForemanDatacenter::Site.first.id}
-      #   assert_response :forbidden
-      # end
-
-      # TODO
-      # Expected response to be a <403: forbidden>, but was a <302: Found> redirect to <http://test.host/users/login>
-      # test "user_with_viewer_rights_should_succeed_in_viewing_sites" do
-      #   setup_user
-      #   get :index
-      #   assert_response :success
-      # end
-
-      # TODO
-      # test "should not show site when not permitted" do
-      #   setup_user "none"
-      #   get :show, params: { :id => ForemanDatacenter::Site.first.to_param }#, session: set_session_user
-      #   assert_response 403
-      # end
-
-      # TODO
-      # test "should not show site when restricted" do
-      #   setup_user "view"
-      #   get :show, params: { :id => @your_site.to_param }, session: set_session_user
-      #   assert_response 404
-      # end
-
-      def get_factory_name
-        :site
+      test "should search by name" do
+        get :index, params: {:search => "name=\"site_1\""}, session: set_session_user
+        assert_response :success
+        refute_empty assigns(:sites)
+        assert assigns(:sites).include?(sites(:one))
       end
+
+      test "should search by facility" do
+        get :index, params: {:search => "facility=\"facility_for_site_1\""}, session: set_session_user
+        assert_response :success
+        refute_empty assigns(:sites)
+        assert assigns(:sites).include?(sites(:one))
+      end
+
+      test "should search by physical_address" do
+        get :index, params: {:search => "physical_address=\"phisycal_address_for_site_1\""}, session: set_session_user
+        assert_response :success
+        refute_empty assigns(:sites)
+        assert assigns(:sites).include?(sites(:one))
+      end
+
+      test "should search by shipping_address" do
+        get :index, params: {:search => "shipping_address=\"shipping_address_for_site_1\""}, session: set_session_user
+        assert_response :success
+        refute_empty assigns(:sites)
+        assert assigns(:sites).include?(sites(:one))
+      end
+
+      test "should search by asn" do
+        get :index, params: {:search => "asn=\"1\""}, session: set_session_user
+        assert_response :success
+        refute_empty assigns(:sites)
+        assert assigns(:sites).include?(sites(:one))
+      end
+
+      test "should_render_404_when_site_is_not_found" do
+        get :show, params: { id: 'no.such.site' }, session: set_session_user
+        assert_response :not_found
+        assert_template 'common/404'
+      end
+
+      test "should_not_destroy_site_when_not_permitted" do
+        setup_user
+        assert_difference('ForemanDatacenter::Site.count', 0) do
+          delete :destroy, params: { :id => @model.id }, session: {:user => users(:one).id, :expires_at => 5.minutes.from_now}
+        end
+        assert_response :forbidden
+      end
+
     end
   end
 end
