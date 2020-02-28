@@ -420,7 +420,7 @@ module ForemanDatacenter
           :edit_sites,
           :destroy_sites,
         ]
-        role "Datacenter Manager", MANAGER, "TODO: Better description"
+        role "Datacenter Manager", MANAGER, "Role granting permissions to manage datacenters."
         add_all_permissions_to_default_roles
 
         sub_menu :top_menu, :datacenter, :after=> :infrastructure_menu, :icon => 'pficon pficon-enterprise' do
