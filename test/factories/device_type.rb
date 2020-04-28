@@ -4,19 +4,19 @@ FactoryBot.define do
     sequence(:manufacturer_id) { 1 }
 
     trait :full_depth do
-      is_full_depth true
+      is_full_depth { true }
     end
 
     trait :console_server do
-      is_console_server true
+      is_console_server { true }
     end
 
     trait :pdu do
-      is_pdu true
+      is_pdu { true }
     end
 
     trait :network_device do
-      is_network_device true
+      is_network_device { true }
     end
 
     trait :parent do
