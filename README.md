@@ -1,3 +1,8 @@
+# **DEPRECATED** - no longer actively maintained
+
+---
+
+
 # Foreman Datacenter Plugin
 
 This plugin lets you document your physical servers across multiple datacenters. It documents racks, devices, interfaces, connections between machines (servers or switches).
