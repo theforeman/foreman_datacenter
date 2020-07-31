@@ -3,7 +3,7 @@ module ForemanDatacenter
     include Foreman::Controller::AutoCompleteSearch
     include ForemanDatacenter::Controller::Parameters::Rack
 
-    before_action :find_resource, only: [:show, :edit, :update, :destroy, :devices, :move]
+    before_action :find_resource, only: [:show, :edit, :update, :destroy, :devices, :move, :export_to_csv]
 
     def index
       @racks = resource_base_search_and_page.includes(:site, :rack_group)
@@ -62,6 +62,13 @@ module ForemanDatacenter
       @racks = resource_base_search_and_page
       @devices = @rack.devices
       process_error object: @rack, error_msg: 'Current Rack haven\'t any Devices.' if @devices.empty?
+    end
+
+    def export_to_csv
+      data = @rack.format_for_csv
+      file = File.open("#{@rack.name}.csv", "r")
+      send_file(file)
+      file.close
     end
 
     def update_associated_objects

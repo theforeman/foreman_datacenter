@@ -52,7 +52,41 @@ module ForemanDatacenter
           count
     end
 
+    def format_for_csv
+      positioned_devices = self.positioned_devices
+      unpositioned_devices = self.unpositioned_devices
+      csv_string = CSV.generate do |csv|
+        csv << ["positions", "left", "full", "right", "no side"]
+        positioned_devices.each do |i|
+          pos = i[0].map{|p| "#{p}"+"U"}.join(",")
+          if i[1].size > 0
+            sort = sort_for_csv(i[1])
+            csv << [pos, sort[0], sort[1], sort[2], sort[3]]
+          else
+            csv << [pos]
+          end
+        end
+        unless unpositioned_devices.empty?
+          csv << []
+          csv << ["Unpositioned", unpositioned_devices.map(&:name).join(",")]
+        end
+
+      end
+      File.open("#{self.name}.csv", "w") {|f| f << csv_string}
+    end
+
     private
+
+    def sort_for_csv(device_array)
+      left, full, right, no_side = "", "", "", []
+      device_array.each do |d|
+        left = d.name if d.side == "left"
+        right = d.name if d.side == "right"
+        full = d.name if d.side == "full"
+        no_side << d.name if d.side == nil
+      end
+      [left, full, right, no_side.join(",")]
+    end
 
     def device_sorting(devices)
       devices.reverse.map { |d| [d[0].reverse, d[1]] }
@@ -63,5 +97,7 @@ module ForemanDatacenter
       devices.each{|d| devs[1] << d[1][0]}
       return devs
     end
+
+
   end
 end
