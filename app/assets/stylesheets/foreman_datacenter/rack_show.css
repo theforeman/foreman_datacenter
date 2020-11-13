@@ -1,0 +1,56 @@
+.rack-grid {
+  width: 100%;
+  border-bottom: 1px solid #d1d1d1;
+  border-left: 1px solid #d1d1d1;
+	display: inline-grid;
+}
+
+.item {
+	justify-content: center;
+  padding: 2px 10px 3px;
+  border-top: 1px solid #d1d1d1;
+  border-right: 1px solid #d1d1d1;
+}
+
+.item-dev {
+	position: relative;
+	text-align: center;
+}
+
+.dev-cell {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	position: absolute;
+	height: inherit;
+	width: 90%;
+	text-align: center;
+}
+
+.a:hover {
+	overflow: visible;
+}
+
+.no-border {
+	border: none !important;
+}
+
+.panel-head-border {
+	border-top: 1px solid #ddd !important;
+	border-left: 1px solid #ddd !important;
+	border-right: 1px solid #ddd !important;
+	border-bottom: none !important;
+}
+
+.item-row {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.item-row:hover {
+	overflow: visible;
+}
+
+.item-empty-cell {
+}

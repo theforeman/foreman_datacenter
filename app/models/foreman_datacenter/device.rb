@@ -34,6 +34,7 @@ module ForemanDatacenter
     validates :serial, length: { maximum: 50 }
     validates :rack_id, presence: true
     validates :position, numericality: { only_integer: true }, allow_nil: true
+    validate :correct_position
 
     after_create :create_interfaces
     after_create :import_interfaces_from_host
@@ -70,6 +71,10 @@ module ForemanDatacenter
 
     def parent?
       device_type.try(:subdevice_role) == 'Parent'
+    end
+
+    def child?
+      device_type.try(:subdevice_role) == 'Child'
     end
 
     def free_interfaces
@@ -136,6 +141,39 @@ module ForemanDatacenter
             )
           end
         end
+      end
+    end
+
+    def correct_position
+      if position > 0
+        grid_template = JSON.parse(self.rack.grid_template_areas)
+        correct_pos = true
+        pos = []
+        sz = (size == 0 || size == 1) ? [position] : [*position..(position + (size - 1))]
+        sd = (side.nil?) ? "full" : side
+        sz.each do |i|
+          if grid_template["#{i}"].is_a?(Hash)
+            if grid_template["#{i}"].key?("full") &&  grid_template["#{i}"]["full"] != "device-#{self.id}"
+              correct_pos = false
+              pos << "#{i}(full)"
+            end
+            if sd == "full"
+              ["left", "right"].each do |s|
+                if grid_template["#{i}"].key?("#{s}") && grid_template["#{i}"]["#{s}"] != "device-#{self.id}"
+                  correct_pos = false
+                  pos << "#{i}(#{s})"
+                end
+              end
+            else
+              if grid_template["#{i}"].key?("#{sd}") && grid_template["#{i}"]["#{sd}"] != "device-#{self.id}"
+                correct_pos = false
+                pos << "#{i}(#{sd})"
+              end
+            end
+          end
+        end
+        pos.uniq!
+        errors.add(:position, "Positions: #{pos.join(', ')} already taken") if correct_pos == false
       end
     end
 

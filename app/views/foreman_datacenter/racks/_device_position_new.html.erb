@@ -1,0 +1,91 @@
+<div class="panel panel-default no-border">
+  <div class="panel-heading text-center panel-head-border">
+    <h4 class="nonmargintop nonmarginbottom">
+      <strong>
+        <%= link_to rack.name, rack_path(rack)  %>
+      </strong>
+      <strong>
+        <%= link_to 'Export to CSV', export_to_csv_rack_path(rack.id), class: "btn btn-primary btn-xs pull-right" %>
+      </strong>
+      <strong>
+        <% if @order == "asc" %>
+         <%= link_to 'DESC', url_for(), class: "btn btn-success btn-xs pull-left" %>
+       <% else %>
+         <%= link_to 'ASC', url_for(order: "asc"), class: "btn btn-success btn-xs pull-left" %>
+       <% end %>
+      </strong>
+    </h4>
+  </div>
+
+  <!-- Grid -->
+  <div class="rack-grid rack-<%= rack.id %>" style="<%= grid_template(rack.grid_template_areas, rack.id, @order) %>">
+   
+    <!-- Rows -->
+    <% (rack.height+1).times.each do |i| %>
+      <% if i == 0 && !rack.unpositioned_devices.empty? %>
+        <div class="item item-row" style="grid-area: rack-<%= rack.id %>-u<%= i %>">
+          <%= i == 0 ? "Unpositioned Devices" : "#{i}U"%>
+        </div>
+      <% else %>
+        <% if i != 0 %>
+          <div class="item item-row" style="grid-area: rack-<%= rack.id %>-u<%= i %>">
+            <%= "#{i}U" %>
+            <% rack.child_devices.each do |d| %>
+              <% if d.position == i %>
+                <strong>
+                  <%= link_to "Child", device_path(d), class: "btn btn-primary btn-xs pull-right" %>
+                </strong>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <% next %>
+        <% end %>
+      <% end %>
+    <% end %>
+   
+    <!-- Empty cells -->
+    <% rack.empty_cells.each do |c| %>
+      <div class="item item-empty-cell" style="<%= grid_empty_style(c, rack.id)%>">
+        &nbsp;
+      </div>
+    <% end %>
+   
+    <!-- Devices -->
+    <% rack.devices.each do |d| %>
+      <% if !d.position.nil? && d.size != 0 && d.position != 0 %>
+        <div class="item item-dev" style="grid-area: device-<%= d.id %>">
+          <div class="dev-cell" style="<%= margin_style(d.size) %>">
+            <div class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>" style="border-radius:40px;border:0px;">&nbsp;&nbsp;</div>
+            <%= link_to d.name, device_path(d) %>
+            <% if d.side.nil? %>
+              *
+            <% end %>
+            <% if d.size.nil? %>
+              **
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+   
+    <!-- Unpositioned devices -->
+    <% if rack.unpositioned_devices.count != 0 %>
+      <div class="item item-dev" style="grid-area: rack-<%= rack.id %>-unpos-devs">
+        <% rack.unpositioned_devices.each do |d| %>
+          <div class="<%= "label " + d.device_role.color.downcase.gsub(" ","") %>" style="border-radius:40px;border:0px;">&nbsp;&nbsp;</div>
+          <%= link_to d.name, device_path(d) %>
+          <% if d.side.nil? %>
+            *
+          <% end %>
+          <% if d.size.nil? %>
+            **
+          <% end %>
+          <br>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>
