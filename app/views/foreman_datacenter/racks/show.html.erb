@@ -1,5 +1,6 @@
 <% stylesheet 'foreman_datacenter/device_roles' %>
 <% stylesheet 'foreman_datacenter/datacenter' %>
+<% stylesheet 'foreman_datacenter/rack_show' %>
 <% stylesheet 'foreman_datacenter/modal' %>
 <% javascript 'foreman_datacenter/modal' %>
 
@@ -89,10 +90,11 @@
   </div>
 
   <div class="col-md-6">
-    <!-- Devices -->
-    <%= render "device_position", rack: @rack %>
-    <!-- Unpositioned Devices -->
-    <%= render "unpositioned_devices", rack: @rack if @rack.unpositioned_devices.count != 0 %>
+    <%= render "device_position_new", rack: @rack %>
+      <!-- Devices -->
+      <%#= render "device_position", rack: @rack %>
+      <!-- Unpositioned Devices -->
+      <%#= render "unpositioned_devices", rack: @rack if @rack.unpositioned_devices.count != 0 %>
     <div><h6 class="text-right"><%= _("* side is not defined") %></h6></div>
     <div><h6 class="text-right"><%= _("** size is not defined") %></h6></div>
   </div>

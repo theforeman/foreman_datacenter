@@ -70,7 +70,7 @@
         </tr>
         <tr>
           <td><%= _("Position") %></td>
-          <td><%= @device.positions.join(", ") %> / <%= @device.face %> / <%= @device.side %></td>
+          <td><%= (@device.position > 0) ? (@device.child? ? "#{@device.position} (Child)" : @device.positions.join(", ")) : 0 %> / <%= @device.face %> / <%= @device.side %></td>
         </tr>
         <tr>
           <td><%= _("Device Type") %></td>
