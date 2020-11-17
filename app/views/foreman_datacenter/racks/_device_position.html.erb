@@ -1,5 +1,14 @@
 <div class="panel panel-default">
-  <div class="panel-heading text-center"><h4 class="nonmargintop nonmarginbottom"><strong><%= link_to _("#{rack.name}"), rack_path(rack) %></strong></h4></div>
+  <div class="panel-heading text-center">
+    <h4 class="nonmargintop nonmarginbottom">
+      <strong>
+        <%= link_to _("#{rack.name}"), rack_path(rack) %>
+      </strong>
+      <strong>
+           <%= link_to 'Export to CSV', export_to_csv_rack_path(rack.id), class: "btn btn-primary btn-xs pull-right" %>
+      </strong>
+      </h4>
+    </div>
   <table class="<%= table_css_classes 'table-hover panel-body nonmarginbottom' %>">
     <tbody>
       <% rack.positioned_devices.each do |positions, devices| %>

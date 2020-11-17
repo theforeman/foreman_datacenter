@@ -92,6 +92,8 @@ module ForemanDatacenter
           'move'
         when 'racks'
           'racks'
+        when 'export_to_csv'
+          'export_to_csv'
         else
           super
       end

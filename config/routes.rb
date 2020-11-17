@@ -113,6 +113,7 @@ Foreman::Application.routes.draw do
     end
     resources :racks do
       member do
+        get :export_to_csv
         get :move
       end
       collection do
