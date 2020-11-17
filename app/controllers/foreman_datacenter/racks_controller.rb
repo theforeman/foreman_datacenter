@@ -17,6 +17,7 @@ module ForemanDatacenter
 
     def show
       @rack = resource_base.includes(devices: [:device_role]).find(params[:id])
+      @order = params[:order] || "desc"
     end
 
     def new

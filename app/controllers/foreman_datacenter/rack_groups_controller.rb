@@ -61,6 +61,7 @@ module ForemanDatacenter
     def racks
       @racks = @rack_group.racks.includes(devices: [:device_role])
       process_error redirect: rack_groups_path(@rack_group), error_msg: 'Current Rack Group haven\'t any Racks.' if @racks.empty?
+      @order = params[:order] || "desc"
     end
 
     def update_associated_objects
